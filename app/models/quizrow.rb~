@@ -1,0 +1,2 @@
+class Quizrow < ActiveRecord::Base
+end
