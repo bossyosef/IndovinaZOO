@@ -51,5 +51,12 @@ group :development do
 end
 
 group :development, :test do
+	gem 'rspec'
   gem 'jazz_hands'
 end
+
+#gem per login
+gem 'devise'
+
+#gem per upload file
+gem 'carrierwave'
