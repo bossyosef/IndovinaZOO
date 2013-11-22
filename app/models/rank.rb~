@@ -1,9 +1,0 @@
-class Rank < ActiveRecord::Base
-	
-	validates :nickname,
-							presence: true
-
-	validates :score,
-							presence: true
-
-end
