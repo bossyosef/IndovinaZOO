@@ -60,7 +60,3 @@ gem 'devise'
 
 #gem per upload file
 gem 'carrierwave'
-
-#gem per facilitare controller
-gem 'make_resourceful'
-gem 'inherited_resources'
