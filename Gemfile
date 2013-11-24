@@ -60,3 +60,7 @@ gem 'devise'
 
 #gem per upload file
 gem 'carrierwave'
+
+#gem per gestire i locali
+gem 'rails-i18n', '~> 4.0.0'
+
