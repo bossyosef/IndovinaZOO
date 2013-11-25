@@ -8,7 +8,6 @@ class Rank < ActiveRecord::Base
 							:numericality => {:greater_than => 0}
 
  	def self.top5
-		puts "Top 5"
 		order(:score).reverse_order.first(5)
 	end
 
