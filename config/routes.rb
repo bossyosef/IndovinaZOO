@@ -54,10 +54,14 @@ IndovinaZOO::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
+    
   devise_for :admin_users
-   
+    
   resources :main_page, only: :index
+  
+  namespace :admin do  
+	resources :animals
+  end
     
   root "main_page#index"  
 end
