@@ -1,5 +1,5 @@
 IndovinaZOO::Application.routes.draw do
-  root "game/home"
+  root "game#home"
   get "/settings" => "game#settings"
   get "/quiz/:id" => "game#quiz"
   get "/result" => "game#result"
