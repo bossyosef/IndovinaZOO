@@ -1,6 +1,6 @@
 IndovinaZOO::Application.routes.draw do
   root "game#home"
-  get "/settings" => "game#settings"
+  post "/settings" => "game#settings", as: :settings
   get "/quiz/:id" => "game#quiz"
   get "/result" => "game#result"
   get "ranks/top5"
