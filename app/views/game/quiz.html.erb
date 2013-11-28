@@ -10,6 +10,8 @@
 </script>
 <input name="inizia" id="inizia" type="button" value="Inizia il Quiz!" onclick="inizia()" /> 
 
+<%= audio_tag("<%= @quiz.animals[0].cry %>", preload: "auto") %>
+<%= audio_tag("<%= @quiz.animals[1].cry %>", preload: "auto") %>
 
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", "#{params[:numeroquiz]}" %>
