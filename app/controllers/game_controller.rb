@@ -6,6 +6,11 @@ class GameController < ApplicationController
   end
 
   def quiz
+	#if (params[:risultati])
+	#  @quiz, @risposta = Quiz.random(params[:risultati])
+	#else
+	#  @quiz, @risposta = Quiz.random
+	#end
   end
 
   def result

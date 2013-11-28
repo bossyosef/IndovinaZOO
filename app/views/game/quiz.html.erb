@@ -1,2 +1,17 @@
 <h1>Game#quiz</h1>
 <p>Find me in app/views/game/quiz.html.erb</p>
+<script>
+  function inizia()
+  {
+	//riproduci il verso
+	//fai partire il timer
+	//inizializza la form hidden
+  }
+</script>
+<input name="inizia" id="inizia" type="button" value="Inizia il Quiz!" onclick="inizia()" /> 
+
+
+<%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
+  <%= hidden_field_tag "numeroquiz", "#{params[:numeroquiz]}" %>
+  <%= hidden_field_tag "timeout", "#{params[:timeout]}" %>
+<% end %>

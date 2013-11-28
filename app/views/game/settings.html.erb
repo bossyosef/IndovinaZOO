@@ -2,5 +2,6 @@
 <p>Find me in app/views/game/settings.html.erb</p>
 <%= form_tag("/quiz/1", method: "post") do %>
   <%= number_field_tag "numeroquiz", 1, min: 1 %>
+  <%= number_field_tag "timeout", 5, min: 5 %>
   <%= submit_tag("... Adesso Gioca!") %>
 <% end %>
