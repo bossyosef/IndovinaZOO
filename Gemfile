@@ -65,6 +65,9 @@ gem 'carrierwave'
 gem 'inherited_resources'
 gem 'has_scope'
 
+#gem per formtastic
+gem 'formtastic'
+
 
 
 
