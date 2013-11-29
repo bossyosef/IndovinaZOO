@@ -9,7 +9,7 @@ class GameController < ApplicationController
 	#if (params[:risultati])
 	#  @quiz, @risposta = Quiz.random(params[:risultati])
 	#else
-	#  @risultati.random_quiz_array(params[:numeroquiz])
+	#  @quiz_id_arr, @animali_arr, @risposte_arr, @punteggi_arr=random_quiz_array(params[:numeroquiz])
 	#end
   end
 
