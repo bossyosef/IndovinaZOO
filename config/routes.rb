@@ -1,5 +1,5 @@
-IndovinaZOO::Application.routes.draw do
-  
+IndovinaZOO::Application.routes.draw do  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -64,6 +64,8 @@ IndovinaZOO::Application.routes.draw do
   resources :main_page, only: :index
    
   resources :animals
+  
+  get "ranks/top5"
       
   root "main_page#index"  
 end

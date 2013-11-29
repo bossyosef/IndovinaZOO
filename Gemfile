@@ -51,7 +51,7 @@ group :development do
 end
 
 group :development, :test do
-	gem 'rspec'
+  gem 'rspec'
   gem 'jazz_hands'
 end
 
@@ -67,7 +67,3 @@ gem 'has_scope'
 
 #gem per formtastic
 gem 'formtastic'
-
-
-
-

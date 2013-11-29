@@ -7,4 +7,8 @@ class Rank < ActiveRecord::Base
 							presence: true,
 							:numericality => {:greater_than => 0}
 
+ 	def self.top5
+		order(:score).reverse_order.first(5)
+	end
+
 end
