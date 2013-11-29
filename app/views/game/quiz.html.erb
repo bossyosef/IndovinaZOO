@@ -20,7 +20,10 @@
 
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
   <% params[:numeroquiz].to_i.times do |id| %>
-    <%= hidden_field_tag "risultati[]", params[:risultati][id] %>
+    <%= hidden_field_tag "quiz_id_arr[]", params[:quiz_id_arr][id] %>
+    <%= hidden_field_tag "animali_arr[]", params[:animali_arr][id] %>
+    <%= hidden_field_tag "risposte_arr[]", params[:risposte_arr][id] %>
+    <%= hidden_field_tag "punteggi_arr[]", params[:punteggi_arr][id] %>
   <% end %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
