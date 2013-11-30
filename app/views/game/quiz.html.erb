@@ -1,0 +1,42 @@
+<h1>Game#quiz</h1>
+<p>Find me in app/views/game/quiz.html.erb</p>
+<script>
+  var dec_seconds = 0;
+  var to = <%= params[:timeout].to_i*1000 %>;
+  function inizia()
+  {
+    //inizializza la form hidden
+    //riproduci il verso
+    timerID = setTimeout("timeout()", to)
+  }
+  function scelta(animale)
+  {
+    // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
+    // aggiungi risposta nell'array
+    quizdopo()
+  }
+  function timeout
+  {
+    clearTimeout(timerID);
+    //stampa errore con risposta esatta
+    quizdopo();
+  }
+  function quizdopo
+  {
+    //mostra bottone per prossimo quiz o bottone per risultato
+  }
+</script>
+<input name="inizia" id="inizia" type="button" value="Inizia il Quiz!" onclick="inizia()" /> 
+
+<%= audio_tag(@risposta.cry, preload: "auto", id: @risposta.name) %>
+
+<%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
+  <% params[:numeroquiz].to_i.times do |id| %>
+    <%= hidden_field_tag "quiz_id_arr[]", params[:quiz_id_arr][id] %>
+    <%= hidden_field_tag "animali_arr[]", params[:animali_arr][id] %>
+    <%= hidden_field_tag "risposte_arr[]", params[:risposte_arr][id] %>
+    <%= hidden_field_tag "punteggi_arr[]", params[:punteggi_arr][id] %>
+  <% end %>
+  <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
+  <%= hidden_field_tag "timeout", params[:timeout] %>
+<% end %>

@@ -1,5 +1,5 @@
-IndovinaZOO::Application.routes.draw do  
-
+IndovinaZOO::Application.routes.draw do
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -54,7 +54,13 @@ IndovinaZOO::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-   
+  
+  root "game#home"
+  post "/settings" => "game#settings", as: :settings
+  post "/quiz/:id" => "game#quiz"
+  post "/result" => "game#result"
+  get "ranks/top5"
+  
   devise_scope :admin_user do
 	get "/admin_users", :to => "admin_users#index"
   end
@@ -65,7 +71,4 @@ IndovinaZOO::Application.routes.draw do
    
   resources :animals
   
-  get "ranks/top5"
-      
-  root "main_page#index"  
 end
