@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<head>
-	<link rel="stylesheet" type="text/css" href="style.css">
+<head>	
 </head>
 <body>
 	<h1>Elenco Animali</h1>
@@ -14,7 +13,8 @@
 					</audio>
 					<p><%= animal.name %></p>
 				</li>
-			<% end %>
-			</ul>
+		<% end %>
+		</ul>
 	</div>
+	<%= button_to "Aggiungi un nuovo animale", animals_path %>
 </body>

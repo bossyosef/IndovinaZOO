@@ -66,9 +66,7 @@ IndovinaZOO::Application.routes.draw do
   end
   
   devise_for :admin_users
-      
-  resources :main_page, only: :index
-   
+     
   resources :animals
   
 end
