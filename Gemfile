@@ -51,7 +51,7 @@ group :development do
 end
 
 group :development, :test do
-	gem 'rspec'
+  gem 'rspec'
   gem 'jazz_hands'
 end
 
@@ -61,6 +61,9 @@ gem 'devise'
 #gem per upload file
 gem 'carrierwave'
 
-#gem per facilitare controller
-gem 'make_resourceful'
+#gem per inherited resources
 gem 'inherited_resources'
+gem 'has_scope'
+
+#gem per formtastic
+gem 'formtastic'
