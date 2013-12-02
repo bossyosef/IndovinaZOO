@@ -28,7 +28,10 @@
 
 <button type="button" id="inizia" name="inizia" onclick="inizia()" >Inizia il Quiz!</button>
 
-<%= audio_tag(@verso, preload: "auto", id: "verso" %>
+<%= audio_tag @verso, preload: "auto", id: "verso" %>
+
+<%= image_tag @animale1.image, alt: @animale1.name %>
+<%= image_tag @animale2.image, alt: @animale2.name %>
 
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
   <% params[:numeroquiz].to_i.times do |id| %>

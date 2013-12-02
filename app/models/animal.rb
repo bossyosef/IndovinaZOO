@@ -17,6 +17,10 @@ class Animal < ActiveRecord::Base
 
 	has_many :quizrows
 	has_many :quizzes, :through => :quizrows
+	
+	def self.get_cry(animale)
+	  where(name: animale).cry
+	end
 
 end
 

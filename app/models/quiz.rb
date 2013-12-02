@@ -6,12 +6,10 @@ class Quiz < ActiveRecord::Base
 		animals.sample
 	end
 
-	def self.random_quiz 
-		quizzes.sample
-	end
-
-  def random_quiz_from_array(array)
-		
+	def self.get_animals_from_id(idquiz)
+		animal1 = find(idquiz).animals.first
+		animal2 = find(idquiz).animals.last
+		return animal1,animal2
 	end
 
 	def self.random_quiz_array(numQuiz)
