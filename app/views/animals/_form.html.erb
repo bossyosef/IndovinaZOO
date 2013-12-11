@@ -1,0 +1,32 @@
+<%= simple_form_for @animal do |f| %>
+	
+	<!-- parte del form per la gestione degli errori -->
+	
+	<% if @animal.errors.any? %>
+	<div id="error_message">
+		<h2><%= pluralize(@animal.errors.count, "error") %> prohibited
+		  this animal from being saved:</h2>
+		<ul>
+		<% @animal.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+	<% end %>
+			
+	<%= f.input :name %>
+	
+	<p>
+		<%= f.label :image %><br>
+		<%= f.file_field :image %>				
+	</p>
+	
+	<p>
+		<%= f.label :cry %><br>
+		<%= f.file_field :cry %>		
+	</p>
+	
+	<%= f.button :submit %>
+<% end %>
+
+<%= link_to "Torna a Gestione", animals_path %>

@@ -55,18 +55,14 @@ IndovinaZOO::Application.routes.draw do
   #     resources :products
   #   end
   
+  get "game/home"
   root "game#home"
   post "/settings" => "game#settings", as: :settings
   post "/quiz/:id" => "game#quiz"
   post "/result" => "game#result"
   get "ranks/top5"
-  
-  devise_scope :admin_user do
-	get "/admin_users", :to => "admin_users#index"
-  end
-  
-  devise_for :admin_users
-     
+       
   resources :animals
+  resources :quizzes
   
 end

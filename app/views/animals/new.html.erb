@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>	
-</head>
-<body>
-	<h1>Nuovo animale</h1>
-	<h4>Riempi il seguente form:</h4>
-	<%= semantic_form_for @animal do |f| %>
-		<%= f.inputs do %>
-			<%= f.input :name %>
-			<%= f.input :image %>
-			<%= f.input :cry %>
-		<% end %>
-		<%= f.actions do %>
-			<%= f.action :submit, :as => :button %>
-			<%= f.action :cancel, :as => :link %>
-		<% end %>
-	<% end %>
-</body>
-</html>
+<h1>New Animal</h1>
+
+<%= render "form" %>

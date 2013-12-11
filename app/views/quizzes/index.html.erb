@@ -1,0 +1,28 @@
+<h1>Gestione quiz</h1>
+
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Level</th>
+		<th>Animals</th>
+	</tr>
+	
+	<% @quizzes.each do |quiz| %>
+		<tr>
+			<td><%= quiz.id %></td>
+			<td><%= quiz.level %></td>
+			<td>
+				<% quiz.animals.each do |animal| %>
+					<%= animal.name %><%= image_tag animal.image_url, size: "150x120" %> |
+				<% end %>			
+			</td>			
+			<td><%= link_to "Show", quiz %></td>
+			<td><%= link_to "Edit", edit_quiz_path(quiz) %></td>
+			<td><%= link_to "Delete", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
+		</tr>
+	<% end %>
+</table>
+
+<%= link_to "Torna a Home", root_path %>
+<%= link_to "New Quiz", new_quiz_path %>
+

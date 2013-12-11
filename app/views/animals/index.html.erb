@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<head>	
-</head>
-<body>
-	<h1>Elenco Animali</h1>
-	<div id="container">
-		<ul id="griglia_immagini">
-	    <% @animals.each do |animal| %>
-				<li>
-					<img src="<%= animal.image %>" onclick="document.getElementById('<%= animal.name %>_sound').play()"/>
-					<audio id="<%= animal.name %>_sound">
-						<source src="<%= animal.cry %>" type="audio/mpeg"/>
-					</audio>
-					<p><%= animal.name %></p>
-				</li>
-		<% end %>
-		</ul>
-	</div>
-	<%= button_to "Aggiungi un nuovo animale", animals_path %>
-</body>
+<h1>Gestione animali</h1>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Image</th>
+		<th>Cry</th>
+	</tr>
+	
+	<% @animals.each do |animal| %>
+		<tr>
+			<td><%= animal.name %></td>
+			<td><%= image_tag animal.image_url, size: "120x100" %></td>
+			<td><%= audio_tag animal.cry_url, controls: true %></td>
+			<td><%= link_to "Show", animal %></td>
+			<td><%= link_to "Edit", edit_animal_path(animal) %></td>
+			<td><%= link_to "Delete", animal_path(animal), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
+		</tr>
+	<% end %>
+</table>
+
+<%= link_to "Nuovo animale", new_animal_path %><br>
+<%= link_to "Torna a Home", root_path %>

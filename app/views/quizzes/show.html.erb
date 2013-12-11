@@ -1,0 +1,19 @@
+<p>
+	<strong>Quiz ID:</strong>
+	<%= @quiz.id %>
+</p>
+
+<p>
+	<strong>Level:</strong>
+	<%= @quiz.level %>
+</p>
+
+<ul>
+	<strong>Animals:</strong>
+	<% @quiz.animals.each do |animal| %>		
+		<li><%= animal.name %><%= image_tag animal.image_url, size: "150x120" %></li>
+	<% end %>
+</ul>
+
+<%= link_to "Edit", edit_quiz_path(@quiz) %>
+<%= link_to "Torna a Gestione", quizzes_path %>

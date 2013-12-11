@@ -55,15 +55,8 @@ group :development, :test do
   gem 'jazz_hands'
 end
 
-#gem per login
-gem 'devise'
-
 #gem per upload file
 gem 'carrierwave'
 
-#gem per inherited resources
-gem 'inherited_resources'
-gem 'has_scope'
-
-#gem per formtastic
-gem 'formtastic'
+#gemma per form
+gem 'simple_form'
