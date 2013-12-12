@@ -1,6 +1,7 @@
 class AnimalsController < ApplicationController
   before_action :set_animal, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_admin_user!, except: [:show, :index]
+  
 def new
 	@animal = Animal.new
 end

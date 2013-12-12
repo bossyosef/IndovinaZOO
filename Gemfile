@@ -60,3 +60,7 @@ gem 'carrierwave'
 
 #gemma per form
 gem 'simple_form'
+
+#gemma per login
+gem 'devise'
+

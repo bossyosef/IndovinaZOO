@@ -3,3 +3,15 @@
 		<div class="alert alert-<%= key %>"><%= value %></div>
 	<% end %> 
 </div>
+
+<div class="loginbar-text" style="float:right">
+
+<% if admin_user_signed_in? %>
+	Loggato come <strong><%= current_admin_user.username %></strong>.
+	<%= link_to "Modifica profilo", edit_admin_user_registration_path, class: "loginbar-link" %> |
+	<%= link_to "Logout", destroy_admin_user_session_path, method: :delete, class: "loginbar-link" %>
+<% else %>
+	<%= link_to "Registrati", new_admin_user_registration_path, class: "loginbar-link" %> |
+	<%= link_to "Login", new_admin_user_session_path, class: "loginbar-link" %>
+<% end %>
+</div>

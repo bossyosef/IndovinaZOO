@@ -1,5 +1,5 @@
 IndovinaZOO::Application.routes.draw do
-  
+    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -61,8 +61,9 @@ IndovinaZOO::Application.routes.draw do
   post "/quiz/:id" => "game#quiz"
   post "/result" => "game#result"
   get "ranks/top5"
-       
+         
   resources :animals
   resources :quizzes
   
+  devise_for :admin_users  
 end
