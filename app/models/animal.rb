@@ -25,6 +25,10 @@ class Animal < ActiveRecord::Base
 	  where(name: animale).cry
 	end
 	
+	def self.has_animals?
+		Animal.count > 0
+	end
+	
 	private
 	def image_size_validation
 		errors[:image] << "Il file deve essere più piccolo di 5 MB." if image.size > 5.megabytes

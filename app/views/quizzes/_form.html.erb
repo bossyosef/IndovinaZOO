@@ -14,17 +14,23 @@
 	</div>
 	<% end %>
 	
-	<%= f.input :level %>
+	<% if Animal.has_animals? %>
+	
+		<%= f.input :level %>
 		
-	<!-- parte del form per l'aggiunta degli animali -->
+		<!-- parte del form per l'aggiunta degli animali -->
 	
-	<fieldset id="quiz-animals"> 			
-		<%= f.simple_fields_for :quiz_rows do |quizRow| %>			
-			<%= quizRow.association :animal, as: :select, prompt: "Seleziona un animale" %>						  
-		<% end %>	  	  
-	</fieldset>
+		<fieldset id="quiz-animals"> 			
+			<%= f.simple_fields_for :quiz_rows do |quizRow| %>			
+				<%= quizRow.association :animal, as: :select, prompt: "Seleziona un animale" %>						  
+			<% end %>	  	  
+		</fieldset>
 	
-	<%= f.button :submit %>
+		<%= f.button :submit %>
+	<% else %>
+		<%= f.label "Nessun animale inserito!" %><br>
+		<%= link_to "Nuovo Animale", new_animal_path %>
+	<% end %>
 	
 <% end %>
 

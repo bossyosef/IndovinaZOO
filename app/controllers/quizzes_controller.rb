@@ -2,7 +2,7 @@ class QuizzesController < ApplicationController
 	before_action :set_quiz, only: [:show, :edit, :update, :destroy]
 	before_action :init_quiz_insertions, only: [:new, :edit]
 	before_action :authenticate_admin_user!, except: [:show, :index]
-	
+
 def index
 	@quizzes = Quiz.all
 end
@@ -10,11 +10,12 @@ end
 def show
 end
 
-def new
+def new	
 	@quiz = Quiz.new
 		
 	#creo due oggetti quiz_row vuoti che sarebbero le righe del quiz.
-	2.times { @quiz.quiz_rows.build(quiz_id: @quiz.id) }				
+		
+	2.times { @quiz.quiz_rows.build(quiz_id: @quiz.id) }	
 end
 
 def create

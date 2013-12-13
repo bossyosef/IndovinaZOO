@@ -6,14 +6,14 @@ class Quiz < ActiveRecord::Base
 									  greater_than: 0,
 									  less_than_or_equal_to: 10
 									}
-	
+		
 	#associazioni
 	has_many :quiz_rows, dependent: :destroy, inverse_of: :quiz
 	has_many :animals, through: :quiz_rows
-	accepts_nested_attributes_for :quiz_rows, reject_if: proc { |attributes| attributes['animal_id'].blank? }
+	accepts_nested_attributes_for :quiz_rows, reject_if: :quiz_row_invalid
 	
-	#metodi
-
+	#metodi pubblici per il gioco
+	
 	def random_animal
 		animals.sample
 	end
@@ -39,5 +39,13 @@ class Quiz < ActiveRecord::Base
 			quizzes.delete_if {|q| q.id == q1.id}		
 		end
 		return [quiz_id_arr, animal_arr, answer_arr, score_arr]
+	end
+	
+	#metodi privati
+	
+	private
+	
+	def quiz_row_invalid(attributes)
+		attributes['animal_id'] =~ /^$/
 	end
 end
