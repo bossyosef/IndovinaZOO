@@ -1,18 +1,22 @@
 class AnimalsController < ApplicationController
+  respond_to :js, :json, :html
   before_action :set_animal, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_admin_user!, except: [:show, :index]
   
 def new
 	@animal = Animal.new
+	
+	respond_to do |format|
+		format.html { render :layout => !request.xhr? }
+	end	
 end
 
 def create		
 	@animal = Animal.new(animal_params)
 	
 	if @animal.save
-		redirect_to @animal
-	else
-		render "new"
+	   flash[:success] = "Animale creato correttamente!"
+	   respond_with(@animal)
 	end
 end
 
@@ -21,6 +25,7 @@ end
 
 def index
 	@animals = Animal.all
+	@animal = Animal.new
 end
 
 def edit	

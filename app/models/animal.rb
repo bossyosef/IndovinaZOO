@@ -19,15 +19,11 @@ class Animal < ActiveRecord::Base
 	has_many :quiz_rows
 	has_many :quizzes, through: :quiz_rows
 	
-	#metodi
+	#metodi pubblici
 	
 	def self.get_cry(animale)
 	  where(name: animale).cry
-	end
-	
-	def self.has_animals?
-		Animal.count > 0
-	end
+	end	
 	
 	private
 	def image_size_validation

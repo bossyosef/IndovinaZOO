@@ -1,23 +1,23 @@
 <h1>Gestione animali</h1>
 
-<table>
-	<tr>
-		<th>Name</th>
-		<th>Image</th>
-		<th>Cry</th>
-	</tr>
-	
-	<% @animals.each do |animal| %>
+<% if Animal.any? %>
+	<table id="animals">
 		<tr>
-			<td><%= animal.name %></td>
-			<td><%= image_tag animal.image_url, size: "120x100" %></td>
-			<td><%= audio_tag animal.cry_url, controls: true %></td>
-			<td><%= link_to "Show", animal %></td>
-			<td><%= link_to "Edit", edit_animal_path(animal) %></td>
-			<td><%= link_to "Delete", animal_path(animal), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
+			<th>Name</th>
+			<th>Image</th>
+			<th>Cry</th>
 		</tr>
-	<% end %>
-</table>
+	
+		<%= render @animals %>	
+	</table>
+<% else %>
+	<div id="no_animal_found">
+		<strong>Nessun animale trovato.</strong>
+	</div>
+<% end %>
 
-<%= link_to "Nuovo animale", new_animal_path %><br>
-<%= link_to "Torna a Home", root_path %>
+<br />
+
+<%= render 'new_animal_ajax_links' %>
+
+<%= link_to 'Torna a Home', root_path %>

@@ -1,28 +1,40 @@
 <h1>Gestione quiz</h1>
-
-<table>
-	<tr>
-		<th>ID</th>
-		<th>Level</th>
-		<th>Animals</th>
-	</tr>
 	
-	<% @quizzes.each do |quiz| %>
+<% if !(Animal.any?) %>
+	<div id="no_animal_found_message">
+		<strong>Nessun animale trovato per creare nuovi quiz.</strong>
+	</div>
+<% elsif !(Quiz.any?) %>	
+	<div id="no_quiz_found_message">
+		<strong>Nessun quiz trovato.</strong>		
+	</div>
+<% else %>	
+	<table>
 		<tr>
-			<td><%= quiz.id %></td>
-			<td><%= quiz.level %></td>
-			<td>
-				<% quiz.animals.each do |animal| %>
-					<%= animal.name %><%= image_tag animal.image_url, size: "150x120" %> |
-				<% end %>			
-			</td>			
-			<td><%= link_to "Show", quiz %></td>
-			<td><%= link_to "Edit", edit_quiz_path(quiz) %></td>
-			<td><%= link_to "Delete", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
+			<th>ID</th>
+			<th>Level</th>
+			<th>Animals</th>
 		</tr>
-	<% end %>
-</table>
+	
+		<% @quizzes.each do |quiz| %>
+			<tr>
+				<td><%= quiz.id %></td>
+				<td><%= quiz.level %></td>
+				<td>
+					<% quiz.animals.each do |animal| %>
+						<%= animal.name %><%= image_tag animal.image_url, size: "150x120" %> |
+					<% end %>			
+				</td>			
+				<td><%= link_to "Show", quiz %></td>
+				<td><%= link_to "Edit", edit_quiz_path(quiz) %></td>
+				<td><%= link_to "Delete", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
+			</tr>
+		<% end %>
+	</table>
+	
+	<br />
+
+	<%= link_to "New Quiz", new_quiz_path %>
+<% end %>
 
 <%= link_to "Torna a Home", root_path %>
-<%= link_to "New Quiz", new_quiz_path %>
-

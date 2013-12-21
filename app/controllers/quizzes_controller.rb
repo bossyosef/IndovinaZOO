@@ -10,12 +10,11 @@ end
 def show
 end
 
-def new	
+def new
 	@quiz = Quiz.new
-		
-	#creo due oggetti quiz_row vuoti che sarebbero le righe del quiz.
-		
-	2.times { @quiz.quiz_rows.build(quiz_id: @quiz.id) }	
+	
+	#Crea due QuizRow per memorizzare gli animali			
+	2.times { @quiz.quiz_rows.build	}
 end
 
 def create
@@ -31,6 +30,7 @@ def create
 end
 
 def edit
+	@quiz.quiz_rows.build
 end
 
 def update	
@@ -49,12 +49,25 @@ def destroy
 	redirect_to quizzes_path
 end
 
+def select_animal_id
+	if params[:id].present?
+	  @animals = Animal.where.not(id: params[:id])
+	else
+	  @animals = Animal.all
+	end
+	
+	respond_to do |format|
+	  format.js
+	end
+end
+
 private
 
 def prepare_quiz
 	# setta i valori corretti per le righe del quiz: quiz_id e animal_id.
 	i = 0	
-	@quiz.quiz_rows.each do |row|		
+	@quiz.quiz_rows.each do |row|
+		row.quiz_id = @quiz.id
 		row.animal_id = params[:quiz][:quiz_rows_attributes][i.to_s][:animal_id]
 		i += 1
 	end

@@ -65,5 +65,7 @@ IndovinaZOO::Application.routes.draw do
   resources :animals
   resources :quizzes
   
+  post "/quizzes/select_animal_id"
+  
   devise_for :admin_users  
 end
