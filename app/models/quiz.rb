@@ -38,7 +38,7 @@ class Quiz < ActiveRecord::Base
 			score_arr.push(0)
 			quizzes.delete_if {|q| q.id == q1.id}		
 		end
-		return [quiz_id_arr, animal_arr, answer_arr, score_arr]
+		return quiz_id_arr, animal_arr, answer_arr, score_arr
 	end
 	
 	#metodi privati
