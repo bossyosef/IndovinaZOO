@@ -9,6 +9,7 @@
   }
   function scelta(animale)
   {
+    clearTimeout(timerID);
     // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     // aggiungi risposta nell'array (prendi il valore di to)
     quizdopo()
@@ -32,6 +33,8 @@
 
 <%= image_tag @animale1.image, alt: @animale1.name %>
 <%= image_tag @animale2.image, alt: @animale2.name %>
+
+<p>Quiz <%= params[:id] %></p>
 
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
   <% params[:numeroquiz].to_i.times do |id| %>
