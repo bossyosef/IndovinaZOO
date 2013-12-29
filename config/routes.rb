@@ -1,4 +1,8 @@
 IndovinaZOO::Application.routes.draw do
+  root "game#home"
+  post "/settings" => "game#settings", as: :settings
+  post "/quiz/:id" => "game#quiz"
+  post "/result" => "game#result"
   get "ranks/top5"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

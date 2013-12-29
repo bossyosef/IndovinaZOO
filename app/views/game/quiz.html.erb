@@ -1,0 +1,27 @@
+<h1>Game#quiz</h1>
+<p>Find me in app/views/game/quiz.html.erb</p>
+<script>
+  function inizia()
+  {
+    //inizializza la form hidden
+    //riproduci il verso
+    //fai partire il timer
+  }
+  function scelta(animale)
+  {
+    // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
+    // aggiungi risposta nell'array
+  }
+</script>
+<input name="inizia" id="inizia" type="button" value="Inizia il Quiz!" onclick="inizia()" /> 
+
+<%= audio_tag(@quiz.animals[0].cry, preload: "auto", id: @quiz.animals[0]) %>
+<%= audio_tag(@quiz.animals[1].cry, preload: "auto", id: @quiz.animals[1]) %>
+
+<%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
+  <% params[:numeroquiz].to_i.times do |id| %>
+    <%= hidden_field_tag "risultati[]", params[:risultati][id] %>
+  <% end %>
+  <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
+  <%= hidden_field_tag "timeout", params[:timeout] %>
+<% end %>
