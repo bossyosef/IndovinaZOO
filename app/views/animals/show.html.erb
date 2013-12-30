@@ -1,0 +1,34 @@
+<p>
+	<strong>ID:</strong>
+	<%= @animal.id %>
+</p>
+
+<p>
+	<strong>Name:</strong>
+	<%= @animal.name %>
+</p>
+
+<p>
+	<strong>Image:</strong>
+	<%= image_tag @animal.image_url, size: "640x480" %><br>	
+</p>
+
+<p>
+	<strong>Image filename:</strong>
+	<%= @animal.image_identifier %>
+</p>
+	 
+<p>	
+	<strong>Cry:</strong>
+	<%= audio_tag @animal.cry_url, controls: true %>
+</p>
+
+<p>
+	<strong>Cry filename:</strong>
+	<%= @animal.cry_identifier %>
+</p>
+
+<%= link_to "Edit", edit_animal_path(@animal) %> |
+<%= link_to "Nuovo animale", new_animal_path %> |
+<%= link_to "Torna a Gestione", animals_path %>
+

@@ -1,0 +1,12 @@
+<% unless @animal.errors.any? %>
+	$("<%= escape_javascript(render @animal) %>").appendTo("#animals");
+<% else %>
+	var $form = $('#new_animal'),
+		$errorDiv = $('<div id="error_messages">'),
+		$errorList = $('<ul>');
+	<% @animal.errors.full_messages.each do |msg| %>
+	  $errorList.append('<li><%= escape_javascript msg %></li>');
+	<% end %>
+	$form.find('#error_messages').remove();
+	$form.prepend($errorDiv.append($errorList));
+<% end %>

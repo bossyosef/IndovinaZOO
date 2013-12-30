@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<head>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<h1>Elenco Animali</h1>
-	<div id="container">
-		<ul id="griglia_immagini">
-	    <% @animals.each do |animal| %>
-				<li>
-					<img src="<%= animal.image %>" onclick="document.getElementById('<%= animal.name %>_sound').play()"/>
-					<audio id="<%= animal.name %>_sound">
-						<source src="<%= animal.cry %>" type="audio/mpeg"/>
-					</audio>
-					<p><%= animal.name %></p>
-				</li>
-			<% end %>
-			</ul>
+<h1>Gestione animali</h1>
+
+<% if Animal.any? %>
+	<table id="animals">
+		<tr>
+			<th>Name</th>
+			<th>Image</th>
+			<th>Cry</th>
+		</tr>
+	
+		<%= render @animals %>	
+	</table>
+<% else %>
+	<div id="no_animal_found">
+		<strong>Nessun animale trovato.</strong>
 	</div>
-</body>
+<% end %>
+
+<br />
+
+<%= render 'new_animal_ajax_links' %>
+
+<%= link_to 'Torna a Home', root_path %>

@@ -51,16 +51,16 @@ group :development do
 end
 
 group :development, :test do
-	gem 'rspec'
+  gem 'rspec'
   gem 'jazz_hands'
 end
-
-#gem per login
-gem 'devise'
 
 #gem per upload file
 gem 'carrierwave'
 
-#gem per facilitare controller
-gem 'make_resourceful'
-gem 'inherited_resources'
+#gemma per form
+gem 'simple_form'
+
+#gemma per login
+gem 'devise'
+

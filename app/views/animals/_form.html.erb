@@ -1,0 +1,25 @@
+<%= simple_form_for @animal, :remote => (params[:action] == 'new' ? true : false), authenticity_token: true do |f| %>
+	
+	<!-- parte del form per la gestione degli errori -->
+	
+	<% if @animal.errors.any? %>
+	<div id="error_messages">
+		<h2><%= pluralize(@animal.errors.count, "error") %> prohibited
+		  this animal from being saved:</h2>
+		<ul>
+		<% @animal.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+	<% end %>
+	
+	<fieldset>
+		<legend>Dati nuovo animale:</legend>
+		<%= f.input :name %><br />
+		<%= f.input :image, as: :file %><br/>		
+		<%= f.input :cry, as: :file %>				
+	</fieldset>		
+		
+	<%= f.button :submit %>	
+<% end %>

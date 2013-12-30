@@ -1,0 +1,33 @@
+<%= simple_form_for @quiz do |f| %>
+	
+	<!-- parte del form per la gestione degli errori. Da vedere come gestisce gli errori simple_form-->
+	
+	<% if @quiz.errors.any? %>
+	<div id="quiz_errors">
+		<h2><%= pluralize(@quiz.errors.count, "error") %> prohibited
+		  this quiz from being saved:</h2>
+		<ul>
+		<% @quiz.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+	<% end %>
+	
+	<%= f.input :level, input_html: { min: 1, max: 10 } %>
+		
+	<!-- parte del form per l'aggiunta degli animali -->
+	
+	<div id="quiz_rows">
+	  <fieldset> 			
+		<%= f.simple_fields_for :quiz_rows do |quizRow| %>			
+			<%= quizRow.association :animal, as: :select, include_blank: "Seleziona un animale" %>												  
+		<% end %>				  	  
+	  </fieldset>
+	</div>
+	
+	<%= f.button :submit %>
+	<%= f.button :button, "Reset", name: "reset", id: "quizform_reset_button", type: "reset" %>
+<% end %>
+
+<%= link_to "Torna a Gestione", quizzes_path %>
