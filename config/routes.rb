@@ -63,9 +63,14 @@ IndovinaZOO::Application.routes.draw do
   get "ranks/top5"
          
   resources :animals
+  
   resources :quizzes
-  
+
   post "/quizzes/select_animal_id"
-  
-  devise_for :admin_users  
+    
+  devise_for :admin_users
+     
+  devise_scope :admin_user do    
+	get "/admin_users/home", to: "admin_users#home", as: "admin_user_home"
+  end  
 end
