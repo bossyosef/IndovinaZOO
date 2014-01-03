@@ -1,19 +1,37 @@
 <h1>Game#quiz</h1>
 <p>Find me in app/views/game/quiz.html.erb</p>
 <script>
-  var to = <%= params[:timeout].to_i*1000 %>;
+  var to = <%= params[:timeout].to_i %>;
+  var id = <%= params[:id] %>;
+  var nq = <%= params[:numeroquiz] %>;
+  var inizio;
+  var fine;
+  
   function inizia()
   {
     //riproduci il verso
-    timerID = setTimeout("timeout()", to)
+    timerID = setTimeout("timeout()", to*1000);
+    inizio = Date.now();
   }
+  
   function scelta(animale)
   {
     clearTimeout(timerID);
+    fine = Date.now();
+    var tempo_trascorso = (fine - inizio)/1000;
     // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     // aggiungi risposta nell'array (prendi il valore di to)
+    var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
+        
+    if (id == nq)
+      var form = document.getElementById('finequiz');
+    else
+      var form = document.getElementById('prossimoquiz');
+    
+    
     quizdopo()
   }
+  
   function timeout
   {
     clearTimeout(timerID);
@@ -21,6 +39,7 @@
     //stampa errore con risposta esatta
     quizdopo();
   }
+  
   function quizdopo
   {
     //mostra bottone per prossimo quiz o bottone per risultato
@@ -37,23 +56,13 @@
 <p>Quiz <%= params[:id] %></p>
 
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
-  <% params[:numeroquiz].to_i.times do |id| %>
-    <%= hidden_field_tag "quiz_id_arr[]", params[:quiz_id_arr][id] %>
-    <%= hidden_field_tag "animali_arr[]", params[:animali_arr][id] %>
-    <%= hidden_field_tag "risposte_arr[]", params[:risposte_arr][id] %>
-    <%= hidden_field_tag "punteggi_arr[]", params[:punteggi_arr][id] %>
-  <% end %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
+  <%= hidden_field_tag "iniziato", "sì" %>
+  <%= hidden_field_tag "quiz", "" %>
+  <%= hidden_field_tag "animale", "" %>
 <% end %>
 
 <%= form_tag("/result", name: "finequiz", method: "post") do %>
-  <% params[:numeroquiz].to_i.times do |id| %>
-    <%= hidden_field_tag "quiz_id_arr[]", params[:quiz_id_arr][id] %>
-    <%= hidden_field_tag "animali_arr[]", params[:animali_arr][id] %>
-    <%= hidden_field_tag "risposte_arr[]", params[:risposte_arr][id] %>
-    <%= hidden_field_tag "punteggi_arr[]", params[:punteggi_arr][id] %>
-  <% end %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
-  <%= hidden_field_tag "timeout", params[:timeout] %>
 <% end %>

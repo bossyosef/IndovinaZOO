@@ -6,11 +6,13 @@ class GameController < ApplicationController
   end
 
   def quiz
-	if(params[:quiz_id_arr])
-	  @animale1, @animale2 = Quiz.get_animals_from_id(params[:quiz_id_arr][params[:id].to_i-1])
-	  @verso = Animal.get_cry(params[:animali_arr][params[:id].to_i-1])
+	if(params[:iniziato])
+	  @animale1, @animale2 = Quiz.get_animals_from_id(params[:quiz])
+	  @verso = Animal.get_cry(params[:animale])
 	else
 	  @quiz_id_arr, @animali_arr, @risposte_arr, @punteggi_arr = Quiz.random_quiz_array(params[:numeroquiz])
+	  @animale1, @animale2 = Quiz.get_animals_from_id(@quiz_id_arr[0])
+	  @verso = Animal.get_cry(@animali_arr[0])
 	end
   end
 
