@@ -2,18 +2,31 @@
 <p>Find me in app/views/game/quiz.html.erb</p>
 <script>
   var to = <%= params[:timeout].to_i*1000 %>;
+  var id = <%= params[:id] %>;
+  var nq = <%= params[:numeroquiz] %>;
+  
   function inizia()
   {
     //riproduci il verso
     timerID = setTimeout("timeout()", to)
   }
+  
   function scelta(animale)
   {
     clearTimeout(timerID);
     // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     // aggiungi risposta nell'array (prendi il valore di to)
+    var punteggio = Math.ceil(10 - (to/<%= params[:timeout] %>)*10);
+        
+    if (id == nq)
+      var form = document.getElementById('finequiz');
+    else
+      var form = document.getElementById('prossimoquiz');
+    
+    
     quizdopo()
   }
+  
   function timeout
   {
     clearTimeout(timerID);
@@ -21,6 +34,7 @@
     //stampa errore con risposta esatta
     quizdopo();
   }
+  
   function quizdopo
   {
     //mostra bottone per prossimo quiz o bottone per risultato
