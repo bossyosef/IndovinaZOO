@@ -22,7 +22,7 @@ class Animal < ActiveRecord::Base
 	#metodi pubblici
 	
 	def self.get_cry(animale)
-	  where(name: animale).cry
+	  where(name: animale).first.cry
 	end	
 	
 	private
