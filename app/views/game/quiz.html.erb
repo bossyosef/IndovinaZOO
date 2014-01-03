@@ -1,22 +1,27 @@
 <h1>Game#quiz</h1>
 <p>Find me in app/views/game/quiz.html.erb</p>
 <script>
-  var to = <%= params[:timeout].to_i*1000 %>;
+  var to = <%= params[:timeout].to_i %>;
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
+  var inizio;
+  var fine;
   
   function inizia()
   {
     //riproduci il verso
-    timerID = setTimeout("timeout()", to)
+    timerID = setTimeout("timeout()", to*1000);
+    inizio = Date.now();
   }
   
   function scelta(animale)
   {
     clearTimeout(timerID);
+    fine = Date.now();
+    var tempo_trascorso = (fine - inizio)/1000;
     // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     // aggiungi risposta nell'array (prendi il valore di to)
-    var punteggio = Math.ceil(10 - (to/<%= params[:timeout] %>)*10);
+    var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
         
     if (id == nq)
       var form = document.getElementById('finequiz');
@@ -53,9 +58,11 @@
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
+  <%= hidden_field_tag "iniziato", "sì" %>
+  <%= hidden_field_tag "quiz", "" %>
+  <%= hidden_field_tag "animale", "" %>
 <% end %>
 
 <%= form_tag("/result", name: "finequiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
-  <%= hidden_field_tag "timeout", params[:timeout] %>
 <% end %>
