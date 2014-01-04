@@ -25,6 +25,12 @@ class Animal < ActiveRecord::Base
 	  where(name: animale).first.cry
 	end	
 	
+	def self.get_index_page_errors
+		if Animal.count == 0
+			"Nessun animale trovato."
+		end
+	end
+	
 	private
 	def image_size_validation
 		errors[:image] << "Il file deve essere più piccolo di 5 MB." if image.size > 5.megabytes

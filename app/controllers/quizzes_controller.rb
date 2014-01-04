@@ -4,7 +4,7 @@ class QuizzesController < ApplicationController
 	before_action :authenticate_admin_user!, except: [:show, :index]
 
 def index
-	@quizzes = Quiz.all
+	@quizzes = Quiz.all		
 end
 
 def show
