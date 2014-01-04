@@ -67,10 +67,11 @@ IndovinaZOO::Application.routes.draw do
   resources :quizzes
 
   post "/quizzes/select_animal_id"
-    
-  devise_for :admin_users
-     
-  devise_scope :admin_user do    
-	get "/admin_users/home", to: "admin_users#home", as: "admin_user_home"
+   
+  devise_for :admin_users, controllers: { sessions: "admin_users/sessions" }
+  
+  devise_scope :admin_user do
+	get "/admin_users/home", to: "admin_users/sessions#home", as: "admin_user_session_home"
   end  
+        
 end
