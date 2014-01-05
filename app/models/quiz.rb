@@ -8,16 +8,16 @@ class Quiz < ActiveRecord::Base
 									}
 		
 	#associazioni
-	has_many :quiz_rows, dependent: :destroy, inverse_of: :quiz
+	has_many :quiz_rows, dependent: :destroy
 	has_many :animals, through: :quiz_rows
-	accepts_nested_attributes_for :quiz_rows, reject_if: :quiz_row_invalid
+	accepts_nested_attributes_for :quiz_rows
 	
 	#metodi pubblici per il gioco
 	
 	def random_animal
 		animals.sample
 	end
-
+		
 	def self.get_animals_from_id(idquiz)
 		animal1 = find(idquiz).animals.first
 		animal2 = find(idquiz).animals.last
@@ -41,11 +41,18 @@ class Quiz < ActiveRecord::Base
 		return quiz_id_arr, animal_arr, answer_arr, score_arr
 	end
 	
-	#metodi privati
-	
-	private
-	
-	def quiz_row_invalid(attributes)
-		attributes['animal_id'] =~ /^$/
+	#metodi pubblici per la creazione dei quiz
+	def self.get_index_page_errors
+		if !Animal.any?
+			"Nessun animale trovato per creare nuovi quiz."
+		elsif Animal.count < 2
+			"Devi creare almeno un altro animale."		
+		elsif !Quiz.any?
+			"Nessun quiz trovato."
+		end
 	end
+	
+	def self.current_animals_count
+		Animal.count
+	end		
 end
