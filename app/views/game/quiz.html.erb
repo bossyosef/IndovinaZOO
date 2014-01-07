@@ -21,26 +21,75 @@
         
         openrequest.onupgradeneeded = function(ev)
         {
-          var store = db.createObjectStore("quizzes", {keyPath: "number", autoIncrement: true});
+          var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
-          store.put({quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
+          store.put({number: <%= id+1 %> quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
           <% end %>
+          db.close();
         }
+        
+        openrequest.onsuccess = function(eve)
+        {
+          db.close();
+        }
+        
+        openrequest.onerror = function(even)
+        {
+          db.close();
+        }
+      }
+      
+      deleterequest.onerror = function(event)
+      {
+        db.close();
       }
     }
   },false);
   
-  function storeQuiz(i,qid,a1,a2,sl,ur,s)
+  function storeQuiz(i,a1,a2,ur,s)
   {
     var request = indexedDB.open("game",id);
     console.log("db aperto.");
     
-    request.onupgradeneeded = function(e) 
+    request.onsuccess = function(e) 
+    {
+      var db = request.result;
+      if(id == 1)
+      {
+        var tx = db.transaction("game","readwrite");
+        var store = tx.objectStore("quizzes");
+        store.get(1).onsuccess = function (ev)
+        {
+          var risultati = ev.target.result;
+          risultati.animal1 = a1;
+          risultati.animal2 = a2;
+          risultati.user_response = ur;
+          risultati.score = s;
+          var putresult = store.put(risultati);
+        }
+      }
+      db.close();
+    }
+    
+    request.onupgradeneeded = function(e)
     {
       var db = request.result;
       var tx = db.transaction("game","readwrite");
       var store = tx.objectStore("quizzes");
-      store.put({number: i, animal1: a1, animal2: a2, solution: sl, user_response: ur, score: s});
+      store.get(id).onsuccess = function (ev)
+      {
+        var risultati = ev.target.result;
+        risultati.animal1 = a1;
+        risultati.animal2 = a2;
+        risultati.user_response = ur;
+        risultati.score = s;
+        var putresult = store.put(risultati);
+      }
+    }
+    
+    request.onerror = function (e)
+    {
+      db.close();
     }
   }
   
