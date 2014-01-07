@@ -22,7 +22,7 @@
         openrequest.onupgradeneeded = function(ev)
         {
           var store = db.createObjectStore("quizzes", {keyPath: "number", autoIncrement: true});
-          <% params[:numeroquiz].to_i.times do %>
+          <% params[:numeroquiz].to_i.times do |id| %>
           store.put({quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
           <% end %>
         }
