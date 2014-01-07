@@ -7,6 +7,40 @@
   var inizio;
   var fine;
   
+  document.addEventListener("DOMContentLoaded", function()
+  {
+    if (id == 1)
+    {
+      var deleterequest = indexedDB.deleteDatabase("game");
+      console.log("db cancellato");
+      
+      deleterequest.onsuccess = function(e)
+      {
+        var openrequest = indexedDB.open("game",id);
+        console.log("db aperto.");
+        
+        openrequest.onupgradeneeded = function(ev)
+        {
+          var store = db.createObjectStore("quizzes", {keyPath: "number"});
+        }
+      }
+    }
+  },false);
+  
+  function storeQuiz(i,qid,a1,a2,sl,ur,s)
+  {
+    var request = indexedDB.open("game",id);
+    console.log("db aperto.");
+    
+    request.onupgradeneeded = function(e) 
+    {
+      var db = request.result;
+      var tx = db.transaction("game","readwrite");
+      var store = tx.objectStore("quizzes");
+      store.put({number: i, animal1: a1, animal2: a2, solution: sl, user_response: ur, score: s});
+    }
+  }
+  
   function inizia()
   {
     //riproduci il verso
@@ -22,12 +56,6 @@
     // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     // aggiungi risposta nell'array
     var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
-        
-    if (id == nq)
-      var form = document.getElementById('finequiz');
-    else
-      var form = document.getElementById('prossimoquiz');
-    
     
     quizdopo()
   }
@@ -42,7 +70,12 @@
   
   function quizdopo
   {
-    //mostra bottone per prossimo quiz o bottone per risultato
+    if (id == nq)
+      var form = document.getElementById("prossimoquiz");
+    else
+      var form = document.getElementById("finequiz");
+    
+    form.parentNode.removeChild(form);
   }
 </script>
 
