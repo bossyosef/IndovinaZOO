@@ -4,8 +4,6 @@
   var to = <%= params[:timeout].to_i %>;
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
-  var animale1 = <%= @animale1.name %>;
-  var animale2 = <%= @animale2.name %>;
   var inizio;
   var fine;
   
@@ -114,7 +112,7 @@
     var tempo_trascorso = (fine - inizio)/1000;
     var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
     
-    storeQuiz(animale1,animale2,animale,punteggio);
+    storeQuiz("<%= @animale1.name %>","<%= @animale2.name %>",animale,punteggio);
     //se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     quizdopo()
   }
@@ -122,7 +120,7 @@
   function timeout()
   {
     clearTimeout(timerID);
-    storeQuiz(animale1,animale2,"",0);
+    storeQuiz("<%= @animale1.name %>","<%= @animale2.name %>","",0);
     //stampa errore con risposta esatta
     quizdopo();
   }
