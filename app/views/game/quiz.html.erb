@@ -4,6 +4,8 @@
   var to = <%= params[:timeout].to_i %>;
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
+  var animale1 = <%= @animale1.name %>;
+  var animale2 = <%= @animale2.name %>;
   var inizio;
   var fine;
   
@@ -107,19 +109,20 @@
   function scelta(animale)
   {
     clearTimeout(timerID);
+    
     fine = Date.now();
     var tempo_trascorso = (fine - inizio)/1000;
-    // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
-    // aggiungi risposta nell'array
     var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
     
+    storeQuiz(animale1,animale2,animale,punteggio);
+    //se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     quizdopo()
   }
   
   function timeout
   {
     clearTimeout(timerID);
-    //inserire valore 0 per la risposta
+    storeQuiz(animale1,animale2,"",0);
     //stampa errore con risposta esatta
     quizdopo();
   }
