@@ -24,7 +24,6 @@
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
           store.put({number: "#{id}", quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
-          <%= hidden_field_tag "punteggi_arr[]", params[:punteggi_arr][id] %>
           <% end %>
         }
       }
