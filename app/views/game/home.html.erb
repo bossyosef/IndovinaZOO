@@ -1,17 +1,16 @@
 <h1>IndovinaZOO 1.0</h1>
 
 <script>
-  var idbSupported = false;
   document.addEventListener("DOMContentLoaded", function()
   {
     if("indexedDB" in window) 
     {
-        idbSupported = true;
-        //mostra la form
+        var div = document.getElementById("cambio_browser");
+        div.parentNode.removeChild(div);
     } else 
     {
-        console.log("Fucking HTML5...");
-        //mostra frase che dice di cambiare browser
+        var div = document.getElementById("mostra_gioco");
+        div.parentNode.removeChild(div);
     }
   },false);
 
@@ -27,7 +26,7 @@
 </div>
 
 <div id="cambio_browser" >
-  Ci dispiace, ma il browser corrente non è adatto all'esecuzione di IndovinaZOO, noi ti consigliamo Chrom{ium,e}.
+  Ci dispiace, ma il browser corrente non è adatto all'esecuzione di IndovinaZOO, noi ti consigliamo Chromium, Google Chrome o Mozilla Firefox.
 </div>
 
 <%= link_to "Guarda gli animali!", animals_path %>
