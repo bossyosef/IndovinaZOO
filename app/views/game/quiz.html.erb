@@ -18,11 +18,12 @@
       {
         var openrequest = indexedDB.open("game",id);
         console.log("db aperto.");
-        var db = openrequest.result;
+        
         
         openrequest.onupgradeneeded = function(ev)
         {
           console.log("entrato upgradeneeded");
+          var db = openrequest.result;
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
           store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
@@ -33,20 +34,17 @@
         openrequest.onsuccess = function(eve)
         {
           console.log("entrato on success");
-          db.close();
         }
         
         openrequest.onerror = function(even)
         {
           console.log("entrato onerror");
-          db.close();
         }
       }
       
       deleterequest.onerror = function(event)
       {
         console.log("entrato onerror delete");
-        db.close();
       }
     }
   },false);
@@ -90,11 +88,11 @@
         risultati.score = s;
         var putresult = store.put(risultati);
       }
+      db.close();
     }
     
     request.onerror = function (e)
     {
-      db.close();
     }
   }
   
