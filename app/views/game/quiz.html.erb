@@ -22,7 +22,7 @@
         openrequest.onupgradeneeded = function(ev)
         {
           console.log("entrato onupgradeneeded");
-          var db = openrequest.result;
+          var db = ev.target.result;
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
           store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
@@ -33,8 +33,8 @@
         openrequest.onsuccess = function(eve)
         {
           console.log("entrato on success");
-          var db = openrequest.result;
-          var tx = db.transaction("game","readwrite");
+          var db = eve.target.result;
+          var tx = db.transaction(["game"],"readwrite");
           var store = tx.objectStore("quizzes");
           store.get(id).onsuccess = function (e)
           {
@@ -65,11 +65,11 @@
     
     request.onsuccess = function(e) 
     {
-      var db = request.result;
+      var db = e.target.result;
       if(id == 1)
       {
         console.log("entrato onsuccess.");
-        var tx = db.transaction("game","readwrite");
+        var tx = db.transaction(["game"],"readwrite");
         var store = tx.objectStore("quizzes");
         store.get(1).onsuccess = function (ev)
         {
@@ -87,8 +87,8 @@
     request.onupgradeneeded = function(e)
     {
       console.log("entrato onupgradeneeded.");
-      var db = request.result;
-      var tx = db.transaction("game","readwrite");
+      var db = e.target.result;
+      var tx = db.transaction(["game"],"readwrite");
       var store = tx.objectStore("quizzes");
       store.get(id).onsuccess = function (ev)
       {
