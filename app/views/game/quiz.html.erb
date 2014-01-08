@@ -48,12 +48,14 @@
         openrequest.onerror = function(even)
         {
           console.log("entrato onerror");
+          console.log(openrequest.errorCode);
         }
       }
       
       deleterequest.onerror = function(event)
       {
         console.log("entrato onerror delete");
+        console.log(deleterequest.errorCode);
       }
     }
   },false);
@@ -105,6 +107,7 @@
     request.onerror = function (e)
     {
       console.log("entrato onerror.");
+      console.log(request.errorCode);
     }
   }
   
