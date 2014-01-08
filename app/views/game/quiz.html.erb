@@ -18,6 +18,7 @@
       {
         var openrequest = indexedDB.open("game",id);
         console.log("db aperto.");
+        var db = openrequest.result;
         
         openrequest.onupgradeneeded = function(ev)
         {
