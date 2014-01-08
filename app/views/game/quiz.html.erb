@@ -4,8 +4,7 @@
   var to = <%= params[:timeout].to_i %>;
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
-  var inizio;
-  var fine;
+  var risposta_corretta;
   
   document.addEventListener("DOMContentLoaded", function()
   {
@@ -34,6 +33,15 @@
         openrequest.onsuccess = function(eve)
         {
           console.log("entrato on success");
+          var db = openrequest.result;
+          var tx = db.transaction("game","readwrite");
+          var store = tx.objectStore("quizzes");
+          store.get(id).onsuccess = function (e)
+          {
+            var risultati = e.target.result;
+            risposta_corretta = risultati.solution;
+          }
+          db.close();
         }
         
         openrequest.onerror = function(even)
@@ -59,6 +67,7 @@
       var db = request.result;
       if(id == 1)
       {
+        console.log("entrato onsuccess.");
         var tx = db.transaction("game","readwrite");
         var store = tx.objectStore("quizzes");
         store.get(1).onsuccess = function (ev)
@@ -76,6 +85,7 @@
     
     request.onupgradeneeded = function(e)
     {
+      console.log("entrato onupgradeneeded.");
       var db = request.result;
       var tx = db.transaction("game","readwrite");
       var store = tx.objectStore("quizzes");
@@ -93,34 +103,48 @@
     
     request.onerror = function (e)
     {
+      console.log("entrato onerror.");
     }
+  }
+  
+  function update()
+  {
+    var valore = to - 1;
+    if (valore != 0)
+      document.getElementById("risultato").innerHTML = valore;
+    else
+      timeout();
   }
   
   function inizia()
   {
-    //riproduci il verso
-    timerID = setTimeout("timeout()", to*1000);
-    inizio = Date.now();
+    var audio = document.getElementById("inizia");
+    audio.play();
+    timerID = setInterval("update()", 1000);
   }
   
   function scelta(animale)
   {
-    clearTimeout(timerID);
+    clearInterval(timerID);
+    audioElement.pause();
     
-    fine = Date.now();
-    var tempo_trascorso = (fine - inizio)/1000;
-    var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
-    
+    if (animale == risposta_corretta)
+    {
+      var punteggio = Math.ceil(10 - (to/<%= params[:timeout].to_i %>)*10);
+      document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
+    } else
+    {
+      var punteggio = 0;
+      document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+    }
     storeQuiz("<%= @animale1.name %>","<%= @animale2.name %>",animale,punteggio);
-    //se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
     quizdopo()
   }
   
   function timeout()
   {
-    clearTimeout(timerID);
+    document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
     storeQuiz("<%= @animale1.name %>","<%= @animale2.name %>","",0);
-    //stampa errore con risposta esatta
     quizdopo();
   }
   
@@ -139,8 +163,10 @@
 
 <%= audio_tag @verso, preload: "auto", id: "verso" %>
 
-<%= image_tag @animale1.image, alt: @animale1.name %>
-<%= image_tag @animale2.image, alt: @animale2.name %>
+<%= image_tag @animale1.image, title: @animale1.name, onclick: "scelta(#{@animale1.name})" %>
+<%= image_tag @animale2.image, title: @animale2.name, onclick: "scelta(#{@animale2.name})" %>
+
+<div id="risultato" ><%= params[:timeout].to_i %></div>
 
 <p>Quiz <%= params[:id] %></p>
 
@@ -150,8 +176,11 @@
   <%= hidden_field_tag "iniziato", "sì" %>
   <%= hidden_field_tag "quiz", "" %>
   <%= hidden_field_tag "animale", "" %>
+  <%= submit_tag "Prossimo Quiz", style: "display:none"  %>
 <% end %>
 
 <%= form_tag("/result", name: "finequiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
+  <%= hidden_field_tag "timeout", params[:timeout] %>
+  <%= submit_tag "Guarda il resoconto!", style: "display:none" %>
 <% end %>
