@@ -21,13 +21,13 @@
         
         openrequest.onupgradeneeded = function(ev)
         {
-          console.log("entrato upgradeneeded");
+          console.log("entrato onupgradeneeded");
           var db = openrequest.result;
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
           store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "", animal2: "", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
           <% end %>
-          db.close();
+          console.log("uscito onupgradeneeded");
         }
         
         openrequest.onsuccess = function(eve)
@@ -42,6 +42,7 @@
             risposta_corretta = risultati.solution;
           }
           db.close();
+          console.log("uscito onsuccess");
         }
         
         openrequest.onerror = function(even)
