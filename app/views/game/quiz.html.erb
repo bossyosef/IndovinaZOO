@@ -130,7 +130,8 @@
   function scelta(animale)
   {
     clearInterval(timerID);
-    audioElement.pause();
+    var audioe = document.getElementById("inizia");
+    audioe.pause();
     
     if (animale == risposta_corretta)
     {
