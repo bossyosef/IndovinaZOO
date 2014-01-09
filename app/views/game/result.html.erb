@@ -1,2 +1,33 @@
 <h1>Game#result</h1>
 <p>Find me in app/views/game/result.html.erb</p>
+<script>
+	document.addEventListener("DOMContentLoaded", function()
+  {
+    var openrequest = indexedDB.open("game");
+    console.log("db aperto");
+
+    openrequest.onupgradeneeded = function(event) 
+		{
+      console.log("entrato onupgradeneeded");
+      var db = event.target.result;
+      var objectStore = db.transaction("quizzes").objectStore("quizzes");
+
+      var quizzes = [];
+
+      objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          quizzes.push(cursor.value);
+          cursor.continue();
+        }
+        else {
+          console.log("scaricati tutti i quiz");
+        }
+      }
+    }
+  }
+
+//quizzes.displayArrayAsTable();
+
+	
+</script>
