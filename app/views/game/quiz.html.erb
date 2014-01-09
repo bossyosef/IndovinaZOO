@@ -161,7 +161,7 @@
     
     if (animale == risposta_corretta)
     {
-      var punteggio = Math.ceil(10 - (to/<%= params[:timeout].to_i %>)*10);
+      var punteggio = Math.ceil((to/<%= params[:timeout].to_i %>)*10);
       document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
     } else
     {
