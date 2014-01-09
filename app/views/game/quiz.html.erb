@@ -58,6 +58,25 @@
         console.log("entrato onerror delete");
         console.log(deleterequest.errorCode);
       }
+    } else
+    {
+      var openrequest = indexedDB.open("game",id);
+      console.log("db aperto.");
+      
+      openrequest.onupgradeneeded = function(ev)
+      {
+        console.log("entrato on success");
+        var db = eve.target.result;
+        var tx = db.transaction(["game"],"readwrite");
+        var store = tx.objectStore("quizzes");
+        store.get(id).onsuccess = function (e)
+        {
+          var risultati = e.target.result;
+          risposta_corretta = risultati.solution;
+        }
+        db.close();
+        console.log("uscito onsuccess");
+      }
     }
   },false);
   
