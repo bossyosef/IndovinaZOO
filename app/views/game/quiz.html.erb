@@ -33,7 +33,9 @@
           var db = eve.target.result;
           var tx = db.transaction(["quizzes"],"readonly");
           var store = tx.objectStore("quizzes");
-          store.get(id).onsuccess = function (e)
+          var getrequest = store.get(id);
+          
+          getrequest.onsuccess = function (e)
           {
             var risultati = e.target.result;
             risposta_corretta = risultati.solution;
@@ -51,7 +53,9 @@
           var db = eve.target.result;
           var tx = db.transaction(["quizzes"],"readonly");
           var store = tx.objectStore("quizzes");
-          store.get(id).onsuccess = function (e)
+          var getrequest = store.get(id);
+          
+          getrequest.onsuccess = function (e)
           {
             var risultati = e.target.result;
             risposta_corretta = risultati.solution;
@@ -92,7 +96,9 @@
         console.log("entrato onsuccess.");
         var tx = db.transaction(["quizzes"],"readwrite");
         var store = tx.objectStore("quizzes");
-        store.get(1).onsuccess = function (ev)
+        var getrequest = store.get(1);
+        
+        getrequest.onsuccess = function (ev)
         {
           var risultati = ev.target.result;
           risultati.user_response = ur;
@@ -109,7 +115,9 @@
       var db = e.target.result;
       var tx = db.transaction(["quizzes"],"readwrite");
       var store = tx.objectStore("quizzes");
-      store.get(id).onsuccess = function (ev)
+      var getrequest = store.get(id);
+      
+      getrequest.onsuccess = function (ev)
       {
         var risultati = ev.target.result;
         risultati.user_response = ur;
