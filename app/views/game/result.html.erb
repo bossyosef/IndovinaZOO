@@ -14,7 +14,8 @@
 
       var quizzes = [];
 
-      objectStore.openCursor().onsuccess = function(event) {
+      var cursorRequest = objectStore.openCursor()
+      cursorRequest.onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
           quizzes.push(cursor.value);
@@ -27,7 +28,39 @@
     }
   }
 
-//quizzes.displayArrayAsTable();
+  function quizResult_create (animal1, animal2, score) 
+  {
+    var quizContainer = document.createElement('div');
+    //eventualmente aggiungere altri attributi tipo class
+    quizContainer.appendChild(img_create(animal1));
+    quizContainer.appendChild(img_create(animal2));
+    quizContainer.write(score);
+  }
+
+	function img_create(src) 
+  {
+		  var img = document.createElement('img');
+		  img.src = src;
+		  if (alt! = null) img.alt = getAnimalName(src);
+		  if (title! = null) img.title = getAnimalName(src);
+		  return img;
+	}
+
+  function getAnimalName (fullPath) 
+  {
+    filename = fullPath.replace(/^.*[\\\/]/, '');
+    name = filename.split(".")[0];
+    return name;
+  }
+
+  function insertQuizzesToHTML() {
+    document.createElement("div"); //External container
+    for (i=0; i<quizzes.length; i++) {
+      quizResult_create(quizzes[i].animal1, quizzes[i].animal2, quizzes[i].score);
+    }
+  }
+
+
 
 	
 </script>
