@@ -136,8 +136,8 @@
   
   function update()
   {
-    var valore = to - 1;
-    if (valore != 0)
+    to = to - 1;
+    if (to != 0)
       document.getElementById("risultato").innerHTML = valore;
     else
       timeout();
