@@ -193,7 +193,7 @@
         var db = eve.target.result;
         var tx = db.transaction(["quizzes"],"readonly");
         var store = tx.objectStore("quizzes");
-        var getrequest = store.get(id);
+        var getrequest = store.get(id+1);
           
         getrequest.onsuccess = function (e)
         {
