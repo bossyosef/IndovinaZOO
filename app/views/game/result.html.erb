@@ -6,8 +6,8 @@
     var openrequest = indexedDB.open("game");
     console.log("db aperto");
 
-    openrequest.onupgradeneeded = function(event) 
-		{
+    openrequest.onsuccess = function(event) 
+    {
       console.log("entrato onupgradeneeded");
       var db = event.target.result;
       var objectStore = db.transaction("quizzes").objectStore("quizzes");
