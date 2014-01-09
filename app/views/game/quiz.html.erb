@@ -31,7 +31,7 @@
         } else
         {
           var db = eve.target.result;
-          var tx = db.transaction(["game"],"readonly");
+          var tx = db.transaction(["quizzes"],"readonly");
           var store = tx.objectStore("quizzes");
           store.get(id).onsuccess = function (e)
           {
@@ -49,7 +49,7 @@
         if (id == 1)
         {
           var db = eve.target.result;
-          var tx = db.transaction(["game"],"readonly");
+          var tx = db.transaction(["quizzes"],"readonly");
           var store = tx.objectStore("quizzes");
           store.get(id).onsuccess = function (e)
           {
@@ -90,7 +90,7 @@
       if(id == 1)
       {
         console.log("entrato onsuccess.");
-        var tx = db.transaction(["game"],"readwrite");
+        var tx = db.transaction(["quizzes"],"readwrite");
         var store = tx.objectStore("quizzes");
         store.get(1).onsuccess = function (ev)
         {
@@ -107,7 +107,7 @@
     {
       console.log("entrato onupgradeneeded.");
       var db = e.target.result;
-      var tx = db.transaction(["game"],"readwrite");
+      var tx = db.transaction(["quizzes"],"readwrite");
       var store = tx.objectStore("quizzes");
       store.get(id).onsuccess = function (ev)
       {
