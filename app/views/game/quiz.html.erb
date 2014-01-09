@@ -35,7 +35,7 @@
         {
           console.log("entrato on success");
           var db = eve.target.result;
-          var tx = db.transaction(["game"],"readwrite");
+          var tx = db.transaction(["game"],"readonly");
           var store = tx.objectStore("quizzes");
           store.get(id).onsuccess = function (e)
           {
@@ -65,9 +65,9 @@
       
       openrequest.onupgradeneeded = function(ev)
       {
-        console.log("entrato on success");
+      console.log("entrato on success");
         var db = eve.target.result;
-        var tx = db.transaction(["game"],"readwrite");
+        var tx = db.transaction(["game"],"readonly");
         var store = tx.objectStore("quizzes");
         store.get(id).onsuccess = function (e)
         {
