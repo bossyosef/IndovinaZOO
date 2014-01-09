@@ -179,12 +179,13 @@
   
   function quizdopo()
   {
+    var tag;
     if (id == nq)
-      var form = document.getElementById("prossimoquiz");
+      tag = document.getElementById("prossimoquiztag");
     else
-      var form = document.getElementById("finequiz");
+      tag = document.getElementById("finequiztag");
     
-    form.parentNode.removeChild(form);
+    tag.style.display = "inline";
   }
 </script>
 
@@ -205,11 +206,11 @@
   <%= hidden_field_tag "iniziato", "sì" %>
   <%= hidden_field_tag "quiz", "" %>
   <%= hidden_field_tag "animale", "" %>
-  <%= submit_tag "Prossimo Quiz", style: "display:none"  %>
+  <%= submit_tag "Prossimo Quiz", style: "display:none", id: "prossimoquiztag" %>
 <% end %>
 
 <%= form_tag("/result", name: "finequiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
-  <%= submit_tag "Guarda il resoconto!", style: "display:none" %>
+  <%= submit_tag "Guarda il resoconto!", style: "display:none", id: "finequiztag" %>
 <% end %>
