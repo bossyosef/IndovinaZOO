@@ -181,7 +181,9 @@
   function quizdopo()
   {
     var tag;
-    if (id == nq)
+    if ((id == nq) || (id == 1))
+      tag = document.getElementById("finequiztag");
+    else
     {
       var openrequest = indexedDB.open("game",id);
       console.log("db aperto.");
@@ -205,8 +207,6 @@
       }
       tag = document.getElementById("prossimoquiztag");
     }
-    else
-      tag = document.getElementById("finequiztag");
     
     tag.style.display = "inline";
   }
