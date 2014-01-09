@@ -1,14 +1,11 @@
 <h1>Gestione quiz</h1>
+
+	<div id="quiz_error_message">
+		<strong><%= Quiz.get_index_page_errors %></strong>
+	</div>
 	
-<% if !(Animal.any?) %>
-	<div id="no_animal_found_message">
-		<strong>Nessun animale trovato per creare nuovi quiz.</strong>
-	</div>
-<% elsif !(Quiz.any?) %>	
-	<div id="no_quiz_found_message">
-		<strong>Nessun quiz trovato.</strong>		
-	</div>
-<% else %>	
+	<br />
+	
 	<table>
 		<tr>
 			<th>ID</th>
@@ -32,9 +29,10 @@
 		<% end %>
 	</table>
 	
-	<br />
+<br />
 
-	<%= link_to "New Quiz", new_quiz_path %>
+<% if Quiz.current_animals_count > 1 %>
+	<%= link_to "New Quiz", new_quiz_path %><br/>
 <% end %>
 
 <%= link_to "Torna a Home", root_path %>

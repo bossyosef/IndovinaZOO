@@ -8,7 +8,7 @@
 
 <% if admin_user_signed_in? %>
 	Loggato come <strong><%= current_admin_user.username %></strong>.
-	<%= link_to "Opzioni amministratore", admin_user_home_path, class: "loginbar-link" %> |
+	<%= link_to "Opzioni amministratore", admin_user_session_home_path, class: "loginbar-link" %> |
 	<%= link_to "Modifica profilo", edit_admin_user_registration_path, class: "loginbar-link" %> |
 	<%= link_to "Logout", destroy_admin_user_session_path, method: :delete, class: "loginbar-link" %>
 <% else %>

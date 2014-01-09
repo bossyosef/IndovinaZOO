@@ -1,6 +1,11 @@
 <h1>Gestione animali</h1>
 
-<% if Animal.any? %>
+<div id="no_animal_found">
+		<strong><%= Animal.get_index_page_errors %></strong>
+</div>
+
+<br />
+
 	<table id="animals">
 		<tr>
 			<th>Name</th>
@@ -10,12 +15,7 @@
 	
 		<%= render @animals %>	
 	</table>
-<% else %>
-	<div id="no_animal_found">
-		<strong>Nessun animale trovato.</strong>
-	</div>
-<% end %>
-
+	
 <br />
 
 <%= render 'new_animal_ajax_links' %>

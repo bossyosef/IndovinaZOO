@@ -4,45 +4,211 @@
   var to = <%= params[:timeout].to_i %>;
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
-  var inizio;
-  var fine;
+  var risposta_corretta;
+  var nextquiz;
+  var nextsolution;
+  var timerID;
+  
+  document.addEventListener("DOMContentLoaded", function()
+  {
+    var deleterequest = indexedDB.deleteDatabase("game");
+    console.log("db cancellato");
+    
+    deleterequest.onsuccess = function(e)
+    {
+      var openrequest = indexedDB.open("game",id);
+      console.log("db aperto.");
+      
+      openrequest.onupgradeneeded = function(ev)
+      {
+        console.log("entrato onupgradeneeded");
+        if (id == 1)
+        {
+          var db = ev.target.result;
+          var store = db.createObjectStore("quizzes", {keyPath: "number"});
+          <% params[:numeroquiz].to_i.times do |id| %>
+          store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_arr[id].id %>", animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
+          <% end %>
+        } else
+        {
+          var db = eve.target.result;
+          var tx = db.transaction(["quizzes"],"readonly");
+          var store = tx.objectStore("quizzes");
+          var getrequest = store.get(id);
+          
+          getrequest.onsuccess = function (e)
+          {
+            var risultati = e.target.result;
+            risposta_corretta = risultati.solution;
+          }
+          db.close();
+        }
+        console.log("uscito onupgradeneeded");
+      }
+      
+      openrequest.onsuccess = function(eve)
+      {
+        console.log("entrato on success");
+        if (id == 1)
+        {
+          var db = eve.target.result;
+          var tx = db.transaction(["quizzes"],"readonly");
+          var store = tx.objectStore("quizzes");
+          var getrequest = store.get(id);
+          
+          getrequest.onsuccess = function (e)
+          {
+            var risultati = e.target.result;
+            risposta_corretta = risultati.solution;
+          }
+          db.close();
+        } else
+        {
+          var db = eve.target.result;
+          db.close();
+        }
+        console.log("uscito onsuccess");
+      }
+      
+      openrequest.onerror = function(even)
+      {
+        console.log("entrato onerror");
+        console.log(openrequest.errorCode);
+      }
+    }
+     
+    deleterequest.onerror = function(event)
+    {
+      console.log("entrato onerror delete");
+      console.log(deleterequest.errorCode);
+    }
+  },false);
+  
+  function storeQuiz(ur,s)
+  {
+    var request = indexedDB.open("game",id);
+    console.log("db aperto.");
+    
+    request.onsuccess = function(e) 
+    {
+      var db = e.target.result;
+      if(id == 1)
+      {
+        console.log("entrato onsuccess.");
+        var tx = db.transaction(["quizzes"],"readwrite");
+        var store = tx.objectStore("quizzes");
+        var getrequest = store.get(1);
+        
+        getrequest.onsuccess = function (ev)
+        {
+          var risultati = ev.target.result;
+          risultati.user_response = ur;
+          risultati.score = s;
+          var putresult = store.put(risultati);
+        }
+      }
+      db.close();
+    }
+    
+    request.onupgradeneeded = function(e)
+    {
+      console.log("entrato onupgradeneeded.");
+      var db = e.target.result;
+      var tx = db.transaction(["quizzes"],"readwrite");
+      var store = tx.objectStore("quizzes");
+      var getrequest = store.get(id);
+      
+      getrequest.onsuccess = function (ev)
+      {
+        var risultati = ev.target.result;
+        risultati.user_response = ur;
+        risultati.score = s;
+        var putresult = store.put(risultati);
+      }
+      db.close();
+    }
+    
+    request.onerror = function (e)
+    {
+      console.log("entrato onerror.");
+      console.log(request.errorCode);
+    }
+  }
+  
+  function update()
+  {
+    to = to - 1;
+    if (to != 0)
+      document.getElementById("risultato").innerHTML = to;
+    else
+      timeout();
+  }
   
   function inizia()
   {
-    //riproduci il verso
-    timerID = setTimeout("timeout()", to*1000);
-    inizio = Date.now();
+    var audio = document.getElementById("verso");
+    audio.play();
+    timerID = setInterval("update()", 1000);
   }
   
   function scelta(animale)
   {
-    clearTimeout(timerID);
-    fine = Date.now();
-    var tempo_trascorso = (fine - inizio)/1000;
-    // se la risposta è giusta stampalo, altrimenti stampa anche la risposta esatta
-    // aggiungi risposta nell'array (prendi il valore di to)
-    var punteggio = Math.ceil(10 - (tempo_trascorso/to)*10);
-        
-    if (id == nq)
-      var form = document.getElementById('finequiz');
-    else
-      var form = document.getElementById('prossimoquiz');
+    clearInterval(timerID);
+    var audioe = document.getElementById("inizia");
+    audioe.pause();
     
-    
-    quizdopo()
-  }
-  
-  function timeout
-  {
-    clearTimeout(timerID);
-    //inserire valore 0 per la risposta
-    //stampa errore con risposta esatta
+    if (animale == risposta_corretta)
+    {
+      var punteggio = Math.ceil(10 - (to/<%= params[:timeout].to_i %>)*10);
+      document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
+    } else
+    {
+      var punteggio = 0;
+      document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+    }
+    storeQuiz(animale,punteggio);
     quizdopo();
   }
   
-  function quizdopo
+  function timeout()
   {
-    //mostra bottone per prossimo quiz o bottone per risultato
+    clearInterval(timerID);
+    document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+    storeQuiz("",0);
+    quizdopo();
+  }
+  
+  function quizdopo()
+  {
+    var tag;
+    if ((id == nq) || (nq == 1))
+      tag = document.getElementById("finequiztag");
+    else
+    {
+      var openrequest = indexedDB.open("game",id);
+      console.log("db aperto.");
+      
+      openrequest.onsuccess = function(eve)
+      {
+        var db = eve.target.result;
+        var tx = db.transaction(["quizzes"],"readonly");
+        var store = tx.objectStore("quizzes");
+        var getrequest = store.get(id+1);
+          
+        getrequest.onsuccess = function (e)
+        {
+          var risultati = e.target.result;
+          nextquiz = risultati.quiz_id;
+          nextsolution = risultati.solution;
+          document.getElementById("nextquiztag").value = nextquiz;
+          document.getElementById("nextsolutiontag").value = nextsolution;
+        }
+        db.close();
+      }
+      tag = document.getElementById("prossimoquiztag");
+    }
+    
+    tag.style.display = "inline";
   }
 </script>
 
@@ -50,8 +216,10 @@
 
 <%= audio_tag @verso, preload: "auto", id: "verso" %>
 
-<%= image_tag @animale1.image, alt: @animale1.name %>
-<%= image_tag @animale2.image, alt: @animale2.name %>
+<%= image_tag @animale1.image, title: @animale1.name, onclick: "scelta(#{@animale1.name})" %>
+<%= image_tag @animale2.image, title: @animale2.name, onclick: "scelta(#{@animale2.name})" %>
+
+<div id="risultato" ><%= params[:timeout].to_i %></div>
 
 <p>Quiz <%= params[:id] %></p>
 
@@ -59,10 +227,13 @@
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
   <%= hidden_field_tag "iniziato", "sì" %>
-  <%= hidden_field_tag "quiz", "" %>
-  <%= hidden_field_tag "animale", "" %>
+  <%= hidden_field_tag "quiz", "", id: "nextquiztag" %>
+  <%= hidden_field_tag "animale", "", id: "nextsolutiontag" %>
+  <%= submit_tag "Prossimo Quiz", style: "display:none", id: "prossimoquiztag" %>
 <% end %>
 
 <%= form_tag("/result", name: "finequiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
+  <%= hidden_field_tag "timeout", params[:timeout] %>
+  <%= submit_tag "Guarda il resoconto!", style: "display:none", id: "finequiztag" %>
 <% end %>

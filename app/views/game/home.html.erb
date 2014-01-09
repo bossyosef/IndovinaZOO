@@ -1,10 +1,32 @@
 <h1>IndovinaZOO 1.0</h1>
 
-<%= button_to "Prima imposta le preferenze...", settings_path %>
-<%= form_tag("/quiz/1", method: "post") do %>
-	<%= hidden_field_tag "numeroquiz", "10" %>
-	<%= hidden_field_tag "timeout", "60" %>
-	<%= submit_tag("Gioca adesso!") %>
-<% end %>
+<script>
+  document.addEventListener("DOMContentLoaded", function()
+  {
+    if("indexedDB" in window) 
+    {
+        var div = document.getElementById("cambio_browser");
+        div.parentNode.removeChild(div);
+    } else 
+    {
+        var div = document.getElementById("mostra_gioco");
+        div.parentNode.removeChild(div);
+    }
+  },false);
+
+</script>
+
+<div id="mostra_gioco" >
+  <%= button_to "Prima imposta le preferenze...", settings_path %>
+  <%= form_tag("/quiz/1", method: "post") do %>
+      <%= hidden_field_tag "numeroquiz", "10" %>
+      <%= hidden_field_tag "timeout", "60" %>
+      <%= submit_tag("Gioca adesso!") %>
+  <% end %>
+</div>
+
+<div id="cambio_browser" >
+  Ci dispiace, ma il browser corrente non è adatto all'esecuzione di IndovinaZOO, noi ti consigliamo Chromium, Google Chrome o Mozilla Firefox.
+</div>
 
 <%= link_to "Guarda gli animali!", animals_path %>
