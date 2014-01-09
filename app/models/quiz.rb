@@ -34,11 +34,9 @@ class Quiz < ActiveRecord::Base
 			q1 = quizzes.sample											#scelgo a caso un quiz
 			quiz_id_arr.push(q1.id)									#copio l'id del quiz 
 			animal_arr.push(q1.random_animal.name)	#copio il nome di uno dei due animali scelti a caso
-			answer_arr.push(0)
-			score_arr.push(0)
 			quizzes.delete_if {|q| q.id == q1.id}		
 		end
-		return quiz_id_arr, animal_arr, answer_arr, score_arr
+		return quiz_id_arr, animal_arr
 	end
 	
 	#metodi pubblici per la creazione dei quiz
