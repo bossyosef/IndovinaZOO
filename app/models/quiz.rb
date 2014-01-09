@@ -26,17 +26,15 @@ class Quiz < ActiveRecord::Base
 
 	def self.random_quiz_array(numQuiz)
 		quizzes = self.all
-		quiz_id_arr = [] 
+		quiz_arr = [] 
 		animal_arr = []
-		answer_arr = []
-		score_arr = []
 		numQuiz.to_i.times do
 			q1 = quizzes.sample											#scelgo a caso un quiz
-			quiz_id_arr.push(q1.id)									#copio l'id del quiz 
+			quiz_arr.push(q1)									#copio l'id del quiz 
 			animal_arr.push(q1.random_animal.name)	#copio il nome di uno dei due animali scelti a caso
-			quizzes.delete_if {|q| q.id == q1.id}		
+			quizzes.delete_if {|q| q == q1}		
 		end
-		return quiz_id_arr, animal_arr
+		return quiz_arr, animal_arr
 	end
 	
 	#metodi pubblici per la creazione dei quiz
