@@ -26,7 +26,7 @@
           var db = ev.target.result;
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
-          store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "<%= @quiz_id_arr[id].animals.first.image %>", animal2: "<%= @quiz_id_arr[id].animals.last.image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
+          store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_id_arr[id] %>", animal1: "<%= @quiz_id_arr[id].animals[0].image %>", animal2: "<%= @quiz_id_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
           <% end %>
           console.log("uscito onupgradeneeded");
         }
