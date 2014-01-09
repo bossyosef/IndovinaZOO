@@ -171,6 +171,7 @@
   
   function timeout()
   {
+    clearInterval(timerID);
     document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
     storeQuiz("",0);
     quizdopo();
