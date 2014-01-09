@@ -141,14 +141,14 @@
       var punteggio = 0;
       document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
     }
-    storeQuiz("<%= @animale1.name %>","<%= @animale2.name %>",animale,punteggio);
+    storeQuiz("<%= @animale1.image %>","<%= @animale2.image %>",animale,punteggio);
     quizdopo()
   }
   
   function timeout()
   {
     document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
-    storeQuiz("<%= @animale1.name %>","<%= @animale2.name %>","",0);
+    storeQuiz("<%= @animale1.image %>","<%= @animale2.image %>","",0);
     quizdopo();
   }
   
