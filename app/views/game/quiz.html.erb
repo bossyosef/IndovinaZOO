@@ -5,6 +5,8 @@
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
   var risposta_corretta;
+  var nextquiz;
+  var nextsolution;
   var timerID;
   
   document.addEventListener("DOMContentLoaded", function()
@@ -17,7 +19,6 @@
       var openrequest = indexedDB.open("game",id);
       console.log("db aperto.");
       
-      
       openrequest.onupgradeneeded = function(ev)
       {
         console.log("entrato onupgradeneeded");
@@ -26,7 +27,7 @@
           var db = ev.target.result;
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
-          store.put({number: <%= id+1 %>, animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
+          store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_arr[id].id %>", animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
           <% end %>
         } else
         {
@@ -181,7 +182,29 @@
   {
     var tag;
     if (id == nq)
+    {
+      var openrequest = indexedDB.open("game",id);
+      console.log("db aperto.");
+      
+      openrequest.onsuccess = function(eve)
+      {
+        var db = eve.target.result;
+        var tx = db.transaction(["quizzes"],"readonly");
+        var store = tx.objectStore("quizzes");
+        var getrequest = store.get(id);
+          
+        getrequest.onsuccess = function (e)
+        {
+          var risultati = e.target.result;
+          nextquiz = risultati.quiz_id;
+          nextsolution = risultati.solution;
+          document.getElementById("nextquiztag").value = nextquiz;
+          document.getElementById("nextsolutiontag").value = nextsolution;
+        }
+        db.close();
+      }
       tag = document.getElementById("prossimoquiztag");
+    }
     else
       tag = document.getElementById("finequiztag");
     
@@ -204,8 +227,8 @@
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
   <%= hidden_field_tag "iniziato", "sì" %>
-  <%= hidden_field_tag "quiz", "" %>
-  <%= hidden_field_tag "animale", "" %>
+  <%= hidden_field_tag "quiz", "", id: "nextquiztag" %>
+  <%= hidden_field_tag "animale", "", id: "nextsolutiontag" %>
   <%= submit_tag "Prossimo Quiz", style: "display:none", id: "prossimoquiztag" %>
 <% end %>
 
