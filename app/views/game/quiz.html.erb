@@ -9,31 +9,27 @@
   
   document.addEventListener("DOMContentLoaded", function()
   {
-    if (id == 1)
+    var deleterequest = indexedDB.deleteDatabase("game");
+    console.log("db cancellato");
+    
+    deleterequest.onsuccess = function(e)
     {
-      var deleterequest = indexedDB.deleteDatabase("game");
-      console.log("db cancellato");
+      var openrequest = indexedDB.open("game",id);
+      console.log("db aperto.");
       
-      deleterequest.onsuccess = function(e)
+      
+      openrequest.onupgradeneeded = function(ev)
       {
-        var openrequest = indexedDB.open("game",id);
-        console.log("db aperto.");
-        
-        
-        openrequest.onupgradeneeded = function(ev)
+        console.log("entrato onupgradeneeded");
+        if (id == 1)
         {
-          console.log("entrato onupgradeneeded");
           var db = ev.target.result;
           var store = db.createObjectStore("quizzes", {keyPath: "number"});
           <% params[:numeroquiz].to_i.times do |id| %>
           store.put({number: <%= id+1 %>, animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
           <% end %>
-          console.log("uscito onupgradeneeded");
-        }
-        
-        openrequest.onsuccess = function(eve)
+        } else
         {
-          console.log("entrato on success");
           var db = eve.target.result;
           var tx = db.transaction(["game"],"readonly");
           var store = tx.objectStore("quizzes");
@@ -43,40 +39,43 @@
             risposta_corretta = risultati.solution;
           }
           db.close();
-          console.log("uscito onsuccess");
         }
-        
-        openrequest.onerror = function(even)
-        {
-          console.log("entrato onerror");
-          console.log(openrequest.errorCode);
-        }
+        console.log("uscito onupgradeneeded");
       }
       
-      deleterequest.onerror = function(event)
+      openrequest.onsuccess = function(eve)
       {
-        console.log("entrato onerror delete");
-        console.log(deleterequest.errorCode);
-      }
-    } else
-    {
-      var openrequest = indexedDB.open("game",id);
-      console.log("db aperto.");
-      
-      openrequest.onupgradeneeded = function(ev)
-      {
-      console.log("entrato on success");
-        var db = eve.target.result;
-        var tx = db.transaction(["game"],"readonly");
-        var store = tx.objectStore("quizzes");
-        store.get(id).onsuccess = function (e)
+        console.log("entrato on success");
+        if (id == 1)
         {
-          var risultati = e.target.result;
-          risposta_corretta = risultati.solution;
+          var db = eve.target.result;
+          var tx = db.transaction(["game"],"readonly");
+          var store = tx.objectStore("quizzes");
+          store.get(id).onsuccess = function (e)
+          {
+            var risultati = e.target.result;
+            risposta_corretta = risultati.solution;
+          }
+          db.close();
+        } else
+        {
+          var db = eve.target.result;
+          db.close();
         }
-        db.close();
         console.log("uscito onsuccess");
       }
+      
+      openrequest.onerror = function(even)
+      {
+        console.log("entrato onerror");
+        console.log(openrequest.errorCode);
+      }
+    }
+     
+    deleterequest.onerror = function(event)
+    {
+      console.log("entrato onerror delete");
+      console.log(deleterequest.errorCode);
     }
   },false);
   
