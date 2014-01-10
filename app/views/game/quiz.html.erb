@@ -14,7 +14,7 @@
   {
     if (id == 1)
     {
-	  var deleterequest = indexedDB.deleteDatabase("game");
+      var deleterequest = indexedDB.deleteDatabase("game");
 	  console.log("db cancellato");
 	  
 	  deleterequest.onsuccess = function(e)
@@ -63,6 +63,34 @@
 	  {
 		console.log("entrato onerror delete");
 		console.log(deleterequest.errorCode);
+	  }
+	} else
+	{
+	  var openrequest = indexedDB.open("game");
+	  console.log("db aperto");
+	  
+	  openrequest.onsuccess = function(e)
+	  {
+		console.log("entrato on success");
+		var db = e.target.result;
+		var tx = db.transaction(["quizzes"],"readonly");
+		var store = tx.objectStore("quizzes");
+		var getrequest = store.get(id);
+		
+		getrequest.onsuccess = function(ev)
+		{
+		  var risultati = getrequest.result;
+		  risposta_corretta = risultati.solution;
+		}
+		
+		getrequest.onerror = function(event)
+		{
+		  console.log("entrato onerror get");
+		  console.log(getrequest.errorCode);
+		}
+		
+		db.close();   
+		console.log("uscito onsuccess");
 	  }
 	}
   },false);
