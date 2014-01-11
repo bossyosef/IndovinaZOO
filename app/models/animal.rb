@@ -24,6 +24,11 @@ class Animal < ActiveRecord::Base
 	has_many :quizzes, through: :quiz_rows
 	
 	#metodi pubblici
+	
+	def self.get_cry(animal)
+		where(name: animal).first.cry
+	end
+	
 	def self.verify_presence_of_animals				
 		if !Animal.any?			
 			@@error_message = "Nessun animale trovato."
