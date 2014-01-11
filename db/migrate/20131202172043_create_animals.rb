@@ -7,5 +7,9 @@ class CreateAnimals < ActiveRecord::Migration
 
       t.timestamps
     end
+    
+    add_index :animals, :name, unique: true
+    add_index :animals, :image, unique: true
+    add_index :animals, :cry, unique: true 
   end
 end

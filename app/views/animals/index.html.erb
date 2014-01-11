@@ -1,23 +1,22 @@
 <h1>Gestione animali</h1>
 
-<div id="no_animal_found">
-		<strong><%= Animal.get_index_page_errors %></strong>
+<div id="animal_error_messages">
+	<strong><%= Animal.error_message %></strong>
 </div>
 
-<br />
-
-	<table id="animals">
+<table id="animals_table">
+	<thead>
 		<tr>
-			<th>Name</th>
-			<th>Image</th>
-			<th>Cry</th>
+		  <th>Name</th>
+		  <th>Image</th>
+		  <th>Cry</th>		  
 		</tr>
-	
-		<%= render @animals %>	
-	</table>
-	
+	</thead>	
+	<tbody>
+	    <%= render @animals %>
+	</tbody>
+</table>
+
 <br />
-
 <%= render 'new_animal_ajax_links' %>
-
-<%= link_to 'Torna a Home', root_path %>
+<%= link_to "Torna a Home", root_path %>

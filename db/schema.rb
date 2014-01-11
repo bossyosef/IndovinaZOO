@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(version: 20140104095052) do
     t.string   "image"
   end
 
+  add_index "animals", ["cry"], name: "index_animals_on_cry", unique: true
+  add_index "animals", ["name"], name: "index_animals_on_name", unique: true
+
   create_table "quiz_rows", force: true do |t|
     t.integer  "quiz_id"
     t.integer  "animal_id"

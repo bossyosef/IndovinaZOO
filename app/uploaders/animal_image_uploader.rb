@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class AnimalImageUploader < CarrierWave::Uploader::Base
+  after :store, :delete_old_tmp_file
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -10,6 +11,17 @@ class AnimalImageUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
+  # Memorizza in cache il nome del tmp file.
+  def cache!(new_file)
+    super
+	@old_tmp_file = new_file
+  end
+  
+  # Cancella il file temporaneo.
+  def delete_old_tmp_file(dummy)
+	@old_tmp_file.try :delete
+  end
+  
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
