@@ -15,7 +15,8 @@ class Quiz < ActiveRecord::Base
 	has_many :animals, through: :quiz_rows
 	accepts_nested_attributes_for :quiz_rows
 	
-	#metodi pubblici
+	#metodi pubblici per la gestione dei quiz
+	
 	def self.verify_presence_of_quizzes		
 		if !Quiz.any?			
 			@@error_message = "Nessun quiz trovato."
@@ -23,9 +24,34 @@ class Quiz < ActiveRecord::Base
 			@@error_message = ""
 		end		
 	end
-		
+
 	def self.error_message
 	  @@error_message
+	end
+	
+	#metodi pubblici per il gioco
+	
+	def random_animal
+		animals.sample
+	end
+	
+	def self.get_animals_from_id(idquiz)
+		animal1 = find(idquiz).animals.first
+		animal2 = find(idquiz).animals.last
+		return animal1,animal2
+	end
+
+	def self.random_quiz_array(numQuiz)
+		quizzes = self.all
+		quiz_arr = [] 
+		animal_arr = []
+		numQuiz.to_i.times do
+			q1 = quizzes.sample											#scelgo a caso un quiz
+			quiz_arr.push(q1)									#copio l'id del quiz 
+			animal_arr.push(q1.random_animal.name)	#copio il nome di uno dei due animali scelti a caso
+			quizzes.delete_if {|q| q == q1}		
+		end
+		return quiz_arr, animal_arr
 	end
 	
 	#metodi privati
