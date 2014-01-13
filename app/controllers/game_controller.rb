@@ -3,6 +3,7 @@ class GameController < ApplicationController
   end
 
   def settings
+	@livello_alto, @quantita_quiz = Quiz.levels_hash
   end
 
   def quiz

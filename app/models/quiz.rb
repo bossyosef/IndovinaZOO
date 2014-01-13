@@ -54,6 +54,20 @@ class Quiz < ActiveRecord::Base
 		return quiz_arr, animal_arr
 	end
 	
+	def self.levels_hash
+	  quizzes = self.all.to_a
+	  level_arr = []
+	  highest_level = 1
+	  quizzes.each do |quiz|
+		level_arr.push(quiz.level)
+		if quiz.level > highest_level
+		  highest_level = quiz.level
+		end
+	  end
+	  level_count = Hash[level_arr.group_by{|i| i }.map{|k,v| [k,v.size]}]
+	  return highest_level, level_count
+	end
+	
 	#metodi privati
 	
 	private 

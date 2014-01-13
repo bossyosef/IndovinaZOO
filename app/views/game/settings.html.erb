@@ -1,7 +1,37 @@
 <h1>Game#settings</h1>
 <p>Find me in app/views/game/settings.html.erb</p>
-<%= form_tag("/quiz/1", method: "post") do %>
+
+<script>
+  function submitForm()
+  {
+    var form = document.getElementById("settings");
+    var livello_massimo = <%= @livello_alto %>;
+    var numeroquiz = document.getElementById("numeroquiz").value;
+    var livelloquiz = document.getElementById("livelloquiz").value;
+    var livelli_numero = <%= @quantita_quiz.to_json %>;
+    
+    if (livelli_numero.livelloquiz < numeroquiz)
+    {
+      alert("Ci dispiace, ma al momento non abbiamo un numero di quiz disponibili con quel livello.");
+      document.getElementById("numeroquiz").focus();
+    } else if (livelloquiz > livello_massimo)
+    {
+      alert("Ci dispiace, ma al momento non abbiamo quiz di quel livello.");
+      document.getElementById("livelloquiz").focus();
+    } else
+    {
+      form.submit();
+    }
+  }
+</script>
+
+<%= form_tag("/quiz/1", id:"settings" , method: "post") do %>
+  <%= label_tag "numeroquiz", "Inserisci Il numero di quiz che desideri per questa partita." %>
   <%= number_field_tag "numeroquiz", 1, min: 1 %>
+  <%= label_tag "timeout", "Inserisci il timeout desiderato per ogni quiz della partita." %>
   <%= number_field_tag "timeout", 10, min: 10 %>
-  <%= submit_tag("... Adesso Gioca!") %>
+  <%= label_tag "livelloquiz", "Inserisci il livello desiderato di ogni quiz. (se 0 il livello sarà casuale)" %>
+  <%= number_field_tag "livelloquiz", 0 , min: 0 %>
 <% end %>
+
+<button type="button" onclick="submitForm()">... Adesso Gioca!</button>
