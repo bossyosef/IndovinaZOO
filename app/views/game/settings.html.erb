@@ -8,7 +8,7 @@
     var livello_massimo = <%= @livello_alto %>;
     var numeroquiz = document.getElementById("numeroquiz").value;
     var livelloquiz = document.getElementById("livelloquiz").value;
-    var livelli_numero = <%= @quantita_quiz.to_json %>;
+    var livelli_numero = jQuery.parseJSON('<%=raw @quantita_quiz.to_json %>');
     
     if (livelli_numero.livelloquiz < numeroquiz)
     {
