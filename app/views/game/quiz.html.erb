@@ -46,10 +46,10 @@
 		  getrequest.onsuccess = function (e)
 		  {
 			var risultati = e.target.result;
-			risposta_corretta = risultati.solution;
+			  risposta_corretta = risultati.solution;
+		    db.close();
+  		  console.log("uscito onsuccess");
 		  }
-		  db.close();   
-		  console.log("uscito onsuccess");
 		}
 		
 		openrequest.onerror = function(even)
@@ -81,6 +81,8 @@
 		{
 		  var risultati = getrequest.result;
 		  risposta_corretta = risultati.solution;
+  		db.close();   
+	  	console.log("uscito onsuccess");
 		}
 		
 		getrequest.onerror = function(event)
@@ -88,9 +90,6 @@
 		  console.log("entrato onerror get");
 		  console.log(getrequest.errorCode);
 		}
-		
-		db.close();   
-		console.log("uscito onsuccess");
 	  }
 	}
   },false);
@@ -102,7 +101,7 @@
     
     request.onsuccess = function(e) 
     {
-      var db = e.target.result;
+      
       if(id == 1)
       {
         console.log("entrato onsuccess.");
@@ -116,9 +115,13 @@
           risultati.user_response = ur;
           risultati.score = s;
           var putresult = store.put(risultati);
+          db.close();
         }
       }
-      db.close();
+			else {
+			  var db = e.target.result;      
+			  db.close();
+		  }
     }
     
     request.onupgradeneeded = function(e)
@@ -136,7 +139,7 @@
         risultati.score = s;
         var putresult = store.put(risultati);
       }
-      db.close();
+
     }
     
     request.onerror = function (e)
@@ -221,13 +224,12 @@
           nextsolution = risultati.solution;
           document.getElementById("nextquiztag").value = nextquiz;
           document.getElementById("nextsolutiontag").value = nextsolution;
+          db.close();
+          tag = document.getElementById("prossimoquiztag");
+          tag.style.display = "inline";
         }
-        db.close();
       }
-      tag = document.getElementById("prossimoquiztag");
     }
-    
-    tag.style.display = "inline";
   }
 </script>
 
