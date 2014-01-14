@@ -60,7 +60,16 @@
     }
   }
 
+  function totalScore(){
+		var res = 0;
+    for (i=0; i<quizzes.length; i++) {
+      res += quizzes[i].score;
+    }
+    return document.getElementById("total_score").writeln(res);
+  }
 
-
-	
 </script>
+
+<div id="total_score" onload=totalScore()>
+Punteggio Totale:
+</div>
