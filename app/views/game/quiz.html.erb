@@ -203,9 +203,10 @@
   function quizdopo()
   {
     var tag;
-    if ((id == nq) || (nq == 1))
+    if ((id == nq) || (nq == 1)) {
       tag = document.getElementById("finequiztag");
 			tag.style.display = "inline";
+    }
     else
     {
       var openrequest = indexedDB.open("game",id);
