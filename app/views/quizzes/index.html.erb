@@ -1,38 +1,25 @@
 <h1>Gestione quiz</h1>
 
-	<div id="quiz_error_message">
-		<strong><%= Quiz.get_index_page_errors %></strong>
-	</div>
-	
-	<br />
-	
-	<table>
+<div id="quiz_error_messages">
+	<strong><%= Quiz.error_message %></strong><br />
+	<strong><%= Animal.error_message %></strong>
+</div>
+
+<table id="quiz_table">
+	<thead>		
 		<tr>
 			<th>ID</th>
 			<th>Level</th>
 			<th>Animals</th>
 		</tr>
-	
-		<% @quizzes.each do |quiz| %>
-			<tr>
-				<td><%= quiz.id %></td>
-				<td><%= quiz.level %></td>
-				<td>
-					<% quiz.animals.each do |animal| %>
-						<%= animal.name %><%= image_tag animal.image_url, size: "150x120" %> |
-					<% end %>			
-				</td>			
-				<td><%= link_to "Show", quiz %></td>
-				<td><%= link_to "Edit", edit_quiz_path(quiz) %></td>
-				<td><%= link_to "Delete", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
-			</tr>
-		<% end %>
-	</table>
-	
+	</thead>
+	<tbody>
+		<%= render @quizzes %>
+	</tbody>		
+</table>
+
 <br />
 
-<% if Quiz.current_animals_count > 1 %>
-	<%= link_to "New Quiz", new_quiz_path %><br/>
-<% end %>
+<%= render 'new_quiz_ajax_links' if Animal.min_animals_to_make_a_quiz? %>
 
 <%= link_to "Torna a Home", root_path %>

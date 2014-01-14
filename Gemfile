@@ -61,6 +61,9 @@ gem 'carrierwave'
 #gemma per form
 gem 'simple_form'
 
+#gemma per upload file via AJAX
+gem 'remotipart'
+
 #gemma per login
 gem 'devise'
 

@@ -1,3 +1,9 @@
-<h1>New Quiz</h1>
+<div id="new_quiz_form_container">
 
-<%= render 'form' %>
+	<h2>New Quiz</h2>
+
+	<%= render 'form' %>
+	
+	<%= link_to "Annulla", quizzes_path, id: 'cancel_button' %>
+</div>
+
