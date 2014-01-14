@@ -11,7 +11,7 @@ class GameController < ApplicationController
 	  @animale1, @animale2 = Quiz.get_animals_from_id(params[:quiz])
 	  @verso = Animal.get_cry(params[:animale])
 	else
-	  @quiz_arr, @animali_arr = Quiz.random_quiz_array(params[:numeroquiz])
+	  @quiz_arr, @animali_arr = Quiz.random_quiz_array(params[:numeroquiz],params[:livelloquiz])
 	  @animale1, @animale2 = Quiz.get_animals_from_id(@quiz_arr[0].id)
 	  @verso = Animal.get_cry(@animali_arr[0])
 	end

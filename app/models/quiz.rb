@@ -41,20 +41,25 @@ class Quiz < ActiveRecord::Base
 		return animal1,animal2
 	end
 
-	def self.random_quiz_array(numQuiz)
+	def self.random_quiz_array(numQuiz,livello)
+	  livelloQuiz = livello.to_i
+	  if (livelloQuiz == 0)
 		quizzes = self.all
-		quiz_arr = [] 
-		animal_arr = []
-		numQuiz.to_i.times do
-			q1 = quizzes.sample											#scelgo a caso un quiz
-			quiz_arr.push(q1)									#copio l'id del quiz 
-			animal_arr.push(q1.random_animal.name)	#copio il nome di uno dei due animali scelti a caso
-			quizzes.delete_if {|q| q == q1}		
-		end
-		return quiz_arr, animal_arr
+	  else
+		quizzes = self.where(:level => livelloQuiz)
+	  end
+	  quiz_arr = [] 
+	  animal_arr = []
+	  numQuiz.to_i.times do
+		  q1 = quizzes.sample											#scelgo a caso un quiz
+		  quiz_arr.push(q1)									#copio l'id del quiz 
+		  animal_arr.push(q1.random_animal.name)	#copio il nome di uno dei due animali scelti a caso
+		  quizzes.delete_if {|q| q == q1}		
+	  end
+	  return quiz_arr, animal_arr
 	end
 	
-	def self.levels_hash
+	def self.levels_hash #conviene salvare nel db l'associazione livello - numeroquiz
 	  quizzes = self.all.to_a
 	  level_arr = []
 	  highest_level = 1
