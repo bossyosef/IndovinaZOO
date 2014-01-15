@@ -35,11 +35,18 @@
 
   function quizResult_create(animal1, animal2, score) 
   {
-    var quizContainer = document.createElement('div');
+    var quizContainer = document.getElementById('result_summary');
     //eventualmente aggiungere altri attributi tipo class
     quizContainer.appendChild(img_create(animal1));
     quizContainer.appendChild(img_create(animal2));
-    quizContainer.innerHTML = score;
+    quizContainer.appendChild(p_create(score));
+  }
+
+  function p_create(text) 
+  {
+    var p = document.createElement('p');
+    p.innerHTML = text;
+    return p;
   }
 
 	function img_create(src) 
@@ -75,7 +82,8 @@
   }
 
 </script>
-
+<div id="result_summary">
+</div>
 <div id="total_score">
 Punteggio Totale:
   <div id="change_total_score">
