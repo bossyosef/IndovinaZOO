@@ -96,51 +96,26 @@
   
   function storeQuiz(ur,s)
   {
-    var request = indexedDB.open("game",id);
+    var request = indexedDB.open("game");
     console.log("db aperto.");
-    
-    request.onupgradeneeded = function(e)
-    {
-      console.log("entrato onupgradeneeded.");
-      var db = e.target.result;
-      var tx = db.transaction(["quizzes"],"readwrite");
-      var store = tx.objectStore("quizzes");
-      var getrequest = store.get(id);
-      
-      getrequest.onsuccess = function (ev)
-      {
-        var risultati = ev.target.result;
-        risultati.user_response = ur;
-        risultati.score = s;
-        var putresult = store.put(risultati);
-      }
-    }
     
     request.onsuccess = function(e) 
     {
-      if(id == 1)
-      {
-        console.log("entrato onsuccess.");
-        var db = e.target.result;
-        var tx = db.transaction(["quizzes"],"readwrite");
-        var store = tx.objectStore("quizzes");
-        var getrequest = store.get(1);
-        
-        getrequest.onsuccess = function (ev)
-        {
-          var risultati = ev.target.result;
-          risultati.user_response = ur;
-          risultati.score = s;
-          var putresult = store.put(risultati);
-          db.close();
-          quizdopo();
-        }
-      } else 
-      {
-		var db = e.target.result;      
+	  console.log("entrato onsuccess.");
+	  var db = e.target.result;
+	  var tx = db.transaction(["quizzes"],"readwrite");
+	  var store = tx.objectStore("quizzes");
+	  var getrequest = store.get(id);
+	  
+	  getrequest.onsuccess = function (ev)
+	  {
+		var risultati = ev.target.result;
+		risultati.user_response = ur;
+		risultati.score = s;
+		var putresult = store.put(risultati);
 		db.close();
 		quizdopo();
-      }
+	  }
     }
     
     request.onerror = function (e)
@@ -208,7 +183,7 @@
     }
     else
     {
-      var openrequest = indexedDB.open("game",id);
+      var openrequest = indexedDB.open("game");
       console.log("db aperto.");
       
       openrequest.onsuccess = function(eve)
