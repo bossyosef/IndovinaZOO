@@ -18,11 +18,13 @@
       cursorRequest.onsuccess = function(event) {
         var cursor = event.target.result;
         if (cursor) {
+          console.log("DEBUG: popolazione quizzes");
           quizzes.push(cursor.value);
           cursor.continue();
         }
         else {
           console.log("scaricati tutti i quiz");
+          insertQuizzesToHTML();
         }
       }
     }
