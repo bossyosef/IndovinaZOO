@@ -10,7 +10,7 @@
     var livelloquiz = document.getElementById("livelloquiz").value;
     var livelli_numero = jQuery.parseJSON('<%=raw @quantita_quiz.to_json %>');
     
-    if (livelli_numero.livelloquiz < numeroquiz)
+    if (livelli_numero[livelloquiz] < numeroquiz)
     {
       alert("Ci dispiace, ma al momento non abbiamo un numero di quiz disponibili con quel livello.");
       document.getElementById("numeroquiz").focus();
