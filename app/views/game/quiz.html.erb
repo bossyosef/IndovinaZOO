@@ -133,11 +133,13 @@
           risultati.score = s;
           var putresult = store.put(risultati);
           db.close();
+          quizdopo();
         }
       } else 
       {
 		var db = e.target.result;      
 		db.close();
+		quizdopo();
       }
     }
     
@@ -187,7 +189,6 @@
         document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
       }
       storeQuiz(animale,punteggio);
-      quizdopo();
     }
   }
   
@@ -196,7 +197,6 @@
     clearInterval(timerID);
     document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
     storeQuiz("",0);
-    quizdopo();
   }
   
   function quizdopo()
