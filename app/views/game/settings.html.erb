@@ -8,10 +8,18 @@
     var livello_massimo = <%= @livello_alto %>;
     var numeroquiz = document.getElementById("numeroquiz").value;
     var livelloquiz = document.getElementById("livelloquiz").value;
+    var timeout = document.getElementById("timeout").value;
     var livelli_numero = jQuery.parseJSON('<%=raw @quantita_quiz.to_json %>');
-    var numero_quiz_db = <%= @numero_quiz %>
+    var numero_quiz_db = <%= @numero_quiz %>;
     
-    if(livelloquiz == 0)
+    if(timeout < 10)
+    {
+      document.getElementById("timeout").value = 10;
+    }
+    if(numeroquiz == 0)
+    {
+      alert("Impossibile una partita con 0 quiz."); 
+    } else if (livelloquiz == 0)
     {
       if (numeroquiz > numero_quiz_db)
       {

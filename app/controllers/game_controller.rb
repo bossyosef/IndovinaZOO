@@ -19,4 +19,7 @@ class GameController < ApplicationController
 
   def result
   end
+  
+  def error
+  end
 end

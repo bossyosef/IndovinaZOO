@@ -58,8 +58,11 @@ IndovinaZOO::Application.routes.draw do
   get "game/home"
   root "game#home"
   post "/settings" => "game#settings", as: :settings
+  get "/settings" => "game#error"
   post "/quiz/:id" => "game#quiz"
+  get "/quiz/:id" => "game#error"
   post "/result" => "game#result"
+  get "/result" => "game#error"
   get "ranks/top5"
          
   resources :animals
