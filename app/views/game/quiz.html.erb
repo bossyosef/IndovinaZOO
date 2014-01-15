@@ -32,9 +32,9 @@
 		  store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_arr[id].id %>", animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
 			<% end %>
 		  <% end %>
-			<% if params[:id].to_i == 1 %>
-			risposta_corretta = "<%= @animali_arr[0] %>";
-			<% end %>
+		  <% if params[:id].to_i == 1 %>
+		  risposta_corretta = "<%= @animali_arr[0] %>";
+		  <% end %>
 		  console.log("uscito onupgradeneeded");
 		}
 		
@@ -42,8 +42,8 @@
 		{
 		  console.log("entrato on success");
 		  var db = eve.target.result;
-	    db.close();
-			console.log("uscito onsuccess");
+		  db.close();
+		  console.log("uscito onsuccess");
 		}
 		
 		openrequest.onerror = function(even)
