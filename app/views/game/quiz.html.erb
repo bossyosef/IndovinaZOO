@@ -46,9 +46,9 @@
 		  getrequest.onsuccess = function (e)
 		  {
 			var risultati = e.target.result;
-			  risposta_corretta = risultati.solution;
+			risposta_corretta = risultati.solution;
 		    db.close();
-  		  console.log("uscito onsuccess");
+			console.log("uscito onsuccess");
 		  }
 		}
 		
@@ -81,8 +81,8 @@
 		{
 		  var risultati = getrequest.result;
 		  risposta_corretta = risultati.solution;
-  		db.close();   
-	  	console.log("uscito onsuccess");
+		  db.close();   
+		  console.log("uscito onsuccess");
 		}
 		
 		getrequest.onerror = function(event)
@@ -99,9 +99,25 @@
     var request = indexedDB.open("game",id);
     console.log("db aperto.");
     
+    request.onupgradeneeded = function(e)
+    {
+      console.log("entrato onupgradeneeded.");
+      var db = e.target.result;
+      var tx = db.transaction(["quizzes"],"readwrite");
+      var store = tx.objectStore("quizzes");
+      var getrequest = store.get(id);
+      
+      getrequest.onsuccess = function (ev)
+      {
+        var risultati = ev.target.result;
+        risultati.user_response = ur;
+        risultati.score = s;
+        var putresult = store.put(risultati);
+      }
+    }
+    
     request.onsuccess = function(e) 
     {
-      
       if(id == 1)
       {
         console.log("entrato onsuccess.");
@@ -118,29 +134,11 @@
           var putresult = store.put(risultati);
           db.close();
         }
-      }
-			else {
-			  var db = e.target.result;      
-			  db.close();
-		  }
-    }
-    
-    request.onupgradeneeded = function(e)
-    {
-      console.log("entrato onupgradeneeded.");
-      var db = e.target.result;
-      var tx = db.transaction(["quizzes"],"readwrite");
-      var store = tx.objectStore("quizzes");
-      var getrequest = store.get(id);
-      
-      getrequest.onsuccess = function (ev)
+      } else 
       {
-        var risultati = ev.target.result;
-        risultati.user_response = ur;
-        risultati.score = s;
-        var putresult = store.put(risultati);
+		var db = e.target.result;      
+		db.close();
       }
-
     }
     
     request.onerror = function (e)
@@ -206,7 +204,7 @@
     var tag;
     if ((id == nq) || (nq == 1)) {
       tag = document.getElementById("finequiztag");
-			tag.style.display = "inline";
+	  tag.style.display = "inline";
     }
     else
     {
