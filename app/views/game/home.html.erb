@@ -1,8 +1,7 @@
 <h1>IndovinaZOO 1.0</h1>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function()
-  {
+  $(document).ready ( function () {
     if("indexedDB" in window) 
     {
         var div = document.getElementById("mostra_gioco");
@@ -12,8 +11,7 @@
         var div = document.getElementById("cambio_browser");
         div.style.display = "inline";
     }
-  },false);
-
+  });
 </script>
 
 <div id="mostra_gioco" style="display:none" >
