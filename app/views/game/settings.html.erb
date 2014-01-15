@@ -9,8 +9,18 @@
     var numeroquiz = document.getElementById("numeroquiz").value;
     var livelloquiz = document.getElementById("livelloquiz").value;
     var livelli_numero = jQuery.parseJSON('<%=raw @quantita_quiz.to_json %>');
+    var numero_quiz_db = <%= @numero_quiz %>
     
-    if (livelli_numero[livelloquiz] < numeroquiz)
+    if(livelloquiz == 0)
+    {
+      if (numeroquiz < numero_quiz_db)
+      {
+        alert("Ci dispiace, ma al momento non abbiamo quella quantità di quiz disponibile.");
+      } else
+      {
+        form.submit();
+      }
+    } else if (livelli_numero[livelloquiz] < numeroquiz)
     {
       alert("Ci dispiace, ma al momento non abbiamo un numero di quiz disponibili con quel livello.");
       document.getElementById("numeroquiz").focus();

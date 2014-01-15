@@ -61,6 +61,7 @@ class Quiz < ActiveRecord::Base
 	
 	def self.levels_hash #conviene salvare nel db l'associazione livello - numeroquiz
 	  quizzes = self.all.to_a
+	  quiz_count = quizzes.length
 	  level_arr = []
 	  highest_level = 1
 	  quizzes.each do |quiz|
@@ -70,7 +71,7 @@ class Quiz < ActiveRecord::Base
 		end
 	  end
 	  level_count = Hash[level_arr.group_by{|i| i }.map{|k,v| [k,v.size]}]
-	  return highest_level, level_count
+	  return highest_level, level_count, quiz_count
 	end
 	
 	#metodi privati
