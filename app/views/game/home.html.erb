@@ -16,13 +16,13 @@
 
 </script>
 
-<div id="mostra_gioco" >
-  <%= button_to "Prima imposta le preferenze...", settings_path, style: "display:none" %>
+<div id="mostra_gioco" style="display:none" >
+  <%= button_to "Prima imposta le preferenze...", settings_path %>
   <%= form_tag("/quiz/1", method: "post") do %>
       <%= hidden_field_tag "numeroquiz", "10" %>
       <%= hidden_field_tag "timeout", "60" %>
       <%= hidden_field_tag "livelloquiz", "0" %>
-      <%= submit_tag "Gioca adesso!", style: "display:none" %>
+      <%= submit_tag "Gioca adesso!" %>
   <% end %>
 </div>
 
