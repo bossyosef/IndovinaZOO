@@ -10,14 +10,15 @@
 
     openrequest.onsuccess = function(event) 
     {
-      console.log("entrato onupgradeneeded");
+      console.log("entrato onsuccess");
       var db = event.target.result;
       var objectStore = db.transaction("quizzes").objectStore("quizzes");
 
       quizzes = [];
 
-      var cursorRequest = objectStore.openCursor()
+      var cursorRequest = objectStore.openCursor();
       cursorRequest.onsuccess = function(event) {
+        console.log("entrato onsuccess");
         var cursor = event.target.result;
         if (cursor) {
           console.log("DEBUG: popolazione quizzes");
@@ -27,6 +28,9 @@
         else {
           console.log("scaricati tutti i quiz");
           insertQuizzesToHTML();
+          db.close();
+          console.log("chiuso DB");
+          console.log("uscito onsuccess");
         }
       }
     }
