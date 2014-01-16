@@ -91,6 +91,13 @@
 	}
   },false);
   
+  function getAnimalName(fullPath) 
+  {
+    filename = fullPath.replace(/^.*[\\\/]/, '');
+    name = filename.split(".")[0];
+    return name;
+  }
+  
   function storeQuiz(ur,s)
   {
     var request = indexedDB.open("game");
