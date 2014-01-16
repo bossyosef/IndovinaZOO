@@ -126,9 +126,11 @@
   {
     var img = document.createElement('img');
 	img.src = a;
-	img.alt = getAnimalName(a);
-	img.title = getAnimalName(a);
-	img.onclick = "scelta("+ getAnimalName(a) + ")";
+	img.alt = "getAnimalName(a)";
+	img.title = "getAnimalName(a)";
+	var att = document.createAttribute("onclick");
+	att.value = "scelta("+ 'getAnimalName(a)' + ")";
+	img.setAttributeNode(att);
 	return img;
   }
   
