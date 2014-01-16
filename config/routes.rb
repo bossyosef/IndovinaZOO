@@ -75,6 +75,8 @@ IndovinaZOO::Application.routes.draw do
   
   devise_scope :admin_user do
 	get "/admin_users/home", to: "admin_users/sessions#home", as: "admin_user_session_home"
-  end  
+  end
+  
+  get "/*all" => "game#home"
         
 end
