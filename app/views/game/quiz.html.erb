@@ -210,6 +210,7 @@
         var modificatore = livello/2+0.5; 
         var punteggio = Math.ceil((to/<%= params[:timeout].to_i %>)*10);
         punteggio *= modificatore;
+        punteggio = Math.ceil(punteggio);
         document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
       } else
       {
