@@ -45,9 +45,9 @@
 
 <%= form_tag("/quiz/1", id:"settings" , method: "post") do %>
   <%= label_tag "numeroquiz", "Inserisci Il numero di quiz che desideri per questa partita." %>
-  <%= number_field_tag "numeroquiz", 1, min: 1 %>
+  <%= number_field_tag "numeroquiz", 1, min: 1 %> <br/>
   <%= label_tag "timeout", "Inserisci il timeout desiderato per ogni quiz della partita." %>
-  <%= number_field_tag "timeout", 10, min: 10 %>
+  <%= number_field_tag "timeout", 10, min: 10 %> <br/>
   <%= label_tag "livelloquiz", "Inserisci il livello desiderato di ogni quiz. (se 0 il livello sarà casuale)" %>
   <%= number_field_tag "livelloquiz", 0 , min: 0 %>
 <% end %>
