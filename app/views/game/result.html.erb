@@ -90,6 +90,10 @@
     document.getElementById("hidden_score").value = score;
   }
 
+  function showForm() {
+    document.getElementById("hidden_form").style.display = "block";
+  }
+
 </script>
 <div id="result_summary">
 </div>
@@ -99,11 +103,14 @@ Punteggio Totale:
   </div>
 </div>
 
-<%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
-    :method => 'post' do |f| %>
-  <%= f.input :nickname %>
-  <%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
-  <%= f.button :submit %>
-<% end %>
+<button type="button" onclick=showForm()>Salva in classifica</button>
+<div style="display:none" id="hidden_form">
+	<%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
+		  :method => 'post' do |f| %>
+		<%= f.input :nickname %>
+		<%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
+		<%= f.button :submit %>
+	<% end %>
+</div>
 
 <%= link_to "Torna a Home", root_path %>
