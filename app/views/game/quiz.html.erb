@@ -37,7 +37,7 @@
 			<% end %>
 		  <% end %>
 		  <% if params[:id].to_i == 1 %>
-		  risposta_corretta = getAnimalName(<%= @animali_arr[0] %>);
+		  risposta_corretta = "getAnimalName(<%= @animali_arr[0] %>)";
 		  livello = "<%= @quiz_arr[0].level %>";
 		  animale1 = "<%= @quiz_arr[0].animals[0].image %>";
 		  animale2 = "<%= @quiz_arr[0].animals[1].image %>";
