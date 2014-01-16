@@ -5,6 +5,7 @@
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
   var risposta_corretta;
+  var livello;
   var nextquiz;
   var nextsolution;
   var timerID;
@@ -29,11 +30,12 @@
 		  var store = db.createObjectStore("quizzes", {keyPath: "number"});
 		  <% params[:numeroquiz].to_i.times do |id| %>
 			<% if params[:id].to_i == 1 %>
-		  store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_arr[id].id %>", animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
+		  store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_arr[id].id %>", level: <%= @quiz_arr[id].level %> ,animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
 			<% end %>
 		  <% end %>
 		  <% if params[:id].to_i == 1 %>
 		  risposta_corretta = "<%= @animali_arr[0] %>";
+		  livello = "<%= @quiz_arr[0].level %>";
 		  <% end %>
 		  console.log("uscito onupgradeneeded");
 		}
@@ -75,6 +77,7 @@
 		{
 		  var risultati = getrequest.result;
 		  risposta_corretta = risultati.solution;
+		  livello = risultati.level;
 		  db.close();   
 		  console.log("uscito onsuccess");
 		}
@@ -151,7 +154,9 @@
       if (animale == risposta_corretta)
       {
         var valore = document.getElementById("risultato").innerHTML;
+        var modificatore = livello/2+0.5; 
         var punteggio = Math.ceil((to/<%= params[:timeout].to_i %>)*10);
+        punteggio *= modificatore;
         document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
       } else
       {
