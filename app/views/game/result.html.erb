@@ -82,7 +82,12 @@
     for (i=0; i<quizzes.length; i++) {
       res += quizzes[i].score;
     }
+    insertHiddenScore(res);
     return document.getElementById("change_total_score").innerHTML = res;
+  }
+
+  function insertHiddenScore(score) {
+    document.getElementById("hidden_score").value = score;
   }
 
 </script>
@@ -97,7 +102,7 @@ Punteggio Totale:
 <%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
     :method => 'post' do |f| %>
   <%= f.input :nickname %>
-  <%= f.input :score %>
+  <%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
   <%= f.button :submit %>
 <% end %>
 
