@@ -93,3 +93,12 @@ Punteggio Totale:
   <div id="change_total_score">
   </div>
 </div>
+
+<%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
+    :method => 'post' do |f| %>
+  <%= f.input :nickname %>
+  <%= f.input :score %>
+  <%= f.button :submit %>
+<% end %>
+
+<%= link_to "Torna a Home", root_path %>

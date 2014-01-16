@@ -64,6 +64,7 @@ IndovinaZOO::Application.routes.draw do
   post "/result" => "game#result"
   get "/result" => "game#error"
   get "ranks/top5"
+  post "ranks/create"
          
   resources :animals
   
