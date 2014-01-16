@@ -43,13 +43,34 @@
   }
 </script>
 
+
 <%= form_tag("/quiz/1", id:"settings" , method: "post") do %>
-  <%= label_tag "numeroquiz", "Inserisci Il numero di quiz che desideri per questa partita." %>
-  <%= number_field_tag "numeroquiz", 1, min: 1 %> <br/>
-  <%= label_tag "timeout", "Inserisci il timeout desiderato per ogni quiz della partita." %>
-  <%= number_field_tag "timeout", 10, min: 10 %> <br/>
-  <%= label_tag "livelloquiz", "Inserisci il livello desiderato di ogni quiz. (se 0 il livello sarà casuale)" %>
-  <%= number_field_tag "livelloquiz", 0 , min: 0 %>
+<table border="0">
+  <tr>
+	<td>
+	  <%= label_tag "numeroquiz", "Inserisci Il numero di quiz che desideri per questa partita." %>
+	</td>
+	<td>
+	  <%= number_field_tag "numeroquiz", 1, min: 1 %>
+	</td>
+  </tr>
+  <tr>
+	<td>
+	  <%= label_tag "timeout", "Inserisci il timeout desiderato per ogni quiz della partita." %>
+	</td>
+	<td>
+	  <%= number_field_tag "timeout", 10, min: 10 %>
+	</td>
+  </tr>
+  <tr>
+	<td>
+	  <%= label_tag "livelloquiz", "Inserisci il livello desiderato di ogni quiz. (se 0 il livello sarà casuale)" %>
+	</td>
+	<td>
+	  <%= number_field_tag "livelloquiz", 0 , min: 0 %>
+	</td>
+  </tr>
+</table>
 <% end %>
 
 <button type="button" onclick="submitForm()">... Adesso Gioca!</button>

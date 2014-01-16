@@ -7,7 +7,7 @@ class GameController < ApplicationController
   end
 
   def quiz
-	if(!params[:iniziato])
+	if !params[:iniziato]
 	  @quiz_arr, @animali_arr = Quiz.random_quiz_array(params[:numeroquiz],params[:livelloquiz])
 	end
   end
