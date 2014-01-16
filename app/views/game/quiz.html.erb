@@ -6,12 +6,15 @@
   var nq = <%= params[:numeroquiz] %>;
   var risposta_corretta;
   var livello;
-  var nextquiz;
-  var nextsolution;
+  var animale1;
+  var animale2;
+  var verso;
+  var animale1name;
+  var animale2name;
   var timerID;
   var timeriniziato = 0;
   
-  document.addEventListener("DOMContentLoaded", function()
+  $(document).ready ( function ()
   {
     if (id == 1)
     {
@@ -30,12 +33,18 @@
 		  var store = db.createObjectStore("quizzes", {keyPath: "number"});
 		  <% params[:numeroquiz].to_i.times do |id| %>
 			<% if params[:id].to_i == 1 %>
-		  store.put({number: <%= id+1 %>, quiz_id: "<%= @quiz_arr[id].id %>", level: <%= @quiz_arr[id].level %> ,animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
+		  store.put({number: <%= id+1 %>, quiz_id: <%= @quiz_arr[id].id %>, level: <%= @quiz_arr[id].level %> ,animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
 			<% end %>
 		  <% end %>
 		  <% if params[:id].to_i == 1 %>
-		  risposta_corretta = "<%= @animali_arr[0] %>";
+		  risposta_corretta = getAnimalName(<%= @animali_arr[0] %>);
 		  livello = "<%= @quiz_arr[0].level %>";
+		  animale1 = "<%= @quiz_arr[0].animals[0].image %>";
+		  animale2 = "<%= @quiz_arr[0].animals[1].image %>";
+		  verso = "<%= @animali_arr[0] %>";
+		  animale1name = getAnimalName(animale1);
+		  animale2name = getAnimalName(animale2);
+		  createQuizObjects();
 		  <% end %>
 		  console.log("uscito onupgradeneeded");
 		}
@@ -76,9 +85,15 @@
 		getrequest.onsuccess = function(ev)
 		{
 		  var risultati = getrequest.result;
-		  risposta_corretta = risultati.solution;
+		  risposta_corretta = getAnimalName(risultati.solution);
 		  livello = risultati.level;
-		  db.close();   
+		  animale1 = risultati.animal1;
+		  animale2 = risultati.animal2;
+		  verso = risultati.solution;
+		  animale1name = getAnimalName(animale1);
+		  animale2name = getAnimalName(animale2);
+		  db.close();
+		  createQuizObjects();
 		  console.log("uscito onsuccess");
 		}
 		
@@ -89,13 +104,39 @@
 		}
 	  }
 	}
-  },false);
+  });
   
   function getAnimalName(fullPath) 
   {
     filename = fullPath.replace(/^.*[\\\/]/, '');
     name = filename.split(".")[0];
-    return name;
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+  
+  function audio_el(v)
+  {
+    var audio = document.createElement('audio');
+    audio.id = "verso";
+    audio.preload = "auto";
+    audio.src = v;
+  }
+  
+  function image_el(a)
+  {
+    var img = document.createElement('img');
+	img.src = a;
+	img.alt = getAnimalName(a);
+	img.title = getAnimalName(a);
+	img.onclick = "scelta("+ getAnimalName(a) + ")";
+	return img;
+  }
+  
+  function createQuizObjects()
+  {
+    var div = document.getElementById("elementiquiz");
+    div.appendChild(audio_el(verso));
+    div.appendChild(image_el(animale1));
+    div.appendChild(image_el(animale2));
   }
   
   function storeQuiz(ur,s)
@@ -190,38 +231,15 @@
     }
     else
     {
-      var openrequest = indexedDB.open("game");
-      console.log("db aperto.");
-      
-      openrequest.onsuccess = function(eve)
-      {
-        var db = eve.target.result;
-        var tx = db.transaction(["quizzes"],"readonly");
-        var store = tx.objectStore("quizzes");
-        var getrequest = store.get(id+1);
-          
-        getrequest.onsuccess = function (e)
-        {
-          var risultati = e.target.result;
-          nextquiz = risultati.quiz_id;
-          nextsolution = risultati.solution;
-          document.getElementById("nextquiztag").value = nextquiz;
-          document.getElementById("nextsolutiontag").value = nextsolution;
-          db.close();
-          tag = document.getElementById("prossimoquiztag");
-          tag.style.display = "inline";
-        }
-      }
+      tag = document.getElementById("prossimoquiztag");
+	  tag.style.display = "inline";
     }
   }
 </script>
 
 <button type="button" id="inizia" name="inizia" onclick="inizia()" >Inizia il Quiz!</button>
 
-<%= audio_tag @verso, preload: "auto", id: "verso" %>
-
-<%= image_tag @animale1.image, title: @animale1.name, onclick: "scelta('#{@animale1.name}')" %>
-<%= image_tag @animale2.image, title: @animale2.name, onclick: "scelta('#{@animale2.name}')" %>
+<div id="elementiquiz"></div>
 
 <div id="risultato" ><%= params[:timeout].to_i %></div>
 
@@ -231,8 +249,6 @@
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
   <%= hidden_field_tag "iniziato", "sì" %>
-  <%= hidden_field_tag "quiz", "", id: "nextquiztag" %>
-  <%= hidden_field_tag "animale", "", id: "nextsolutiontag" %>
   <%= submit_tag "Prossimo Quiz", style: "display:none", id: "prossimoquiztag" %>
 <% end %>
 

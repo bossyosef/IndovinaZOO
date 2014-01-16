@@ -53,7 +53,7 @@ class Quiz < ActiveRecord::Base
 	  numQuiz.to_i.times do
 		  q1 = quizzes.sample											#scelgo a caso un quiz
 		  quiz_arr.push(q1)									#copio l'id del quiz 
-		  animal_arr.push(q1.random_animal.name)	#copio il nome di uno dei due animali scelti a caso
+		  animal_arr.push(q1.random_animal.cry)	#copio il nome di uno dei due animali scelti a caso
 		  quizzes.delete_if {|q| q == q1}		
 	  end
 	  return quiz_arr, animal_arr
