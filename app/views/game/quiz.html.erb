@@ -125,11 +125,13 @@
   function image_el(a)
   {
     var img = document.createElement('img');
+    var temp;
 	img.src = a;
-	img.alt = "getAnimalName(a)";
-	img.title = "getAnimalName(a)";
+	temp = getAnimalName(a);
+	img.alt = temp;
+	img.title = temp
 	var att = document.createAttribute("onclick");
-	att.value = "scelta("+ 'getAnimalName(a)' + ")";
+	att.value = "scelta('"+ temp + "')";
 	img.setAttributeNode(att);
 	return img;
   }
