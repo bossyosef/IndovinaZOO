@@ -1,6 +1,8 @@
 <h1>Game#result</h1>
 <p>Find me in app/views/game/result.html.erb</p>
 <script>
+  var quizzes = [];
+
   document.addEventListener("DOMContentLoaded", function()
   {
     var openrequest = indexedDB.open("game");
@@ -12,7 +14,7 @@
       var db = event.target.result;
       var objectStore = db.transaction("quizzes").objectStore("quizzes");
 
-      var quizzes = [];
+      quizzes = [];
 
       var cursorRequest = objectStore.openCursor()
       cursorRequest.onsuccess = function(event) {
@@ -37,15 +39,15 @@
     //eventualmente aggiungere altri attributi tipo class
     quizContainer.appendChild(img_create(animal1));
     quizContainer.appendChild(img_create(animal2));
-    quizContainer.write(score);
+    quizContainer.innerHTML = score;
   }
 
 	function img_create(src) 
   {
 		  var img = document.createElement('img');
 		  img.src = src;
-		  if (alt!= null) img.alt = getAnimalName(src);
-		  if (title!= null) img.title = getAnimalName(src);
+		  img.alt = getAnimalName(src);
+		  img.title = getAnimalName(src);
 		  return img;
 	}
 
@@ -61,6 +63,7 @@
     for (i=0; i<quizzes.length; i++) {
       quizResult_create(quizzes[i].animal1, quizzes[i].animal2, quizzes[i].score);
     }
+    totalScore();
   }
 
   function totalScore(){
@@ -68,11 +71,13 @@
     for (i=0; i<quizzes.length; i++) {
       res += quizzes[i].score;
     }
-    return document.getElementById("total_score").writeln(res);
+    return document.getElementById("change_total_score").innerHTML = res;
   }
 
 </script>
 
-<div id="total_score" onload=totalScore()>
+<div id="total_score">
 Punteggio Totale:
+  <div id="change_total_score">
+  </div>
 </div>
