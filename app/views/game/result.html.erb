@@ -3,6 +3,8 @@
 <script>
   var quizzes = [];
 
+
+  //Apro una connessione a indexedDB e carico nell'array quizzes tutti i quiz della partita
   document.addEventListener("DOMContentLoaded", function()
   {
     var openrequest = indexedDB.open("game");
@@ -37,15 +39,17 @@
   }
 	, false);
 
+  //inserisce sul sommario dei risultati le immagini degli animali e il punteggio in appositi tag 
   function quizResult_create(animal1, animal2, score) 
   {
     var quizContainer = document.getElementById('result_summary');
-    //eventualmente aggiungere altri attributi tipo class
+//eventualmente aggiungere altri attributi tipo class
     quizContainer.appendChild(img_create(animal1));
     quizContainer.appendChild(img_create(animal2));
     quizContainer.appendChild(p_create(score));
   }
 
+  //crea un tag p con all'interno il testo passato come parametro
   function p_create(text) 
   {
     var p = document.createElement('p');
@@ -53,6 +57,7 @@
     return p;
   }
 
+  //crea un tag img con gli attributi alt e title
 	function img_create(src) 
   {
 		  var img = document.createElement('img');
@@ -62,6 +67,7 @@
 		  return img;
 	}
 
+  //ritorna il nome dell'animale dal path passato come parametro
   function getAnimalName (fullPath) 
   {
     filename = fullPath.replace(/^.*[\\\/]/, '');
@@ -69,6 +75,7 @@
     return name;
   }
 
+  //inserisce tutti i quiz presenti in quizzes
   function insertQuizzesToHTML() {
     document.createElement("div"); //External container
     for (i=0; i<quizzes.length; i++) {
@@ -77,6 +84,7 @@
     totalScore();
   }
 
+  //calcola il punteggio totale e lo inserisce nel div "change_total_score"
   function totalScore(){
 		var res = 0;
     for (i=0; i<quizzes.length; i++) {
@@ -87,14 +95,18 @@
     return document.getElementById("change_total_score").innerHTML = res;
   }
 
+  //inserisce il valore passato come parametro nel div hidden_score
   function insertHiddenScore(score) {
     document.getElementById("hidden_score").value = score;
   }
 
+  //mostra il form per il submit del punteggio sul db server
   function showForm() {
     document.getElementById("hidden_form").style.display = "block";
   }
 
+  //inserisce una frase con punteggio e consiglio di condivisione del gioco nei social network
+  //[funziona solo su Twitter]
   function insertSocialText(score) {
     var stringa = "Ho totalizzato "+score+" punti a IndovinaZOO. Giocaci anche tu su";
     document.getElementsByClassName("social-share-button")[0].setAttribute("data-title", stringa);

@@ -25,10 +25,12 @@ class Animal < ActiveRecord::Base
 	
 	#metodi pubblici
 	
+  #ritorna il path del verso dell'animale passato come parametro
 	def self.get_cry(animal)
 		where(name: animal).first.cry
 	end
 	
+  #ritorna un messaggio di errore se non sono presenti sufficienti animali per creare un quiz
 	def self.verify_presence_of_animals				
 		if !Animal.any?			
 			@@error_message = "Nessun animale trovato."
@@ -41,6 +43,7 @@ class Animal < ActiveRecord::Base
 		end
 	end
 	
+  #verifica se sono presenti almeno 2 animali
 	def self.min_animals_to_make_a_quiz?
 	  if Animal.count >= 2
 		true
