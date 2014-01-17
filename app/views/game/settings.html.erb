@@ -1,9 +1,11 @@
-<h1>Game#settings</h1>
-<p>Find me in app/views/game/settings.html.erb</p>
-
 <script>
   function submitForm()
   {
+    //Questa funzione controlla che non ci siano inconsistenze tra i parametri
+    //inseriti dall'utente e lo stato del DB server, e se i dati inseriti sono
+    //accettati allora fa il submit della form che porta al gioco vero e 
+    //proprio.
+    
     var form = document.getElementById("settings");
     var livello_massimo = <%= @livello_alto %>;
     var numeroquiz = document.getElementById("numeroquiz").value;

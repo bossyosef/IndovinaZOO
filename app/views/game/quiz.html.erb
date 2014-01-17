@@ -1,5 +1,3 @@
-<h1>Game#quiz</h1>
-<p>Find me in app/views/game/quiz.html.erb</p>
 <script>
   var to = <%= params[:timeout].to_i %>;
   var id = <%= params[:id] %>;
@@ -16,6 +14,10 @@
   
   $(document).ready ( function ()
   {
+    //Se siamo nel primo quiz, allora il DB client viene cancellato, viene creato un nuovo
+    //DB client che viene popolato con i dati di ogni quiz della partita e si assegnano alle
+    //variabili globali i valori che servono alle altre funzioni.
+    
     if (id == 1)
     {
       var deleterequest = indexedDB.deleteDatabase("game");
@@ -29,13 +31,16 @@
 		openrequest.onupgradeneeded = function(ev)
 		{
 		  console.log("entrato onupgradeneeded");
+		  
 		  var db = ev.target.result;
 		  var store = db.createObjectStore("quizzes", {keyPath: "number"});
+		  
 		  <% params[:numeroquiz].to_i.times do |id| %>
 			<% if params[:id].to_i == 1 %>
 		  store.put({number: <%= id+1 %>, quiz_id: <%= @quiz_arr[id].id %>, level: <%= @quiz_arr[id].level %> ,animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
 			<% end %>
 		  <% end %>
+		  
 		  <% if params[:id].to_i == 1 %>
 		  risposta_corretta = getAnimalName("<%= @animali_arr[0] %>");
 		  livello = "<%= @quiz_arr[0].level %>";
@@ -46,14 +51,17 @@
 		  animale2name = getAnimalName(animale2);
 		  createQuizObjects();
 		  <% end %>
+		  
 		  console.log("uscito onupgradeneeded");
 		}
 		
 		openrequest.onsuccess = function(eve)
 		{
 		  console.log("entrato on success");
+		  
 		  var db = eve.target.result;
 		  db.close();
+		  
 		  console.log("uscito onsuccess");
 		}
 		
@@ -71,15 +79,20 @@
 	  }
 	} else
 	{
+	  //Se siamo in un quiz diverso dal primo allora si prendono solo i valori necessari per le
+	  //altre funzioni.
+	  
 	  var openrequest = indexedDB.open("game");
 	  console.log("db aperto");
 	  
 	  openrequest.onsuccess = function(e)
 	  {
 		console.log("entrato on success");
+		
 		var db = e.target.result;
 		var tx = db.transaction(["quizzes"],"readonly");
 		var store = tx.objectStore("quizzes");
+		
 		var getrequest = store.get(id);
 		
 		getrequest.onsuccess = function(ev)
@@ -94,6 +107,7 @@
 		  animale2name = getAnimalName(animale2);
 		  db.close();
 		  createQuizObjects();
+		  
 		  console.log("uscito onsuccess");
 		}
 		
@@ -108,6 +122,9 @@
   
   function getAnimalName(fullPath) 
   {
+    //Questa funzione ricava il nome di un animale, capitalizzato correttamente, dal path
+    //dell'immagine o del verso.
+    
     filename = fullPath.replace(/^.*[\\\/]/, '');
     name = filename.split(".")[0];
     return name.charAt(0).toUpperCase() + name.slice(1);
@@ -115,6 +132,9 @@
   
   function audio_el(v)
   {
+    //Questa funzione crea un elemento html audio che contiene il verso dell'animale
+    //che costituisce la risposta corretta a partire dal path del verso.
+    
     var audio = document.createElement('audio');
     audio.id = "verso";
     audio.preload = "auto";
@@ -124,6 +144,9 @@
   
   function image_el(a)
   {
+    //Questa funzione crea un elemento html img che contiene l'immagine di un animale
+    //del quiz a partire dal path dell'immagine.
+    
     var img = document.createElement('img');
     var temp;
 	img.src = a;
@@ -138,6 +161,9 @@
   
   function createQuizObjects()
   {
+    //Questa funzione popola il div principale della pagina con il verso dell'animale
+    //da indovinare e le immagini dei due animali possibili.
+    
     var div = document.getElementById("elementiquiz");
     div.appendChild(audio_el(verso));
     div.appendChild(image_el(animale1));
@@ -146,12 +172,16 @@
   
   function storeQuiz(ur,s)
   {
+    //Questa funzione aggiorna il DB client con la risposta dell'utente e il punteggio che
+    //l'utente ha ottenuto in questo quiz. Se è andato tutto bene chiama quizdopo()
+    
     var request = indexedDB.open("game");
     console.log("db aperto.");
     
     request.onsuccess = function(e) 
     {
 	  console.log("entrato onsuccess.");
+	  
 	  var db = e.target.result;
 	  var tx = db.transaction(["quizzes"],"readwrite");
 	  var store = tx.objectStore("quizzes");
@@ -164,6 +194,7 @@
 		risultati.score = s;
 		var putresult = store.put(risultati);
 		db.close();
+		
 		quizdopo();
 	  }
     }
@@ -177,6 +208,10 @@
   
   function update()
   {
+    //Questa funzione viene chiamata ogni 1000 millisecondi da setInterval e
+    //aggiorna l'utente su quanto tempo rimane per rispondere. Se il timer arriva
+    //a 0 allora chiama timeout()
+    
     to = to - 1;
     if (to != 0)
       document.getElementById("risultato").innerHTML = to;
@@ -186,6 +221,9 @@
   
   function inizia()
   {
+    //Questa funzione viene chiamata quanto l'utente vuole iniziare il quiz, riproduce
+    //l'audio del verso e fa partire il conto alla rovescia.
+    
     if (timeriniziato == 0)
     {
       timeriniziato = 1;
@@ -197,6 +235,10 @@
   
   function scelta(animale)
   {
+    //Questa funzione viene chiamata quando l'utente clicca sull'immagine di un animale.
+    //Pausa l'audio e se la risposta è corretta calcola il punteggio e chiama storeQuiz,
+    //altrimenti chiama storeQuiz con punteggio 0. In ogni caso stampa a video una stringa.
+    
     if (timeriniziato == 1)
     {
       timeriniziato = 2;
@@ -211,10 +253,12 @@
         var punteggio = Math.ceil((to/<%= params[:timeout].to_i %>)*10);
         punteggio *= modificatore;
         punteggio = Math.ceil(punteggio);
+        
         document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
       } else
       {
         var punteggio = 0;
+        
         document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
       }
       storeQuiz(animale,punteggio);
@@ -223,15 +267,22 @@
   
   function timeout()
   {
+    //Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
+    //chiama storeQuiz con punteggio 0
+    
     clearInterval(timerID);
-    document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+    document.getElementById("risultato").innerHTML = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
     storeQuiz("",0);
   }
   
   function quizdopo()
   {
+    //Questa funzione mostra il submit per la form corretta, prossimoquiz se non ha
+    //ancora finito, altrimenti finequiz
+    
     var tag;
-    if ((id == nq) || (nq == 1)) {
+    if ((id == nq) || (nq == 1)) 
+    {
       tag = document.getElementById("finequiztag");
 	  tag.style.display = "inline";
     }
