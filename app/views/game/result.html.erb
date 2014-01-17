@@ -83,6 +83,7 @@
       res += quizzes[i].score;
     }
     insertHiddenScore(res);
+    insertSocialText(res);
     return document.getElementById("change_total_score").innerHTML = res;
   }
 
@@ -92,6 +93,11 @@
 
   function showForm() {
     document.getElementById("hidden_form").style.display = "block";
+  }
+
+  function insertSocialText(score) {
+    var string = "Ho totalizzato "+score+" punti a IndovinaZoo. Giocaci anche tu su ";
+    document.getElementsByClassName("social-share-button")[0].setAttribute("data-title", stringa);
   }
 
 </script>
@@ -112,5 +118,8 @@ Punteggio Totale:
 		<%= f.button :submit %>
 	<% end %>
 </div>
-
+<div id="social">
+  Condividi il risultato con i tuoi amici:
+  <%= social_share_button_tag() %>
+</div>
 <%= link_to "Torna a Home", root_path %>

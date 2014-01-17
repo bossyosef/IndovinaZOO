@@ -67,3 +67,5 @@ gem 'remotipart'
 #gemma per login
 gem 'devise'
 
+#gemma per condivisione social
+gem 'social-share-button'
