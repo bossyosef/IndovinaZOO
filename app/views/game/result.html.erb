@@ -95,11 +95,11 @@
     document.getElementById("hidden_form").style.display = "block";
   }
 
-  function insertSocialText(score) {
+/*  function insertSocialText(score) {
     var stringa = "Ho totalizzato "+score+" punti a IndovinaZOO. Giocaci anche tu su";
     document.getElementsByClassName("social-share-button")[0].setAttribute("data-title", stringa);
   }
-
+*/
 </script>
 <div id="result_summary">
 </div>
@@ -120,6 +120,6 @@ Punteggio Totale:
 </div>
 <div id="social">
   Condividi il risultato con i tuoi amici:
-  <%= social_share_button_tag() %>
+  <%= social_share_button_tag("prova", :url => "www.indovinazoo.it") %>
 </div>
 <%= link_to "Torna a Home", root_path %>
