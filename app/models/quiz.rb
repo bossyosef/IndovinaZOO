@@ -46,8 +46,8 @@ class Quiz < ActiveRecord::Base
 
   #ritorna un array composto da numQuiz Quiz e un array di animali corrispondenti alla risposta esatta dei singoli Quiz
   #se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con le rispettive risposte esatte
-	def self.random_quiz_array(numQuiz,livello)
-	  if(numQuiz.to_i != 0)
+	def self.random_quiz_array(numQuiz,livello,standard)
+	  if(standard == "sì")
 		livelloQuiz = livello.to_i
 		if (livelloQuiz == 0)
 		  quizzes = self.all
