@@ -7,7 +7,7 @@ class Quiz < ActiveRecord::Base
 	validates :level, presence: true,
 					  numericality: { only_integer: true,
 									  greater_than: 0,
-									  less_than_or_equal_to: 10
+									  less_than_or_equal_to: 3
 									}
 		
 	#associazioni
@@ -45,22 +45,32 @@ class Quiz < ActiveRecord::Base
 	end
 
   #ritorna un array composto da numQuiz Quiz e un array di animali corrispondenti alla risposta esatta dei singoli Quiz
+  #se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con le rispettive risposte esatte
 	def self.random_quiz_array(numQuiz,livello)
-	  livelloQuiz = livello.to_i
-	  if (livelloQuiz == 0)
-		quizzes = self.all
+	  if(numQuiz.to_i != 0)
+		livelloQuiz = livello.to_i
+		if (livelloQuiz == 0)
+		  quizzes = self.all
+		else
+		  quizzes = self.where(:level => livelloQuiz)
+		end
+		quiz_arr = []                             #Array di Quiz
+		animal_arr = []                           #Array di Animali (risposte esatte dei Quiz di quiz_arr )
+		numQuiz.to_i.times do
+			q1 = quizzes.sample                     #scelgo a caso un quiz
+			quiz_arr.push(q1)                       #copio l'id del quiz 
+			animal_arr.push(q1.random_animal.cry)   #copio il nome di uno dei due animali scelti a caso
+			quizzes.delete_if {|q| q == q1}		
+		end
+		return quiz_arr, animal_arr
 	  else
-		quizzes = self.where(:level => livelloQuiz)
+		quiz_arr = self.where(:level => 1).sample(4) + self.where(:level => 2).sample(4) + self.where(:level => 3).sample(2)
+		animal_arr = []
+		10.times do |i|
+		  animal_arr.push(quiz_arr[i].random_animal.cry)
+		end
+		return quiz_arr, animal_arr
 	  end
-	  quiz_arr = []                             #Array di Quiz
-	  animal_arr = []                           #Array di Animali (risposte esatte dei Quiz di quiz_arr )
-	  numQuiz.to_i.times do
-		  q1 = quizzes.sample                     #scelgo a caso un quiz
-		  quiz_arr.push(q1)                       #copio l'id del quiz 
-		  animal_arr.push(q1.random_animal.cry)   #copio il nome di uno dei due animali scelti a caso
-		  quizzes.delete_if {|q| q == q1}		
-	  end
-	  return quiz_arr, animal_arr
 	end
 	
   #la funzione restituisce il livello più alto tra i quiz presenti nel DB e un hash contenente l'associazione livello -> numero quiz di quel livello
