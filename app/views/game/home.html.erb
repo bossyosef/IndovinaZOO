@@ -5,8 +5,8 @@
 <div id="mostra_gioco" style="display:none" >
   <%= button_to "Prima imposta le preferenze...", settings_path %>
   <%= form_tag("/quiz/1", method: "post") do %>
-      <%= hidden_field_tag "numeroquiz", "10" %>
-      <%= hidden_field_tag "timeout", "30" %>
+      <%= hidden_field_tag "numeroquiz", "5" %>
+      <%= hidden_field_tag "timeout", "5" %>
       <%= hidden_field_tag "livelloquiz", "0" %>
       <%= hidden_field_tag "standard", "sì" %>
       <%= submit_tag "Gioca adesso!" %>
