@@ -1,0 +1,18 @@
+<script>
+$(document).ready ( function () 
+{
+  /*Questa funzione non permette a un browser senza un'implementazione di IndexedDB
+   *di poter arrivare a una pagina che utilizza IndexedDB; mostra il div che mostra
+   *all'utente una scelta tra browser che hanno IndexedDB.*/
+  
+  if("indexedDB" in window) 
+  {
+	var div = document.getElementById("mostra_gioco");
+	div.style.display = "inline";
+  } else 
+  {
+	var div = document.getElementById("cambio_browser");
+	div.style.display = "inline";
+  }
+});
+</script>
