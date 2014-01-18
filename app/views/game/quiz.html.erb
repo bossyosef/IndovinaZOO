@@ -12,11 +12,13 @@
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
   <%= hidden_field_tag "iniziato", "sì" %>
+  <%= hidden_field_tag "standard", params[:standard] %>
   <%= submit_tag "Prossimo Quiz", style: "display:none", id: "prossimoquiztag" %>
 <% end %>
 
 <%= form_tag("/result", name: "finequiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
   <%= hidden_field_tag "timeout", params[:timeout] %>
+  <%= hidden_field_tag "standard", params[:standard] %>
   <%= submit_tag "Guarda il resoconto!", style: "display:none", id: "finequiztag" %>
 <% end %>
