@@ -1,12 +1,12 @@
 <%= render :partial => "quiz.js.erb" %>
 
+<h1>Quiz <%= params[:id] %></h1>
+
 <button type="button" id="inizia" name="inizia" onclick="inizia()" >Inizia il Quiz!</button>
 
 <div id="elementiquiz"></div>
 
 <div id="risultato" ><%= params[:timeout].to_i %></div>
-
-<p>Quiz <%= params[:id] %></p>
 
 <%= form_tag("/quiz/"+(params[:id].to_i+1).to_s, name: "prossimoquiz", method: "post") do %>
   <%= hidden_field_tag "numeroquiz", params[:numeroquiz] %>
