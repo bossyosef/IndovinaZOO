@@ -64,7 +64,10 @@ class Quiz < ActiveRecord::Base
 		end
 		return quiz_arr, animal_arr
 	  else
-		quiz_arr = self.where(:level => 1).sample(4) + self.where(:level => 2).sample(4) + self.where(:level => 3).sample(2)
+		ar1 = self.where(:level => 1).sample(4)
+		ar2 = self.where(:level => 2).sample(4)
+		ar3 = self.where(:level => 3).sample(2)
+		quiz_arr = ar1 + ar2 + ar3
 		animal_arr = []
 		10.times do |i|
 		  animal_arr.push(quiz_arr[i].random_animal.cry)
