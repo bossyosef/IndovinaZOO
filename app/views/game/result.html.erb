@@ -15,14 +15,18 @@ Punteggio Totale:
   <%= social_share_button_tag("", :url => "www.indovinazoo.it") %>
 </div>
 
-<button type="button" onclick=showForm()>Salva in classifica</button>
-<div style="display:none" id="hidden_form">
-	<%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
+<% if params[:standard] == "sì" %>
+  <button type="button" onclick=showForm()>Salva in classifica</button>
+  <div style="display:none" id="hidden_form">
+	  <%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
 		  :method => 'post' do |f| %>
-		<%= f.input :nickname %>
-		<%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
-		<%= f.button :submit %>
-	<% end %>
-</div>
+		  <%= f.input :nickname %>
+		  <%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
+		  <%= f.button :submit %>
+	  <% end %>
+  </div>
+<% else %>
+  <div style="display:none" id="hidden_score"></div>
+<% end %>
 <br/>
 <%= link_to "Torna a Home", root_path %>
