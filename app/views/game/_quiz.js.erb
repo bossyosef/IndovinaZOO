@@ -213,10 +213,16 @@
     //a 0 allora chiama timeout()
     
     to = to - 1;
-    if (to != 0)
+    if (to != 0) {
       document.getElementById("risultato").innerHTML = to;
-    else
+      document.getElementById("barra_avanzamento").value = to;
+      document.getElementById("valore_avanzamento").innerHTML = to+"s";
+    }
+    else {
       timeout();
+      document.getElementById("barra_avanzamento").value = to;
+      document.getElementById("valore_avanzamento").innerHTML = "SCADUTO";
+    }
   }
   
   function inizia()
