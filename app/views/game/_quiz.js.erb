@@ -1,5 +1,5 @@
 <script>
-  var to = <%= params[:timeout].to_i %>;
+  var to = <%= params[:timeout].to_i*100 %>;
   var id = <%= params[:id] %>;
   var nq = <%= params[:numeroquiz] %>;
   var risposta_corretta;
@@ -214,9 +214,8 @@
     
     to = to - 1;
     if (to != 0) {
-      document.getElementById("risultato").innerHTML = to;
       document.getElementById("barra_avanzamento").value = to;
-      document.getElementById("valore_avanzamento").innerHTML = to+"s";
+      document.getElementById("valore_avanzamento").innerHTML = Math.ceil(to/100)+"s";
     }
     else {
       timeout();
@@ -235,7 +234,7 @@
       timeriniziato = 1;
       var audio = document.getElementById("verso");
       audio.play();
-      timerID = setInterval("update()", 1000);
+      timerID = setInterval("update()", 10);
     }
   }
   
@@ -256,7 +255,7 @@
       {
         var valore = document.getElementById("risultato").innerHTML;
         var modificatore = livello/2+0.5; 
-        var punteggio = Math.ceil((to/<%= params[:timeout].to_i %>)*10);
+        var punteggio = Math.ceil((to/<%= params[:timeout].to_i*100 %>)*10);
         punteggio *= modificatore;
         punteggio = Math.ceil(punteggio);
         
