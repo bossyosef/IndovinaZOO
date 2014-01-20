@@ -214,7 +214,7 @@
     
     to = to - 1;
     if (to != 0) {
-      document.getElementById("barra_avanzamento").value = to;
+      document.getElementById("barra_avanzamento").value = (to*10)/<%= params[:timeout].to_i %>;
       document.getElementById("valore_avanzamento").innerHTML = Math.ceil(to/100)+"s";
     }
     else {
