@@ -274,7 +274,7 @@
   {
     //Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
     //chiama storeQuiz con punteggio 0
-    
+    timeriniziato = 2;
     clearInterval(timerID);
     document.getElementById("risultato").innerHTML = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
     storeQuiz("",0);
