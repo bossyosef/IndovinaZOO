@@ -251,20 +251,26 @@
       var audioe = document.getElementById("verso");
       audioe.pause();
       
-      if (animale == risposta_corretta)
-      {
-        var valore = document.getElementById("risultato").innerHTML;
-        var modificatore = livello/2+0.5; 
-        var punteggio = Math.ceil((to/<%= params[:timeout].to_i*100 %>)*10);
-        punteggio *= modificatore;
-        punteggio = Math.ceil(punteggio);
-        
-        document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
-      } else
-      {
-        var punteggio = Math.ceil(-6/livello);
-        
-        document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
+      if (animale == "_skip") {
+        var punteggio = 0;
+        document.getElementById("risultato").innerHTML = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto";
+        animale = "";
+      }
+      else {
+		    if (animale == risposta_corretta)
+		    {
+		      var modificatore = livello/2+0.5; 
+		      var punteggio = Math.ceil((to/<%= params[:timeout].to_i*100 %>)*10);
+		      punteggio *= modificatore;
+		      punteggio = Math.ceil(punteggio);
+		      
+		      document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
+		    } else
+		    {
+		      var punteggio = Math.ceil(-6/livello);
+		      
+		      document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
+		    }
       }
       storeQuiz(animale,punteggio);
     }

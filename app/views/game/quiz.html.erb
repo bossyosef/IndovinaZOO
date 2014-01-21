@@ -3,6 +3,9 @@
 <h1>Quiz <%= params[:id] %></h1>
 
 <button type="button" id="inizia" name="inizia" onclick="inizia()" >Inizia il Quiz!</button>
+
+<button type="button" id="salta" name="salta" onclick="scelta('_skip')" >Salta risposta</button>
+
 <progress id="barra_avanzamento" value="1000" max="1000"></progress>Tempo: <span id="valore_avanzamento"><%= params[:timeout].to_i %>s</span>
 
 <div id="elementiquiz"></div>
