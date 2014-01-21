@@ -236,6 +236,7 @@
       audio.play();
       timerID = setInterval("update()", 10);
     }
+    document.getElementById("salta").style.display= "inline";
   }
   
   function scelta(animale)
@@ -253,7 +254,7 @@
       
       if (animale == "_skip") {
         var punteggio = 0;
-        document.getElementById("risultato").innerHTML = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto";
+        document.getElementById("risultato").innerHTML = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto.";
         animale = "";
       }
       else {
