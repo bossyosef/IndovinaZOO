@@ -262,9 +262,9 @@
         document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
       } else
       {
-        var punteggio = 0;
+        var punteggio = Math.ceil(-6/livello);
         
-        document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+        document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
       }
       storeQuiz(animale,punteggio);
     }
