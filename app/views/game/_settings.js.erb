@@ -14,9 +14,9 @@ function submitForm()
   var livelli_numero = jQuery.parseJSON('<%=raw @quantita_quiz.to_json %>');
   var numero_quiz_db = <%= @numero_quiz %>;
   
-  if(timeout < 10)
+  if(timeout < 1)
   {
-	document.getElementById("timeout").value = 10;
+	document.getElementById("timeout").value = 5;
   }
   if(numeroquiz == 0)
   {
