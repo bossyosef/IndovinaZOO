@@ -6,7 +6,7 @@ class QuizzesController < ApplicationController
 	def index
 		Animal.verify_presence_of_animals
 		Quiz.verify_presence_of_quizzes
-		@quizzes = Quiz.all
+		@quizzes = Quiz.includes(:quiz_rows, :animals)
 	end
 
 	def show

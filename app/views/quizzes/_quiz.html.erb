@@ -2,11 +2,11 @@
   <td><%= quiz.id %></td>
   <td><%= quiz.level %></td>
   <td>
-	 <% quiz.animals.find_each do |animal| %>
+	 <% quiz.animals.each do |animal| %>
 		<%= animal.name %><%= image_tag animal.image_url, size: "150x120" %> |
 	 <% end %>			
   </td>			
-  <td><%= link_to "Show", quiz %></td>
-  <td><%= link_to "Edit", edit_quiz_path(quiz) %></td>
-  <td><%= link_to "Delete", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
+  <td><%= link_to "Dettagli", quiz %></td>
+  <td><%= link_to "Modifica", edit_quiz_path(quiz) %></td>
+  <td><%= link_to "Elimina", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
 </tr>

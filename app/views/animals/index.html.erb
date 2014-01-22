@@ -4,12 +4,14 @@
 	<strong><%= Animal.error_message %></strong>
 </div>
 
+<%= render 'new_animal_ajax_links' if admin_user_signed_in? %>
+
 <table id="animals_table">
 	<thead>
 		<tr>
-		  <th>Name</th>
-		  <th>Image</th>
-		  <th>Cry</th>		  
+		  <th>Nome</th>
+		  <th>Immagine</th>
+		  <th>Verso</th>		  
 		</tr>
 	</thead>	
 	<tbody>
@@ -18,5 +20,5 @@
 </table>
 
 <br />
-<%= render 'new_animal_ajax_links' if admin_user_signed_in? %>
-<%= link_to "Torna a Home", root_path %>
+
+<%= link_to "Torna alla Home", root_path %>

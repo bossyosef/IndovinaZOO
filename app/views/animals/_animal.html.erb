@@ -2,6 +2,6 @@
   <td><%= animal.name %></td>
   <td><%= image_tag animal.image_url, size: "120x100" %></td>
   <td><%= audio_tag animal.cry_url, controls: true %></td>
-  <td><%= link_to "Show", animal %></td>
+  <td><%= link_to "Dettagli", animal %></td>
   <%= render 'animal_admin_commands', a: animal if admin_user_signed_in? %>
 </tr>

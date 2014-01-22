@@ -1,19 +1,21 @@
+<h2>Dettagli del quiz '<%= @quiz.id %>'</h2>
+
 <p>
 	<strong>Quiz ID:</strong>
 	<%= @quiz.id %>
 </p>
 
 <p>
-	<strong>Level:</strong>
+	<strong>Livello:</strong>
 	<%= @quiz.level %>
 </p>
 
 <ul>
-	<strong>Animals:</strong>
+	<strong>Animali:</strong>
 	<% @quiz.animals.each do |animal| %>		
 		<li><%= animal.name %><%= image_tag animal.image_url, size: "150x120" %></li>
 	<% end %>
 </ul>
 
-<%= link_to "Edit", edit_quiz_path(@quiz) %>
+<%= link_to "Modifica", edit_quiz_path(@quiz) %>
 <%= link_to "Torna a Gestione Quiz", quizzes_path %>
