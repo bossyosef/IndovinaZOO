@@ -18,5 +18,5 @@
 </table>
 
 <br />
-<%= render 'new_animal_ajax_links' %>
+<%= render 'new_animal_ajax_links' if admin_user_signed_in? %>
 <%= link_to "Torna a Home", root_path %>

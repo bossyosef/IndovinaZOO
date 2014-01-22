@@ -49,7 +49,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
-    coolline (0.4.2)
+    coolline (0.4.3)
     debug_inspector (0.0.2)
     debugger (1.6.5)
       columnize (>= 0.3.1)
