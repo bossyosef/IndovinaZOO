@@ -69,3 +69,7 @@ gem 'devise'
 
 #gemma per condivisione social
 gem 'social-share-button'
+
+#gemma per stile
+gem "less-rails"
+gem "twitter-bootstrap-rails"
