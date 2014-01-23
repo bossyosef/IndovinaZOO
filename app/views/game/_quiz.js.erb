@@ -153,6 +153,7 @@
 	temp = getAnimalName(a);
 	img.alt = temp;
 	img.title = temp
+  img.className = "img-rounded";
 	var att = document.createAttribute("onclick");
 	att.value = "scelta('"+ temp + "')";
 	img.setAttributeNode(att);
