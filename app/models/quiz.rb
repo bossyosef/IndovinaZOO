@@ -9,7 +9,7 @@ class Quiz < ActiveRecord::Base
 									  greater_than: 0,
 									  less_than_or_equal_to: 3
 									}
-		
+			
 	#associazioni
 	has_many :quiz_rows, dependent: :destroy
 	has_many :animals, through: :quiz_rows
@@ -98,8 +98,8 @@ class Quiz < ActiveRecord::Base
 	
 	#validazione per quiz duplicati (DA SISTEMARE)
 	def uniqueness_quiz_validation
-		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ params[:quiz][:quiz_rows_attributes][0][:animal_id], params[:quiz][:quiz_rows_attributes][1][:animal_id] ]).group(:quiz_id).having("count(*) > ?", 1)
-			errors.add("Esiste già un quiz con gli animali scelti.")
+		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ 7, 2 ]).group(:quiz_id).having("count(*) > ?", 1)
+			errors[:base] << "Esiste già un quiz con gli animali scelti."
 		end
 	end		
 end
