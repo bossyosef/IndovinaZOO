@@ -5,21 +5,19 @@
 	<strong><%= Animal.error_message %></strong>
 </div>
 
-<table class="table table-striped" id="quiz_table">
+<%= render 'new_quiz_ajax_links' if Animal.min_animals_to_make_a_quiz? %>
+<br />
+
+<table id="quiz_table">
 	<thead>		
 		<tr>
 			<th>ID</th>
-			<th>Level</th>
-			<th>Animals</th>
+			<th>Livello</th>
+			<th>Animali</th>
 		</tr>
 	</thead>
 	<tbody>
 		<%= render @quizzes %>
 	</tbody>		
 </table>
-
-<br />
-
-<%= render 'new_quiz_ajax_links' if Animal.min_animals_to_make_a_quiz? %>
-
-<%= link_to "Torna a Home", root_path %>
+<%= link_to "Torna alla Home", root_path %>
