@@ -1,5 +1,6 @@
 class Quiz < ActiveRecord::Base
-
+	include ActiveModel::Validations
+	
 	#variabili di classe per la gestione degli errori	
 	@@error_message = ""
 	
@@ -10,7 +11,7 @@ class Quiz < ActiveRecord::Base
 									  less_than_or_equal_to: 3
 									}
 	
-	#validate :uniqueness_quiz_validation, on: :create
+	validates_with UniquenessQuizValidator
 	
 	#associazioni
 	has_many :quiz_rows, dependent: :destroy
@@ -19,7 +20,7 @@ class Quiz < ActiveRecord::Base
 	
 	#metodi pubblici per la gestione dei quiz
 
-  #ritorna un messaggio di errore se non sono presenti quiz	
+    #ritorna un messaggio di errore se non sono presenti quiz	
 	def self.verify_presence_of_quizzes		
 		if !Quiz.any?			
 			@@error_message = "Nessun quiz trovato."
@@ -33,6 +34,15 @@ class Quiz < ActiveRecord::Base
 	end
 	
 	#metodi pubblici per il gioco
+	
+	#validazione per quiz duplicati (DA SISTEMARE)
+	def self.is_new_quiz_unique?(animal_ids)
+		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ animal_ids[0], animal_ids[1] ]).group(:quiz_id).having("count(*) > ?", 1).any?			
+			return false;
+		end
+		
+		return true;
+	end		
 	
 	def prepare_quiz(animal_ids)		
 		# setta i valori corretti per le righe del quiz: quiz_id e animal_id.
@@ -87,7 +97,7 @@ class Quiz < ActiveRecord::Base
 	  end
 	end
 	
-  #la funzione restituisce il livello più alto tra i quiz presenti nel DB e un hash contenente l'associazione livello -> numero quiz di quel livello
+    #la funzione restituisce il livello più alto tra i quiz presenti nel DB e un hash contenente l'associazione livello -> numero quiz di quel livello
 	def self.levels_hash #conviene salvare nel db l'associazione livello - numeroquiz
 	  quizzes = self.all.to_a
 	  quiz_count = quizzes.length
@@ -101,16 +111,6 @@ class Quiz < ActiveRecord::Base
 	  end
 	  level_count = Hash[level_arr.group_by{|i| i }.map{|k,v| [k,v.size]}]
 	  return highest_level, level_count, quiz_count
-	end
+	end	
 	
-	#metodi privati
-	
-	private 
-	
-	#validazione per quiz duplicati (DA SISTEMARE)
-	def uniqueness_quiz_validation
-		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ 7, 2 ]).group(:quiz_id).having("count(*) > ?", 1).any?
-			errors[:base] << "Esiste già un quiz con gli animali scelti."
-		end
-	end		
 end
