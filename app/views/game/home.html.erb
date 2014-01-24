@@ -1,32 +1,26 @@
 <%= render :partial => "home.js.erb" %>
 
 <div class="img-container text-center">
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-			<a href="">
-				<img id="immagine_indovinazoo" src="/images/indovinazoo_home.png" class="img-responsive" onclick="submitForm()" title="Clicca per giocare"/>
-			</a>
-			<div class="button_container">
-        <%= button_to "Partita personalizzata", settings_path, class: "btn btn-success pull-left", alt: "Partita personalizzata", title: "Partita personalizzata" %>
-        <%= button_to "Guarda gli animali!", animals_path, class: "btn btn-success pull-right", alt: "Guarda gli animali!", title: "Guarda gli animali!" %>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
+	<a href="">
+		<img id="immagine_indovinazoo" src="/images/indovinazoo_home.png" class="img-responsive" onclick="submitForm()" title="Clicca per giocare"/>
+	</a>
+	<div class="button_container">
+    <%= button_to "Partita personalizzata", settings_path, class: "btn btn-success pull-left", alt: "Partita personalizzata", title: "Partita personalizzata" %>
+    <%= button_to "Guarda gli animali!", animals_path, class: "btn btn-success pull-right", alt: "Guarda gli animali!", title: "Guarda gli animali!" %>
   </div>
 </div>
 
 
-	<div id="mostra_gioco" style="display:none" >
-		<%= form_tag("/quiz/1", id: "form_gioca", name: "gioca", method: "post") do %>
-		    <%= hidden_field_tag "numeroquiz", "10" %>
-		    <%= hidden_field_tag "timeout", "5" %>
-		    <%= hidden_field_tag "livelloquiz", "0" %>
-		    <%= hidden_field_tag "standard", "sì" %>
-		<% end %>
-	</div>
+<div id="mostra_gioco" style="display:none" >
+	<%= form_tag("/quiz/1", id: "form_gioca", name: "gioca", method: "post") do %>
+	    <%= hidden_field_tag "numeroquiz", "10" %>
+	    <%= hidden_field_tag "timeout", "5" %>
+	    <%= hidden_field_tag "livelloquiz", "0" %>
+	    <%= hidden_field_tag "standard", "sì" %>
+	<% end %>
+</div>
 
-	<div id="cambio_browser" style="display:none" >
-		Ci dispiace, ma il browser corrente non è adatto all'esecuzione di IndovinaZOO, noi ti consigliamo Chromium, Google Chrome o Mozilla Firefox.<br/>
-		Nota: per la versione Linux di Mozilla Firefox bisogna installare gstreamer0.10-plugins-ugly (controllare il nome del pacchetto per la propria distribuzione)<br/>
-	</div>
+<div id="cambio_browser" style="display:none" >
+	Ci dispiace, ma il browser corrente non è adatto all'esecuzione di IndovinaZOO, noi ti consigliamo Chromium, Google Chrome o Mozilla Firefox.<br/>
+	Nota: per la versione Linux di Mozilla Firefox bisogna installare gstreamer0.10-plugins-ugly (controllare il nome del pacchetto per la propria distribuzione)<br/>
+</div>
