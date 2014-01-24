@@ -65,6 +65,7 @@ IndovinaZOO::Application.routes.draw do
   get "/result" => "game#error"
   get "ranks/top5"
   post "ranks/create"
+  post "/animali" => "animals#index", as: :animali
          
   resources :animals
   
