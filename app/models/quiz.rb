@@ -9,7 +9,9 @@ class Quiz < ActiveRecord::Base
 									  greater_than: 0,
 									  less_than_or_equal_to: 3
 									}
-			
+	
+	#validate :uniqueness_quiz_validation, on: :create
+	
 	#associazioni
 	has_many :quiz_rows, dependent: :destroy
 	has_many :animals, through: :quiz_rows
@@ -31,6 +33,15 @@ class Quiz < ActiveRecord::Base
 	end
 	
 	#metodi pubblici per il gioco
+	
+	def prepare_quiz(animal_ids)		
+		# setta i valori corretti per le righe del quiz: quiz_id e animal_id.
+		i = 0
+		self.quiz_rows.each do |row|
+			row.animal_id = animal_ids[i]
+			i += 1
+		end
+	end
 	
   #ritorna un animale a caso
 	def random_animal
@@ -98,7 +109,7 @@ class Quiz < ActiveRecord::Base
 	
 	#validazione per quiz duplicati (DA SISTEMARE)
 	def uniqueness_quiz_validation
-		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ 7, 2 ]).group(:quiz_id).having("count(*) > ?", 1)
+		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ 7, 2 ]).group(:quiz_id).having("count(*) > ?", 1).any?
 			errors[:base] << "Esiste già un quiz con gli animali scelti."
 		end
 	end		
