@@ -1,0 +1,201 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: image-url("twitter/bootstrap/glyphicons-halflings.png");
+@iconWhiteSpritePath: image-url("twitter/bootstrap/glyphicons-halflings-white.png");
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+@fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+@fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot?#iefix");
+@fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+@fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+@fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+
+// Font Awesome
+@import "fontawesome/font-awesome";
+
+// Glyphicons
+//@import "twitter/bootstrap/sprites.less";
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+
+
+//------Per tutte le pagine------
+
+body 
+{
+  background-color: #ccffcc;
+  color: #006600;
+  #external-container 
+  {
+    .col-md-10 
+    {
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+  }
+}
+
+
+//------Header------
+.loginbar-text 
+{
+
+  margin-top: 15px;
+  margin-right: 15px;
+  
+  text-decoration: none; 
+
+
+  .dropdown
+  {
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #000000;
+    font-weight: bold; 
+
+		a:link { color: #ff9900; }
+		a:visited {color: #ff9900;}
+		a:hover {color: #0066ff;}
+
+		.login-menu 
+		{
+		  background-color: #247724;
+		}
+		.dropdown-header 
+		{
+      font-size: smaller;
+		  color: #995c00;
+		  padding: 5px 0px 5px 10px;
+		}
+    .divider 
+    {
+      background-color: #003300;
+      border-bottom: #003300;
+    }
+  }
+
+  #login-button {
+    margin: 0px;
+
+  }
+}
+
+#header-container 
+{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: #33aa33;
+  border-radius: 25px;
+}
+
+#img-header-container 
+{
+  margin-left: 20%;
+  max-width: 40%;
+}
+
+
+//------Per la Home------
+#immagine_indovinazoo 
+{
+  max-height: 75%;
+}
+
+.button_container 
+{
+  margin-top: -15px;
+  margin-left: 20%;
+  margin-right: 20%;
+  .btn 
+  {
+    width:50%
+  }
+}
+
+
+//------Per setting (su game)------
+
+.note 
+{
+  color: #ff0000;
+}
+
+.italic 
+{
+  font-style: italic;
+}
+
+.number-field {
+  max-width: 50px;
+}
+
+//------Per pagine quiz (su game)------
+
+.quiz-title-container
+{
+  margin-left: 5%;
+  margin-right: 2%;
+}
+
+
+.quiz-title 
+{
+  float:left;
+}
+
+.quiz-result 
+{
+  float:right;
+  
+  #risultato 
+  {
+    padding-top: 15px;
+    float:left;
+  }
+
+  .form-1 
+  {
+    padding-top: 5px;
+    margin-left: 5px;
+    float:right;
+  }
+
+  .form-2 
+  {
+    padding-top: 5px;
+    margin-left: 5px;
+    float:right;
+  }
+}
+
+#elementiquiz 
+{
+  background-color: #66ff66;
+
+  border: medium;
+  border-style: solid;
+  border-color: #33cc33;
+  border-radius: 15px;
+
+  margin: 0;
+  img 
+  {
+    max-width: 46%;
+    margin: 2%;
+  }
+}
+
+#pulsanti_quiz 
+{
+  margin-top: 10px;
+}
