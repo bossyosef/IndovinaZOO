@@ -1,4 +1,5 @@
-<tr class='animal' id='animal-<%= animal.id %>'>  
+<tr class='animal' id='animal-<%= animal.id %>'>
+  <td><%= animal.id %></td>  
   <td><%= animal.name %></td>
   <td><%= image_tag animal.image_url, size: "120x100" %></td>
   <td><%= audio_tag animal.cry_url, controls: true %></td>

@@ -1,18 +1,3 @@
-$errorDiv = $('#quiz_error_messages');
-$errorDiv.empty();
-
-<% unless @quiz.errors.any? %>
-	 $('#flash_messages').html("<%= escape_javascript raw(flash_display) %>");
-	 $('#quiz_table').append("<%= escape_javascript(render @quiz) %>");		
-	 $('#quiz_form')[0].reset();		
-<% else %>
-	 var $form = $('#quiz_form'),			
-		 $errorList = $('<ul>');
-					
-	 <% @quiz.errors.full_messages.each do |msg| %>
-		$errorList.append('<li><%= escape_javascript msg %></li>');
-	 <% end %>
-	
-	 $errorList.append('</ul>');
-	 $errorDiv.append($errorList);	
-<% end %>
+$('#flash_messages').html("<%= escape_javascript raw(flash_display) %>");
+$('#quiz_table').append("<%= escape_javascript(render @quiz) %>");		
+$('#quiz_form')[0].reset();		

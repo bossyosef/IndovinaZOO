@@ -22,17 +22,23 @@ class QuizzesController < ApplicationController
 	end
 
 	def create
-		@quiz = Quiz.new(quiz_params)		
-		prepare_quiz
 	
+		#creo l'oggetto quiz.
+		@quiz = Quiz.new(quiz_params)
+		
+		#preparo l'oggetto quiz con gli id degli animali scelti.				
+		@quiz.prepare_quiz([ params[:quiz][:quiz_rows_attributes]["0"][:animal_id], params[:quiz][:quiz_rows_attributes]["1"][:animal_id] ])
+			
 		if @quiz.save
 			flash[:success] = "Quiz creato correttamente!"
 			respond_to do |format|
-			  format.html { redirect_to @quiz }
-			  format.js
+				format.html { redirect_to @quiz }
+				format.js
 			end
 		else
-			render 'new'
+			respond_to do |format|
+				format.js { render 'quiz_validation_errors' }
+			end
 		end
 	end
 
@@ -68,17 +74,8 @@ class QuizzesController < ApplicationController
 	end
 
 	private
-
-	def prepare_quiz
-		# setta i valori corretti per le righe del quiz: quiz_id e animal_id.
-		i = 0
-		@quiz.quiz_rows.each do |row|
-			row.animal_id = params[:quiz][:quiz_rows_attributes][i.to_s][:animal_id]
-			i += 1
-		end
-	end
-
-	def set_quiz
+    
+    def set_quiz
 		@quiz = Quiz.find(params[:id])
 	end
 
