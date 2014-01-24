@@ -1,6 +1,6 @@
-<div class="container">
-  <div class="pull-left">
-    <h1 class="header_title">IndovinaZOO 1.0</h1>
+<div class="container" id="header-container">
+  <div class="pull-left" id="img-header-container"">
+    <%= link_to image_tag( 'img_header_cb.png', class: "img-responsive"), root_path %>
   </div>
   <div class="col-md-3 pull-right">
   	<div class="loginbar-text">
@@ -13,11 +13,11 @@
 			<% else %>	
 				<%= link_to "Area riservata", new_admin_user_session_path, class: "loginbar-link" %>
 			<% end %>
-			<div id="flash_messages pull-right">
-				<% flash.each do |key, value| %>
-					<%= content_tag :div, value, id: "flash_#{key}" %>
-				<% end %> 
-			</div>
+		</div>
+  	<div id="flash_messages" class="pull-right">
+	  	<% flash.each do |key, value| %>
+				<%= content_tag :div, value, id: "flash_#{key}" %>
+			<% end %> 
 		</div>
   </div>
 </div>
