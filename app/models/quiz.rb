@@ -11,6 +11,7 @@ class Quiz < ActiveRecord::Base
 									  less_than_or_equal_to: 3
 									}
 	
+	#gestisce la verifica della presenza di quiz duplicati.
 	validates_with UniquenessQuizValidator
 	
 	#associazioni
@@ -34,16 +35,7 @@ class Quiz < ActiveRecord::Base
 	end
 	
 	#metodi pubblici per il gioco
-	
-	#validazione per quiz duplicati (DA SISTEMARE)
-	def self.is_new_quiz_unique?(animal_ids)
-		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ animal_ids[0], animal_ids[1] ]).group(:quiz_id).having("count(*) > ?", 1).any?			
-			return false;
-		end
 		
-		return true;
-	end		
-	
 	def prepare_quiz(animal_ids)		
 		# setta i valori corretti per le righe del quiz: quiz_id e animal_id.
 		i = 0

@@ -20,6 +20,7 @@ $(document).delegate('#new_quiz_link', 'ajax:success', function(e, data, status,
 	$container.replaceWith($responseText)
 	$cancelButton.click(function(e) {
 		$cancelButton.parent().replaceWith($container);
+		$('#quiz_error_messages').empty();
 		e.preventDefault();
 	});
 });

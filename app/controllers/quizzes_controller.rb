@@ -23,13 +23,11 @@ class QuizzesController < ApplicationController
 
 	def create
 	
-		#creo l'oggetto quiz con i parametri scelti dall'utente.
+		#creo l'oggetto quiz.
 		@quiz = Quiz.new(quiz_params)
 		
-		#controllo se non esista già un quiz con gli stessi animali nel DB.
-		animal_ids = [ params[:quiz][:quiz_rows_attributes]["0"][:animal_id], params[:quiz][:quiz_rows_attributes]["1"][:animal_id] ]
-				
-		@quiz.prepare_quiz(animal_ids)
+		#preparo l'oggetto quiz con gli id degli animali scelti.				
+		@quiz.prepare_quiz([ params[:quiz][:quiz_rows_attributes]["0"][:animal_id], params[:quiz][:quiz_rows_attributes]["1"][:animal_id] ])
 			
 		if @quiz.save
 			flash[:success] = "Quiz creato correttamente!"
