@@ -1,8 +1,9 @@
-<tr class='animal' id='animal-<%= animal.id %>'>
-  <td><%= animal.id %></td>  
-  <td><%= animal.name %></td>
-  <td><%= image_tag animal.image_url, size: "120x100" %></td>
-  <td><%= audio_tag animal.cry_url, controls: true %></td>
-  <td><%= link_to "Dettagli", animal %></td>
-  <%= render 'animal_admin_commands', a: animal if admin_user_signed_in? %>
-</tr>
+<div class="animal-element" onclick="document.getElementById('<%= animal.name %>_sound').play()" >
+  <div class="animal-name"><%= animal.name %></div>
+  <%= image_tag animal.image_url, class: "img_animal_list img-circle" %>
+  <%= audio_tag animal.cry_url, id: animal.name+"_sound" %>
+  <div class="animal-link">
+    <%= link_to "Dettagli", animal %>
+    <%= render 'animal_admin_commands', a: animal if admin_user_signed_in? %>
+  </div>
+</div>

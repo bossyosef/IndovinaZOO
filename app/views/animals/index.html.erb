@@ -1,25 +1,24 @@
-<h1>Gestione animali</h1>
+<div class="container" id="animal-list-container">
 
-<div id="animal_error_messages">
-	<strong><%= Animal.error_message %></strong>
+	<% if admin_user_signed_in? %>
+		<h1>Gestione animali</h1>
+	<% else %>
+		<h1>Elenco animali</h1>
+	<% end %>
+
+  <div class="row">
+		<div id="animal-list" class="col-md-6">
+			<%= render @animals %>
+			<%= link_to "Torna alla Home", root_path, class: "btn btn-success"%>
+		</div>
+<!--
+		<div id="new-animal" class="col-md-6">
+			<div id="animal_error_messages">
+				<strong><%= Animal.error_message %></strong>
+			</div>
+
+			<%= render 'new_animal_ajax_links' if admin_user_signed_in? %>
+		</div> 
+-->
+  </div>
 </div>
-
-<%= render 'new_animal_ajax_links' if admin_user_signed_in? %>
-
-<table id="animals_table">
-	<thead>
-		<tr>
-		  <th>ID</th>
-		  <th>Nome</th>
-		  <th>Immagine</th>
-		  <th>Verso</th>		  
-		</tr>
-	</thead>	
-	<tbody>
-	    <%= render @animals %>
-	</tbody>
-</table>
-
-<br />
-
-<%= link_to "Torna alla Home", root_path %>
