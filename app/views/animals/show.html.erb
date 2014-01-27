@@ -1,10 +1,4 @@
-<h2>Dettagli di '<%= @animal.name %>'</h2>
-
-<p>
-	<strong>ID:</strong>
-	<%= @animal.id %>
-</p>
-
+<h2>Dettagli di <%= @animal.name %></h2>
 <p>
 	<strong>Nome:</strong>
 	<%= @animal.name %>
@@ -30,6 +24,9 @@
 	<%= @animal.cry_identifier %>
 </p>
 
-<%= link_to "Modifica", edit_animal_path(@animal) %> |
-<%= link_to "Torna a Gestione", animals_path %>
+<% if admin_user_signed_in? %>
+  <%= link_to "Modifica", edit_animal_path(@animal), class: "btn btn-success" %>
+  <%= link_to "Torna a Gestione", animals_path, class: "btn btn-success" %>
+<% end %>
+<%= link_to "Torna a Elenco", animals_path, class: "btn btn-success" %>
 

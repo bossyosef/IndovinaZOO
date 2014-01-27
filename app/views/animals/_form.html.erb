@@ -2,12 +2,13 @@
 	
 	<div id="animal_error_messages"></div>
 			
-	<fieldset>
+	<fieldset class="form-new-animal">
 		<legend>Dati nuovo animale:</legend>
-		<%= f.input :name %>
-		<%= f.input :image, as: :file %>	
-		<%= f.input :cry, as: :file %>				
+    <div class="animal-input"><%= f.input :name %></div>
+    <div class="animal-input"><%= f.input :image, as: :file %></div>
+		<div class="animal-input"><%= f.input :cry, as: :file %></div>		
 	</fieldset>		
 		
-	<%= f.button :submit %>	
+	<%= f.button :submit, class: "btn btn-success"%>
+
 <% end %>

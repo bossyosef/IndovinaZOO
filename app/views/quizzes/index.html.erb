@@ -1,23 +1,15 @@
-<h1>Gestione quiz</h1>
-
-<div id="quiz_error_messages">
-	<strong><%= Quiz.error_message %></strong><br />
-	<strong><%= Animal.error_message %></strong>
+<div class="container" id="list-container">
+  <h1>Gestione quiz<%= link_to "Torna alla Home", root_path, class: "btn btn-success home-button"%></h1>
+  <div class="row">
+		<div id="element-list" class="col-md-6">
+      <%= render @quizzes %>
+		</div>
+    <div id="new-element" class="col-md-6">
+  		<div id="quiz_error_messages">
+	  		<strong><%= Quiz.error_message %></strong><br />
+		  	<strong><%= Animal.error_message %></strong>
+  		</div>
+      <%= render 'new_quiz_ajax_links' if Animal.min_animals_to_make_a_quiz? %>
+    </div>
+  </div>
 </div>
-
-<%= render 'new_quiz_ajax_links' if Animal.min_animals_to_make_a_quiz? %>
-<br />
-
-<table id="quiz_table">
-	<thead>		
-		<tr>
-			<th>ID</th>
-			<th>Livello</th>
-			<th>Animali</th>
-		</tr>
-	</thead>
-	<tbody>
-		<%= render @quizzes %>
-	</tbody>		
-</table>
-<%= link_to "Torna alla Home", root_path %>

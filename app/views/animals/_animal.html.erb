@@ -1,8 +1,8 @@
-<div class="animal-element" onclick="document.getElementById('<%= animal.name %>_sound').play()" >
-  <div class="animal-name"><%= animal.name %></div>
-  <%= image_tag animal.image_url, class: "img_animal_list img-circle" %>
+<div class="animal-element" title="Clicca per sentire il verso">
+  <div class="animal-name" onclick="document.getElementById('<%= animal.name %>_sound').play()"><%= animal.name %></div>
+  <%= image_tag animal.image_url, class: "img_animal_list img-circle", onclick: "document.getElementById('"+animal.name+"_sound').play()" %>
   <%= audio_tag animal.cry_url, id: animal.name+"_sound" %>
-  <div class="animal-link">
+  <div class="animal-link" onclick=prevent_default>
     <%= link_to "Dettagli", animal %>
     <%= render 'animal_admin_commands', a: animal if admin_user_signed_in? %>
   </div>

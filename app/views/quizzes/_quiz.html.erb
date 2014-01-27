@@ -1,12 +1,16 @@
-<tr>
-  <td><%= quiz.id %></td>
-  <td><%= quiz.level %></td>
-  <td>
-	 <% quiz.animals.each do |animal| %>
-		<%= animal.name %><%= image_tag animal.image_url, size: "150x120" %> |
-	 <% end %>			
-  </td>			
-  <td><%= link_to "Dettagli", quiz %></td>
-  <td><%= link_to "Modifica", edit_quiz_path(quiz) %></td>
-  <td><%= link_to "Elimina", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %></td>
-</tr>
+<div class="quiz-element">
+  <span class="quiz-animals-names">
+    <div class="quiz-name"><%= quiz.animals.first.name %></div>
+    <div class="quiz-name"><%= quiz.animals.last.name %></div>
+  </span>
+  <span class="quiz-animals-images">
+    <span class="quiz-image"><%= image_tag quiz.animals.last.image_url %></span>
+    <span class="quiz-image"><%= image_tag quiz.animals.first.image_url %></span>
+  </span>
+  <div class="quiz-link pull-right">
+    <%= link_to "Dettagli", quiz %>
+    <%= link_to "Modifica", edit_quiz_path(quiz) %>
+    <%= link_to "Elimina", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %>
+  </div>
+</div>
+

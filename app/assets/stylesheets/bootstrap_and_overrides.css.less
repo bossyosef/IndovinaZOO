@@ -46,6 +46,12 @@ body
   }
 }
 
+.home-button    /*  usato su index/animal  */
+{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 
 //------Header------
 .loginbar-text 
@@ -200,26 +206,36 @@ body
   margin-top: 10px;
 }
 
-//------Per animal index------
+//------Per animal e quiz index------
 
-#animal-list-container
+#list-container
 {
-  #animal-list
+  #element-list
   {
     float: left;
   }
 
-  #new-animal
+  #new-element
   {
     float:right;
   }
+}
 
-  .col-md-6
+
+  /*solo se  su schermo grande*/
+@media screen
+{
+  #list-container
   {
-    width: 40%;
+    .col-md-6
+    {
+      width: 45%;
+    }
   }
 }
 
+
+//------Per animal index------
 
 .animal-element
 {
@@ -266,7 +282,71 @@ body
   }
 }
 
-.new-animal
+.form-new-animal 
 {
+  .animal-input 
+  {
+    margin-bottom: 20px;
+  }
 }
 
+//------Per quiz index------
+
+.quiz-element 
+{
+  padding: 5px 10px 5px 5px;
+  line-height: 50px;
+/*  vertical-align: middle;  */
+  transition: line-height 0.5s;
+  -webkit-transition: line-height 0.5s;
+
+  .quiz-animals-names
+  {
+    display: inline;
+    float: left;
+    font-weight: bold;
+    width: 5%;
+    min-width: 80px;
+
+  }
+  
+  .quiz-animals-images
+  {
+    display: inline;
+  }
+
+  .quiz-name
+  {
+    line-height: 25px;
+  }
+
+  .quiz-image
+  {
+    img 
+    {
+      height: 35px;
+/*      transition: height 0.5s;
+      -webkit-transition: height 0.5s;  */
+    }
+  }
+
+  .quiz-link
+  {
+    vertical-align: middle;
+    display:inline;
+  } 
+
+}
+
+.quiz-element:hover
+{
+  background-color: #94ff94;
+  border-radius: 10px;
+
+  .quiz-name
+  {
+    color: red;
+    text-transform: uppercase;
+
+  }
+}
