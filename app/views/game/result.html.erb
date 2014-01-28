@@ -9,11 +9,11 @@
 </div>
 
 <div id="total_result_summary">
-	<div id="total_score">
+	<h3 id="total_score">
 	Punteggio Totale:
 		<span id="change_total_score">
 		</span>
-	</div>
+	</h3>
 
 	<div id="social">
 		Condividi il risultato con i tuoi amici:
@@ -21,13 +21,13 @@
 	</div>
 
 	<% if params[:standard] == "sì" %>
-		<button type="button" onclick=showForm()>Salva in classifica</button>
+		<button type="button" onclick=showForm() id="save-rank" class="btn btn-success">Salva in classifica</button>
 		<div style="display:none" id="hidden_form">
 			<%= simple_form_for @rank, :url => url_for(:action => 'create', :controller => 'ranks'),
 				:method => 'post' do |f| %>
 				<%= f.input :nickname %>
 				<%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
-				<%= f.button :submit %>
+				<%= f.button :submit, value: "Inserisci punteggio" %>
 			<% end %>
 		</div>
 	<% else %>
