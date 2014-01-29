@@ -10,9 +10,14 @@ class GameController < ApplicationController
   end
 
   def quiz
-	  if !params[:iniziato]
-	    @quiz_arr, @animali_arr = Quiz.random_quiz_array(params[:numeroquiz],params[:livelloquiz],params[:standard])
-	  end
+	if !params[:iniziato]
+	  @quiz_arr, @animali_arr = Quiz.random_quiz_array(params[:numeroquiz],params[:livelloquiz],params[:standard])
+	  gon.quiz_arr = @quiz_arr
+	  gon.animali_arr = @animali_arr
+	end
+	gon.to = params[:timeout].to_i*100
+	gon.id = params[:id]
+	gon.nq = params[:numeroquiz]
   end
 
   def result

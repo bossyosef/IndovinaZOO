@@ -1,7 +1,7 @@
 <script>
-  var to = <%= params[:timeout].to_i*100 %>;
-  var id = <%= params[:id] %>;
-  var nq = <%= params[:numeroquiz] %>;
+  var to = gon.to;
+  var id = gon.id;
+  var nq = gon.nq;
   var risposta_corretta;
   var livello;
   var animale1;
