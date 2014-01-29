@@ -79,8 +79,8 @@
 	  }
 	} else
 	{
-	  //Se siamo in un quiz diverso dal primo allora si prendono solo i valori necessari per le
-	  //altre funzioni.
+	  /*Se siamo in un quiz diverso dal primo allora si prendono solo i valori necessari per le
+	   *altre funzioni.*/
 	  
 	  var openrequest = indexedDB.open("game");
 	  console.log("db aperto");
@@ -122,8 +122,8 @@
   
   function getAnimalName(fullPath) 
   {
-    //Questa funzione ricava il nome di un animale, capitalizzato correttamente, dal path
-    //dell'immagine o del verso.
+    /*Questa funzione ricava il nome di un animale, capitalizzato correttamente, dal path
+     *dell'immagine o del verso.*/
     
     filename = fullPath.replace(/^.*[\\\/]/, '');
     name = filename.split(".")[0];
@@ -132,8 +132,8 @@
   
   function audio_el(v)
   {
-    //Questa funzione crea un elemento html audio che contiene il verso dell'animale
-    //che costituisce la risposta corretta a partire dal path del verso.
+    /*Questa funzione crea un elemento html audio che contiene il verso dell'animale
+     *che costituisce la risposta corretta a partire dal path del verso.*/
     
     var audio = document.createElement('audio');
     audio.id = "verso";
@@ -144,8 +144,8 @@
   
   function image_el(a)
   {
-    //Questa funzione crea un elemento html img che contiene l'immagine di un animale
-    //del quiz a partire dal path dell'immagine.
+    /*Questa funzione crea un elemento html img che contiene l'immagine di un animale
+     *del quiz a partire dal path dell'immagine.*/
     
     var img = document.createElement('img');
     var temp;
@@ -162,8 +162,8 @@
   
   function createQuizObjects()
   {
-    //Questa funzione popola il div principale della pagina con il verso dell'animale
-    //da indovinare e le immagini dei due animali possibili.
+    /*Questa funzione popola il div principale della pagina con il verso dell'animale
+     *da indovinare e le immagini dei due animali possibili.*/
     
     var div = document.getElementById("elementiquiz");
     div.appendChild(audio_el(verso));
@@ -173,8 +173,8 @@
   
   function storeQuiz(ur,s)
   {
-    //Questa funzione aggiorna il DB client con la risposta dell'utente e il punteggio che
-    //l'utente ha ottenuto in questo quiz. Se è andato tutto bene chiama quizdopo()
+    /*Questa funzione aggiorna il DB client con la risposta dell'utente e il punteggio che
+     *l'utente ha ottenuto in questo quiz. Se è andato tutto bene chiama quizdopo().*/
     
     var request = indexedDB.open("game");
     console.log("db aperto.");
@@ -209,9 +209,9 @@
   
   function update()
   {
-    //Questa funzione viene chiamata ogni 1000 millisecondi da setInterval e
-    //aggiorna l'utente su quanto tempo rimane per rispondere. Se il timer arriva
-    //a 0 allora chiama timeout()
+    /*Questa funzione viene chiamata ogni 1000 millisecondi da setInterval e
+     *aggiorna l'utente su quanto tempo rimane per rispondere. Se il timer arriva
+     *a 0 allora chiama timeout().*/
     
     to = to - 1;
     if (to != 0) {
@@ -227,8 +227,8 @@
   
   function inizia()
   {
-    //Questa funzione viene chiamata quanto l'utente vuole iniziare il quiz, riproduce
-    //l'audio del verso e fa partire il conto alla rovescia.
+    /*Questa funzione viene chiamata quanto l'utente vuole iniziare il quiz, riproduce
+     *l'audio del verso e fa partire il conto alla rovescia.*/
     
     if (timeriniziato == 0)
     {
@@ -242,9 +242,9 @@
   
   function scelta(animale)
   {
-    //Questa funzione viene chiamata quando l'utente clicca sull'immagine di un animale.
-    //Pausa l'audio e se la risposta è corretta calcola il punteggio e chiama storeQuiz,
-    //altrimenti chiama storeQuiz con punteggio 0. In ogni caso stampa a video una stringa.
+    /*Questa funzione viene chiamata quando l'utente clicca sull'immagine di un animale.
+     *Pausa l'audio e se la risposta è corretta calcola il punteggio e chiama storeQuiz,
+     *altrimenti chiama storeQuiz con punteggio 0. In ogni caso stampa a video una stringa.*/
     
     if (timeriniziato == 1)
     {
@@ -280,8 +280,9 @@
   
   function timeout()
   {
-    //Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
-    //chiama storeQuiz con punteggio 0
+    /*Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
+     *chiama storeQuiz con punteggio 0.*/
+	
     timeriniziato = 2;
     clearInterval(timerID);
     document.getElementById("risultato").innerHTML = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
@@ -290,8 +291,8 @@
   
   function quizdopo()
   {
-    //Questa funzione mostra il submit per la form corretta, prossimoquiz se non ha
-    //ancora finito, altrimenti finequiz
+    /*Questa funzione mostra il submit per la form corretta, prossimoquiz se non ha
+     *ancora finito, altrimenti finequiz.*/
     
     var tag;
     if ((id == nq) || (nq == 1)) 
