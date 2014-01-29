@@ -3,7 +3,11 @@
   <%= image_tag animal.image_url, class: "img_animal_list img-circle", onclick: "document.getElementById('"+animal.name+"_sound').play()" %>
   <%= audio_tag animal.cry_url, id: animal.name+"_sound" %>
   <div class="animal-link" onclick=prevent_default>
-    <%= link_to "Dettagli", animal %>
+    <% if admin_user_signed_in? %>
+      <%= link_to "Dettagli", animal %>
+    <% else %>
+      <%= link_to "Guarda Animale", animal %>
+    <% end %>
     <%= render 'animal_admin_commands', a: animal if admin_user_signed_in? %>
   </div>
 </div>

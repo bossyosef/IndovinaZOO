@@ -27,7 +27,7 @@
 				:method => 'post' do |f| %>
 				<%= f.input :nickname %>
 				<%= f.input :score, :as => :hidden, :input_html => { :id => "hidden_score" } %>
-				<%= f.button :submit, value: "Inserisci punteggio" %>
+				<%= f.button :submit, value: "Inserisci punteggio", class: "btn btn-success" %>
 			<% end %>
 		</div>
 	<% else %>
