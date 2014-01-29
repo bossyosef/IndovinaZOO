@@ -71,11 +71,10 @@ class Quiz < ActiveRecord::Base
 		animal_arr = []                           #Array di Animali (risposte esatte dei Quiz di quiz_arr )
 		numQuiz.to_i.times do
 			q1 = quizzes.sample                     #scelgo a caso un quiz
-			quiz_arr.push(q1.to_json)                       #copio l'id del quiz 
+			quiz_arr.push(q1)                       #copio l'id del quiz 
 			animal_arr.push(q1.random_animal.cry)   #copio il nome di uno dei due animali scelti a caso
 			quizzes.delete_if {|q| q == q1}		
 		end
-		quiz_arr = quiz_arr.to_json
 		return quiz_arr, animal_arr
 	  else
 		ar1 = self.where(:level => 1).sample(4)
@@ -86,7 +85,6 @@ class Quiz < ActiveRecord::Base
 		10.times do |i|
 		  animal_arr.push(quiz_arr[i].random_animal.cry)
 		end
-		quiz_arr = quiz_arr.to_json
 		return quiz_arr, animal_arr
 	  end
 	end
