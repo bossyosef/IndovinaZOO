@@ -15,13 +15,13 @@
   
   $(document).ready ( function ()
   {
-    /*Se siamo nel primo quiz, allora il DB client viene cancellato, viene creato un nuovo
-     *db client che viene popolato con i dati di ogni quiz della partita e si assegnano alle
-     *variabili globali i valori che servono alle altre funzioni.*/
-    
-    if (id == 1)
-    {
-      var deleterequest = indexedDB.deleteDatabase("game");
+	/*Se siamo nel primo quiz, allora il DB client viene cancellato, viene creato un nuovo
+	 *db client che viene popolato con i dati di ogni quiz della partita e si assegnano alle
+	 *variabili globali i valori che servono alle altre funzioni.*/
+	
+	if (id == 1)
+	{
+	  var deleterequest = indexedDB.deleteDatabase("game");
 	  console.log("db cancellato");
 	  
 	  deleterequest.onsuccess = function(e)
@@ -36,22 +36,19 @@
 		  var db = ev.target.result;
 		  var store = db.createObjectStore("quizzes", {keyPath: "number"});
 		  
-		  <% params[:numeroquiz].to_i.times do |id| %>
-			<% if params[:id].to_i == 1 %>
-		  store.put({number: <%= id+1 %>, quiz_id: <%= @quiz_arr[id].id %>, level: <%= @quiz_arr[id].level %> ,animal1: "<%= @quiz_arr[id].animals[0].image %>", animal2: "<%= @quiz_arr[id].animals[1].image %>", solution: "<%= @animali_arr[id] %>", user_response: "", score: ""});
-			<% end %>
-		  <% end %>
+		  for(var i=0;i<nq;i++)
+		  {
+			store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.quiz_arr[i].animals[0].image, animal2: gon.quiz_arr[i].animals[1].image, solution: gon.animali_arr[i], user_response: "", score: ""});
+		  }
 		  
-		  <% if params[:id].to_i == 1 %>
-		  risposta_corretta = getAnimalName("<%= @animali_arr[0] %>");
-		  livello = "<%= @quiz_arr[0].level %>";
-		  animale1 = "<%= @quiz_arr[0].animals[0].image %>";
-		  animale2 = "<%= @quiz_arr[0].animals[1].image %>";
-		  verso = "<%= @animali_arr[0] %>";
+		  risposta_corretta = getAnimalName(gon.animali_arr[0]);
+		  livello = gon.quiz_arr[0].level;
+		  animale1 = gon.quiz_arr[0].animals[0].image;
+		  animale2 = gon.quiz_arr[0].animals[1].image;
+		  verso = gon.animali_arr[0];
 		  animale1name = getAnimalName(animale1);
 		  animale2name = getAnimalName(animale2);
 		  createQuizObjects();
-		  <% end %>
 		  
 		  console.log("uscito onupgradeneeded");
 		}
@@ -123,33 +120,33 @@
   
   function getAnimalName(fullPath) 
   {
-    /*Questa funzione ricava il nome di un animale, capitalizzato correttamente, dal path
-     *dell'immagine o del verso.*/
-    
-    filename = fullPath.replace(/^.*[\\\/]/, '');
-    name = filename.split(".")[0];
-    return name.charAt(0).toUpperCase() + name.slice(1);
+	/*Questa funzione ricava il nome di un animale, capitalizzato correttamente, dal path
+	 *dell'immagine o del verso.*/
+	
+	filename = fullPath.replace(/^.*[\\\/]/, '');
+	name = filename.split(".")[0];
+	return name.charAt(0).toUpperCase() + name.slice(1);
   }
   
   function audio_el(v)
   {
-    /*Questa funzione crea un elemento html audio che contiene il verso dell'animale
-     *che costituisce la risposta corretta a partire dal path del verso.*/
-    
-    var audio = document.createElement('audio');
-    audio.id = "verso";
-    audio.preload = "auto";
-    audio.src = v;
-    return audio;
+	/*Questa funzione crea un elemento html audio che contiene il verso dell'animale
+	 *che costituisce la risposta corretta a partire dal path del verso.*/
+	
+	var audio = document.createElement("audio");
+	audio.id = "verso";
+	audio.preload = "auto";
+	audio.src = v;
+	return audio;
   }
   
   function image_el(a)
   {
-    /*Questa funzione crea un elemento html img che contiene l'immagine di un animale
-     *del quiz a partire dal path dell'immagine.*/
-    
-    var img = document.createElement('img');
-    var temp;
+	/*Questa funzione crea un elemento html img che contiene l'immagine di un animale
+	 *del quiz a partire dal path dell'immagine.*/
+	
+	var img = document.createElement("img");
+	var temp;
 	img.src = a;
 	temp = getAnimalName(a);
 	img.alt = temp;
@@ -163,25 +160,25 @@
   
   function createQuizObjects()
   {
-    /*Questa funzione popola il div principale della pagina con il verso dell'animale
-     *da indovinare e le immagini dei due animali possibili.*/
-    
-    var div = document.getElementById("elementiquiz");
-    div.appendChild(audio_el(verso));
-    div.appendChild(image_el(animale1));
-    div.appendChild(image_el(animale2));
+	/*Questa funzione popola il div principale della pagina con il verso dell'animale
+	 *da indovinare e le immagini dei due animali possibili.*/
+	
+	var div = document.getElementById("elementiquiz");
+	div.appendChild(audio_el(verso));
+	div.appendChild(image_el(animale1));
+	div.appendChild(image_el(animale2));
   }
   
   function storeQuiz(ur,s)
   {
-    /*Questa funzione aggiorna il DB client con la risposta dell'utente e il punteggio che
-     *l'utente ha ottenuto in questo quiz. Se è andato tutto bene chiama quizdopo().*/
-    
-    var request = indexedDB.open("game");
-    console.log("db aperto.");
-    
-    request.onsuccess = function(e) 
-    {
+	/*Questa funzione aggiorna il DB client con la risposta dell'utente e il punteggio che
+	 *l'utente ha ottenuto in questo quiz. Se è andato tutto bene chiama quizdopo().*/
+	
+	var request = indexedDB.open("game");
+	console.log("db aperto.");
+	
+	request.onsuccess = function(e) 
+	{
 	  console.log("entrato onsuccess.");
 	  
 	  var db = e.target.result;
@@ -199,112 +196,114 @@
 		
 		quizdopo();
 	  }
-    }
-    
-    request.onerror = function (e)
-    {
-      console.log("entrato onerror.");
-      console.log(request.errorCode);
-    }
+	}
+	
+	request.onerror = function (e)
+	{
+	  console.log("entrato onerror.");
+	  console.log(request.errorCode);
+	}
   }
   
   function update()
   {
-    /*Questa funzione viene chiamata ogni 1000 millisecondi da setInterval e
-     *aggiorna l'utente su quanto tempo rimane per rispondere. Se il timer arriva
-     *a 0 allora chiama timeout().*/
-    
-    to = to - 1;
-    if (to != 0) {
-      document.getElementById("barra_avanzamento").value = (to*10)/timeoutstatico;
-      document.getElementById("valore_avanzamento").innerHTML = Math.ceil(to/100)+"s";
-    }
-    else {
-      timeout();
-      document.getElementById("barra_avanzamento").value = to;
-      document.getElementById("valore_avanzamento").innerHTML = "SCADUTO";
-    }
+	/*Questa funzione viene chiamata ogni 1000 millisecondi da setInterval e
+	 *aggiorna l'utente su quanto tempo rimane per rispondere. Se il timer arriva
+	 *a 0 allora chiama timeout().*/
+	
+	to = to - 1;
+	
+	if (to != 0) 
+	{
+	  document.getElementById("barra_avanzamento").value = (to*10)/timeoutstatico;
+	  document.getElementById("valore_avanzamento").innerHTML = Math.ceil(to/100)+"s";
+	} else 
+	{
+	  timeout();
+	  document.getElementById("barra_avanzamento").value = to;
+	  document.getElementById("valore_avanzamento").innerHTML = "SCADUTO";
+	}
   }
   
   function inizia()
   {
-    /*Questa funzione viene chiamata quanto l'utente vuole iniziare il quiz, riproduce
-     *l'audio del verso e fa partire il conto alla rovescia.*/
-    
-    if (timeriniziato == 0)
-    {
-      timeriniziato = 1;
-      var audio = document.getElementById("verso");
-      audio.play();
-      timerID = setInterval("update()", 10);
-    }
-    document.getElementById("salta").style.display= "inline";
+	/*Questa funzione viene chiamata quanto l'utente vuole iniziare il quiz, riproduce
+	 *l'audio del verso e fa partire il conto alla rovescia.*/
+	
+	if (timeriniziato == 0)
+	{
+	  timeriniziato = 1;
+	  var audio = document.getElementById("verso");
+	  audio.play();
+	  timerID = setInterval("update()", 10);
+	}
+	document.getElementById("salta").style.display= "inline";
   }
   
   function scelta(animale)
   {
-    /*Questa funzione viene chiamata quando l'utente clicca sull'immagine di un animale.
-     *Pausa l'audio e se la risposta è corretta calcola il punteggio e chiama storeQuiz,
-     *altrimenti chiama storeQuiz con punteggio 0. In ogni caso stampa a video una stringa.*/
-    
-    if (timeriniziato == 1)
-    {
-      timeriniziato = 2;
-      clearInterval(timerID);
-      var audioe = document.getElementById("verso");
-      audioe.pause();
-      
-      if (animale == "_skip") {
-        var punteggio = 0;
-        document.getElementById("risultato").innerHTML = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto.";
-        animale = "";
-      }
-      else {
-		    if (animale == risposta_corretta)
-		    {
-		      var modificatore = livello/2+0.5; 
-		      var punteggio = Math.ceil((to/timeoutstatico*100)*10);
-		      punteggio *= modificatore;
-		      punteggio = Math.ceil(punteggio);
-		      
-		      document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
-		    } else
-		    {
-		      var punteggio = Math.ceil(-6/livello);
-		      
-		      document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
-		    }
-      }
-      storeQuiz(animale,punteggio);
-    }
+	/*Questa funzione viene chiamata quando l'utente clicca sull'immagine di un animale.
+	 *Pausa l'audio e se la risposta è corretta calcola il punteggio e chiama storeQuiz,
+	 *altrimenti chiama storeQuiz con punteggio 0. In ogni caso stampa a video una stringa.*/
+	
+	if (timeriniziato == 1)
+	{
+	  timeriniziato = 2;
+	  clearInterval(timerID);
+	  var audioe = document.getElementById("verso");
+	  audioe.pause();
+	  
+	  if (animale == "_skip") {
+		var punteggio = 0;
+		document.getElementById("risultato").innerHTML = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto.";
+		animale = "";
+	  }
+	  else {
+			if (animale == risposta_corretta)
+			{
+			  var modificatore = livello/2+0.5; 
+			  var punteggio = Math.ceil((to/timeoutstatico*100)*10);
+			  punteggio *= modificatore;
+			  punteggio = Math.ceil(punteggio);
+			  
+			  document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
+			} else
+			{
+			  var punteggio = Math.ceil(-6/livello);
+			  
+			  document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
+			}
+	  }
+	  storeQuiz(animale,punteggio);
+	}
   }
   
   function timeout()
   {
-    /*Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
-     *chiama storeQuiz con punteggio 0.*/
+	/*Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
+	 *chiama storeQuiz con punteggio 0.*/
 	
-    timeriniziato = 2;
-    clearInterval(timerID);
-    document.getElementById("risultato").innerHTML = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
-    storeQuiz("",0);
+	timeriniziato = 2;
+	clearInterval(timerID);
+	document.getElementById("risultato").innerHTML = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+	storeQuiz("",0);
   }
   
   function quizdopo()
   {
-    /*Questa funzione mostra il submit per la form corretta, prossimoquiz se non ha
-     *ancora finito, altrimenti finequiz.*/
-    
-    var tag;
-    if ((id == nq) || (nq == 1)) 
-    {
-      tag = document.getElementById("finequiztag");
+	/*Questa funzione mostra il submit per la form corretta, prossimoquiz se non ha
+	 *ancora finito, altrimenti finequiz.*/
+	
+	var tag;
+	if ((id == nq) || (nq == 1)) 
+	{
+	  tag = document.getElementById("finequiztag");
 	  tag.style.display = "inline";
-    }
-    else
-    {
-      tag = document.getElementById("prossimoquiztag");
+	}
+	else
+	{
+	  tag = document.getElementById("prossimoquiztag");
 	  tag.style.display = "inline";
-    }
+	}
   }
 </script>
