@@ -1,5 +1,6 @@
 <script>
   var to = gon.to;
+  var timeoutstatico = gon.to;
   var id = gon.id;
   var nq = gon.nq;
   var risposta_corretta;
@@ -215,7 +216,7 @@
     
     to = to - 1;
     if (to != 0) {
-      document.getElementById("barra_avanzamento").value = (to*10)/<%= params[:timeout].to_i %>;
+      document.getElementById("barra_avanzamento").value = (to*10)/timeoutstatico;
       document.getElementById("valore_avanzamento").innerHTML = Math.ceil(to/100)+"s";
     }
     else {
@@ -262,7 +263,7 @@
 		    if (animale == risposta_corretta)
 		    {
 		      var modificatore = livello/2+0.5; 
-		      var punteggio = Math.ceil((to/<%= params[:timeout].to_i*100 %>)*10);
+		      var punteggio = Math.ceil((to/timeoutstatico*100)*10);
 		      punteggio *= modificatore;
 		      punteggio = Math.ceil(punteggio);
 		      
