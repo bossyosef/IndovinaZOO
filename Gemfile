@@ -71,8 +71,8 @@ gem 'devise'
 gem 'social-share-button'
 
 #gemme per stile
-gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 
 #gemma per passare variabili da rails a js
-gem "gon"
+gem 'gon'
