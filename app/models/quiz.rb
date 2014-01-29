@@ -33,7 +33,7 @@ class Quiz < ActiveRecord::Base
 	def self.error_message
 	  @@error_message
 	end
-	
+		
 	#metodi pubblici per il gioco
 		
 	def prepare_quiz(animal_ids)		

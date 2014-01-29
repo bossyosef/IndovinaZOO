@@ -63,9 +63,9 @@ class QuizzesController < ApplicationController
 
 	def select_animal_id
 		if params[:id].present?
-			@animals = Animal.where.not(id: params[:id])
+			@animals = Animal.where.not(id: params[:id]).order(:name)
 		else
-			@animals = Animal.order(:name)
+			init_quiz_insertions
 		end
 	
 		respond_to do |format|
