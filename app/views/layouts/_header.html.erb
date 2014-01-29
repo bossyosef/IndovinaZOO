@@ -34,11 +34,6 @@
 		  <% else %>	
 			  <%= button_to "Area riservata", new_admin_user_session_path, class: "btn btn-success", id: "login-button" %>
   		<% end %>
-		  <div id="flash_messages" class="pull-right">
-	  	  <% flash.each do |key, value| %>
-				  <%= content_tag :div, value, id: "flash_#{key}" %>
-  			<% end %> 
-	  	</div>
     </div>
   </div>
 </div>
