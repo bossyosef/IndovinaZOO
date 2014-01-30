@@ -216,12 +216,12 @@
 	if (to != 0) 
 	{
 	  document.getElementById("barra_avanzamento").value = (to*10)/timeoutstatico;
-	  document.getElementById("valore_avanzamento").innerHTML = Math.ceil(to/100)+"s";
+	  document.getElementById("valore_avanzamento").textContent = Math.ceil(to/100)+"s";
 	} else 
 	{
 	  timeout();
 	  document.getElementById("barra_avanzamento").value = to;
-	  document.getElementById("valore_avanzamento").innerHTML = "SCADUTO";
+	  document.getElementById("valore_avanzamento").textContent = "SCADUTO";
 	}
   }
   
@@ -255,7 +255,7 @@
 	  
 	  if (animale == "_skip") {
 		var punteggio = 0;
-		document.getElementById("risultato").innerHTML = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto.";
+		document.getElementById("risultato").textContent = "Domanda saltata! La risposta esatta era " + risposta_corretta + "! Non hai guadagnato alcun punto.";
 		animale = "";
 	  }
 	  else {
@@ -266,12 +266,12 @@
 			  punteggio *= modificatore;
 			  punteggio = Math.ceil(punteggio);
 			  
-			  document.getElementById("risultato").innerHTML = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
+			  document.getElementById("risultato").textContent = "Risposta esatta! Il tuo punteggio è " + punteggio + ".";
 			} else
 			{
 			  var punteggio = Math.ceil(-6/livello);
 			  
-			  document.getElementById("risultato").innerHTML = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
+			  document.getElementById("risultato").textContent = "No! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è "+punteggio+".";
 			}
 	  }
 	  storeQuiz(animale,punteggio);
@@ -285,7 +285,7 @@
 	
 	timeriniziato = 2;
 	clearInterval(timerID);
-	document.getElementById("risultato").innerHTML = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+	document.getElementById("risultato").textContent = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
 	storeQuiz("",0);
   }
   
