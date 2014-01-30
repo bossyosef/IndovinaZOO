@@ -76,7 +76,7 @@
   function p_create(text) 
   {
 	var p = document.createElement('p');
-	p.innerHTML = text;
+	p.textContent = text;
 	return p;
   }
 
@@ -134,7 +134,7 @@
 	}
 	insertHiddenScore(res);
 	insertSocialText(res);
-	return document.getElementById("change_total_score").innerHTML = res;
+	return document.getElementById("change_total_score").textContent = res;
   }
 
   /*inserisce il valore passato come parametro nel div hidden_score.*/
