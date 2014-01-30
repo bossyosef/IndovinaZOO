@@ -38,7 +38,7 @@
 		  
 		  for(var i=0;i<nq;i++)
 		  {
-			store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.quiz_arr[i].animals[0].image, animal2: gon.quiz_arr[i].animals[1].image, solution: gon.animali_arr[i], user_response: "", score: ""});
+			store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.animali_arr[0][0].image, animal2: gon.animali_arr[0][1].image, solution: gon.soluzioni_arr[i], user_response: "", score: ""});
 		  }
 		  
 		  risposta_corretta = getAnimalName(gon.animali_arr[0]);
