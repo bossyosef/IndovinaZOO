@@ -68,24 +68,28 @@ class Quiz < ActiveRecord::Base
 		quizzes = self.where(:level => livelloQuiz)
 	  end
 	  quiz_arr = []                             #Array di Quiz
-	  animal_arr = []                           #Array di Animali (risposte esatte dei Quiz di quiz_arr )
+	  animal_arr = []
+	  solution_arr = []                           #Array di Animali (risposte esatte dei Quiz di quiz_arr )
 	  numQuiz.to_i.times do
 		  q1 = quizzes.sample                     #scelgo a caso un quiz
 		  quiz_arr.push(q1)                       #copio l'id del quiz 
-		  animal_arr.push(q1.random_animal.cry)   #copio il nome di uno dei due animali scelti a caso
+		  animal_arr.push(q1.animals)
+		  solution_arr.push(q1.random_animal.cry)   #copio il nome di uno dei due animali scelti a caso
 		  quizzes.delete_if {|q| q == q1}		
 	  end
-	  return quiz_arr, animal_arr
+	  return quiz_arr, animal_arr, solution_arr
 	else
 	  ar1 = self.where(:level => 1).sample(4)
 	  ar2 = self.where(:level => 2).sample(4)
 	  ar3 = self.where(:level => 3).sample(2)
 	  quiz_arr = ar1 + ar2 + ar3
 	  animal_arr = []
+	  solution_arr = []
 	  10.times do |i|
-		animal_arr.push(quiz_arr[i].random_animal.cry)
+		animal_arr.push(quiz_arr[i].animals)
+		solution_arr.push(quiz_arr[i].random_animal.cry)
 	  end
-	  return quiz_arr, animal_arr
+	  return quiz_arr, animal_arr, solution_arr
 	end
   end
   
