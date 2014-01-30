@@ -186,7 +186,7 @@
 	  var store = tx.objectStore("quizzes");
 	  var getrequest = store.get(id);
 	  
-	  getrequest.onsuccess = function (ev)
+	  getrequest.onsuccess = function(ev)
 	  {
 		var risultati = ev.target.result;
 		risultati.user_response = ur;
@@ -198,7 +198,7 @@
 	  }
 	}
 	
-	request.onerror = function (e)
+	request.onerror = function(e)
 	{
 	  console.log("entrato onerror.");
 	  console.log(request.errorCode);
