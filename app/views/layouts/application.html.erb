@@ -10,11 +10,11 @@
 	<%= render 'layouts/header' %>
   <div id="flash_messages" class="custom-alert">
     <h5>
-   	  <% flash.each do |key, value| %>
+   	  <% flash.each do |key, value| %>	      
 	  	  <%= content_tag :div, value, id: "flash_#{key}" %>
-		  <% end %> 
+	  <% end %> 
     </h5>
- 	</div>
+  </div>
 
   <div class="container" id="external-container">
     <div class="col-md-1"></div>

@@ -15,6 +15,8 @@ class Animal < ActiveRecord::Base
 	validates :cry, presence: true	
 	validate :cryfile_size_validation, on: :create		
 	
+	before_destroy :has_quizzes
+	
 	mount_uploader :image, AnimalImageUploader
 	
 	mount_uploader :cry, AnimalCryUploader
@@ -22,7 +24,7 @@ class Animal < ActiveRecord::Base
 	#associazioni
 	has_many :quiz_rows
 	has_many :quizzes, through: :quiz_rows
-	
+		
 	#metodi pubblici
 	
   #ritorna il path del verso dell'animale passato come parametro
@@ -62,12 +64,18 @@ class Animal < ActiveRecord::Base
 	
 	#metodi per validazioni
 	
+	def has_quizzes
+		unless self.quizzes.nil?			
+			return false
+		end
+	end
+	
 	def image_size_validation
-		errors[:image] << "Il file deve essere più piccolo di 5 MB." if image.size > 5.megabytes
+		self.errors[:image] << "Il file deve essere più piccolo di 5 MB." if image.size > 5.megabytes
 	end
 		
 	def cryfile_size_validation
-		errors[:cry] << "Il file deve essere più piccolo di 5 MB." if cry.size > 5.megabytes
+		self.errors[:cry] << "Il file deve essere più piccolo di 5 MB." if cry.size > 5.megabytes
 	end
 	
 end
