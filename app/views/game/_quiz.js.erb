@@ -38,10 +38,10 @@
 		  
 		  for(var i=0;i<nq;i++)
 		  {
-			store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.animali_arr[i][0].image.url, animal2: gon.animali_arr[i][1].image.url, solution: gon.soluzioni_arr[i].url, user_response: "", score: ""});
+			store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.animali_arr[i][0].image.url, animal2: gon.animali_arr[i][1].image.url, solution: gon.soluzioni_arr[i].cry.url, user_response: "", score: ""});
 		  }
 		  
-		  risposta_corretta = getAnimalName(gon.soluzioni_arr[0].url);
+		  risposta_corretta = getAnimalName(gon.soluzioni_arr[0].cry.url);
 		  livello = gon.quiz_arr[0].level;
 		  animale1 = gon.animali_arr[0][0].image.url;
 		  animale2 = gon.animali_arr[0][1].image.url;
