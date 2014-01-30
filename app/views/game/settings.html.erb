@@ -1,6 +1,5 @@
 <div class="container-settings">
-	<h1>Preferenze partita</h1>
-	<small class="note">nota: utilizzando le preferenze personalizzate non potrai registrare il punteggio nella classifica</small>
+	<h1 id="settings-title">Preferenze partita</h1>
 
 	<%= render :partial => "settings.js.erb" %>
 
@@ -33,8 +32,11 @@
 			</td>
 			</tr>
 		</table>
+
+    <small class="note">nota: utilizzando le preferenze personalizzate non potrai registrare il punteggio nella classifica</small>
+
 	<%= hidden_field_tag "standard", "no" %>
 	<% end %>
   </div>
-	<button type="button" class="btn btn-success" onclick="submitForm()">... Adesso Gioca!</button>
+	<a href="javascript:submitForm()" type="button" class="btn btn-success settings-button">... Adesso Gioca!</a>
 </div>
