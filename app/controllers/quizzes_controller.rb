@@ -46,11 +46,13 @@ class QuizzesController < ApplicationController
 	end
 
 	def update	
-		if @quiz.update(quiz_params)
+		if @quiz.update_attributes(quiz_params)
 			flash[:success] = "Quiz modificato con successo!"
 			redirect_to @quiz
 		else
-			render 'edit'
+			respond_to do |format|
+				format.js { render 'quiz_validation_errors' }
+			end
 		end
 	end
 
