@@ -17,9 +17,9 @@ class GameController < ApplicationController
 	  gon.soluzioni_arr = @soluzioni_arr
 	end
 	gon.to = params[:timeout].to_i*100
-	gon.tos = params[:timeout]
-	gon.id = params[:id]
-	gon.nq = params[:numeroquiz]
+	gon.tos = params[:timeout].to_i
+	gon.id = params[:id].to_i
+	gon.nq = params[:numeroquiz].to_i
   end
 
   def result
