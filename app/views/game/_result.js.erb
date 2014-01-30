@@ -34,7 +34,6 @@
 		}
 	  }
 	}
-  }
   });
 
   /*inserisce nell'HTML il div creato da quizResult_create.*/
@@ -85,11 +84,11 @@
   function img_create(src, sol, resp) 
   {
 	var img = document.createElement('img');
-		img.src = src;
+	img.src = src;
 	var animal = getAnimalName(src);
 	console.log("DEBUG: animal: "+animal);
-		img.alt = animal;
-		img.title = animal;
+	img.alt = animal;
+	img.title = animal;
 	img.className = img.className+" img-rounded";
 
 	sol = getAnimalName(sol);
