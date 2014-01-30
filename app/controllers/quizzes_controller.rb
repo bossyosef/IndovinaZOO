@@ -28,7 +28,7 @@ class QuizzesController < ApplicationController
 		
 		#preparo l'oggetto quiz con gli id degli animali scelti.				
 		@quiz.prepare_quiz([ params[:quiz][:quiz_rows_attributes]["0"][:animal_id], params[:quiz][:quiz_rows_attributes]["1"][:animal_id] ])
-			
+					
 		if @quiz.save
 			flash[:success] = "Quiz creato correttamente!"
 			respond_to do |format|
@@ -42,15 +42,23 @@ class QuizzesController < ApplicationController
 		end
 	end
 
-	def edit	
+	def edit
+		respond_to do |format|
+		  format.html { render :layout => !request.xhr? }
+		end
 	end
 
 	def update	
 		if @quiz.update(quiz_params)
 			flash[:success] = "Quiz modificato con successo!"
-			redirect_to @quiz
+			respond_to do |format|
+				format.html { redirect_to @quiz }
+				format.js
+			end
 		else
-			render 'edit'
+			respond_to do |format|
+				format.js { render 'quiz_validation_errors' }
+			end
 		end
 	end
 
@@ -58,14 +66,17 @@ class QuizzesController < ApplicationController
 		@quiz.destroy
 	
 		flash[:success] = "Quiz eliminato con successo!"
-		redirect_to quizzes_path
+		
+		respond_to do |format|
+			format.js
+		end
 	end
 
 	def select_animal_id
 		if params[:id].present?
-			@animals = Animal.where.not(id: params[:id])
+			@animals = Animal.where.not(id: params[:id]).order(:name)
 		else
-			@animals = Animal.order(:name)
+			init_quiz_insertions
 		end
 	
 		respond_to do |format|

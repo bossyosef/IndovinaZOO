@@ -11,8 +11,8 @@ class Quiz < ActiveRecord::Base
 									  less_than_or_equal_to: 3
 									}
 	
-	#gestisce la verifica della presenza di quiz duplicati.
-	validates_with UniquenessQuizValidator
+	#gestisce la verifica della presenza di quiz duplicati.	
+	validate :uniqueness_quiz_validator
 	
 	#associazioni
 	has_many :quiz_rows, dependent: :destroy
@@ -33,7 +33,7 @@ class Quiz < ActiveRecord::Base
 	def self.error_message
 	  @@error_message
 	end
-	
+		
 	#metodi pubblici per il gioco
 		
 	def prepare_quiz(animal_ids)		
@@ -105,4 +105,13 @@ class Quiz < ActiveRecord::Base
 	  return highest_level, level_count, quiz_count
 	end	
 	
+	private
+	
+	def uniqueness_quiz_validator
+		first_animal_id = self.quiz_rows.first.animal_id
+		second_animal_id = self.quiz_rows.last.animal_id
+		if QuizRow.select("quiz_id, count(*)").where(animal_id: [ first_animal_id, second_animal_id ]).group(:quiz_id).having("count(*) > ?", 1).any?
+			self.errors[:base] << "Esiste già un quiz con gli animali scelti!"
+		end
+	end	
 end

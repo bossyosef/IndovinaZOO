@@ -1,4 +1,4 @@
-<div class="quiz-element">
+<div class="quiz-element" id="quiz-<%= quiz.id %>">
   <span class="quiz-animals-names">
     <div class="quiz-name"><%= quiz.animals.first.name %></div>
     <div class="quiz-name"><%= quiz.animals.last.name %></div>
@@ -9,8 +9,8 @@
   </span>
   <div class="quiz-link pull-right">
     <%= link_to "Dettagli", quiz %>
-    <%= link_to "Modifica", edit_quiz_path(quiz) %>
-    <%= link_to "Elimina", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %>
+    <%= link_to "Modifica", edit_quiz_path(quiz), remote: true, class: "edit-quiz" %>
+    <%= link_to "Elimina", quiz_path(quiz), remote: true, method: :delete, data: { confirm: "Sei sicuro?" } %>
   </div>
 </div>
 
