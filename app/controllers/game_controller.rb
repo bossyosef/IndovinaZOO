@@ -16,6 +16,7 @@ class GameController < ApplicationController
 	  gon.animali_arr = @animali_arr
 	end
 	gon.to = params[:timeout].to_i*100
+	gon.tos = params[:timeout]
 	gon.id = params[:id]
 	gon.nq = params[:numeroquiz]
   end
