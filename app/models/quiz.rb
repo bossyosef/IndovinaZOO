@@ -57,8 +57,8 @@ class Quiz < ActiveRecord::Base
 	  return animal1,animal2
   end
 
-#ritorna un array composto da numQuiz Quiz e un array di animali corrispondenti alla risposta esatta dei singoli Quiz
-#se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con le rispettive risposte esatte
+#ritorna un array composto da numQuiz Quiz,un array di animali dei quiz e un array con le risposte esatte
+#se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con gli animali e le risposte
   def self.random_quiz_array(numQuiz,livello,standard)
 	if(standard == "no")
 	  livelloQuiz = livello.to_i
@@ -67,14 +67,14 @@ class Quiz < ActiveRecord::Base
 	  else
 		quizzes = self.where(:level => livelloQuiz)
 	  end
-	  quiz_arr = []                             #Array di Quiz
+	  quiz_arr = []
 	  animal_arr = []
-	  solution_arr = []                           #Array di Animali (risposte esatte dei Quiz di quiz_arr )
+	  solution_arr = []
 	  numQuiz.to_i.times do
-		  q1 = quizzes.sample                     #scelgo a caso un quiz
-		  quiz_arr.push(q1)                       #copio l'id del quiz 
+		  q1 = quizzes.sample
+		  quiz_arr.push(q1)
 		  animal_arr.push(q1.animals)
-		  solution_arr.push(q1.random_animal.cry)   #copio il nome di uno dei due animali scelti a caso
+		  solution_arr.push(q1.random_animal.cry)
 		  quizzes.delete_if {|q| q == q1}		
 	  end
 	  return quiz_arr, animal_arr, solution_arr
@@ -94,7 +94,7 @@ class Quiz < ActiveRecord::Base
   end
   
   #la funzione restituisce il livello più alto tra i quiz presenti nel DB e un hash contenente l'associazione livello -> numero quiz di quel livello
-  def self.levels_hash #conviene salvare nel db l'associazione livello - numeroquiz
+  def self.levels_hash
 	quizzes = self.all.to_a
 	quiz_count = quizzes.length
 	level_arr = []
