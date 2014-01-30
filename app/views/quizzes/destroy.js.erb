@@ -1,3 +1,2 @@
-$("#flash_messages").html("<%= escape_javascript(flash[:success])%>");
-$("#flash_messages").show(300);
-$("#quiz_table").html("<%= escape_javascript(render @quizzes) %>");
+$("#flash_messages").html("<%= escape_javascript raw(flash_display) %>");
+$("#quiz-<%= @quiz.id %>").remove();

@@ -11,8 +11,7 @@ class Quiz < ActiveRecord::Base
 									  less_than_or_equal_to: 3
 									}
 	
-	#gestisce la verifica della presenza di quiz duplicati.
-	#validates_with UniquenessQuizValidator
+	#gestisce la verifica della presenza di quiz duplicati.	
 	validate :uniqueness_quiz_validator
 	
 	#associazioni

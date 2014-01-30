@@ -66,7 +66,10 @@ class QuizzesController < ApplicationController
 		@quiz.destroy
 	
 		flash[:success] = "Quiz eliminato con successo!"
-		redirect_to quizzes_path
+		
+		respond_to do |format|
+			format.js
+		end
 	end
 
 	def select_animal_id

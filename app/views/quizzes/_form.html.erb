@@ -11,8 +11,10 @@
 	  <fieldset>
 		<legend>Seleziona gli animali</legend>
 		
+		<% i = 1 %>
 		<%= f.simple_fields_for :quiz_rows do |quizRow| %>
-			<%= quizRow.association :animal, collection: @animals, include_blank: "Seleziona un animale" %>
+			<%= quizRow.association :animal, label: "Animale #{i}", collection: @animals, include_blank: "Seleziona un animale" %>
+			<% i += 1 %>
 		<% end %>			  	  
 	  </fieldset>
 	</div>
