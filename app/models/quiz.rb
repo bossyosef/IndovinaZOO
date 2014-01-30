@@ -13,7 +13,7 @@ class Quiz < ActiveRecord::Base
 	
 	#gestisce la verifica della presenza di quiz duplicati.
 	#validates_with UniquenessQuizValidator
-	validate :uniqueness_quiz_validator, on: :create
+	validate :uniqueness_quiz_validator
 	
 	#associazioni
 	has_many :quiz_rows, dependent: :destroy

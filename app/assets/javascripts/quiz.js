@@ -11,16 +11,15 @@ $(document).delegate('#quizform_reset_button', 'click', function(e) {
 });
 
 //delegato per la gestione del link new quiz via AJAX
-$(document).delegate('#new_quiz_link', 'ajax:success', function(e, data, status, xhr) {
-	var $this = $(this),
-		$container = $('#new_quiz_links'),
-		$responseText = $(xhr.responseText),
-		$cancelButton = $responseText.find('#cancel_button');
-		
-	$container.replaceWith($responseText)
-	$cancelButton.click(function(e) {
-		$cancelButton.parent().replaceWith($container);
-		$('#quiz_error_messages').empty();
-		e.preventDefault();
-	});
+$(document).delegate('#new_quiz_link, .edit-quiz', 'ajax:success', function(e, data, status, xhr) {
+	var $container = $('#new_quiz_links'),
+		$responseText = $(xhr.responseText),		
+	    $cancelButton = $responseText.find('#cancel_button');
+                
+    $container.replaceWith($responseText);
+    $cancelButton.click(function(e) {
+        $cancelButton.parent().replaceWith($container);
+        $('#quizform_error_messages').empty();
+        e.preventDefault();
+    });
 });

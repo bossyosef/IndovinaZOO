@@ -9,7 +9,7 @@
   </span>
   <div class="quiz-link pull-right">
     <%= link_to "Dettagli", quiz %>
-    <%= link_to "Modifica", edit_quiz_path(quiz) %>
+    <%= link_to "Modifica", edit_quiz_path(quiz), remote: true, class: "edit-quiz" %>
     <%= link_to "Elimina", quiz_path(quiz), method: :delete, data: { confirm: "Sei sicuro?" } %>
   </div>
 </div>
