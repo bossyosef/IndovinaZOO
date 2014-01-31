@@ -51,17 +51,30 @@ footer
   padding-bottom: 20px;
 }
 
-#flash_messages
+#flash_error
 {
   margin-left: 40%;
   margin-right: 40%;
   color: red;
 }
 
-#quizform_error_messages
+#flash_success
 {
   margin-left: 40%;
   margin-right: 40%;
+  color: green;
+}
+
+#flash_notice, #flash_alert
+{
+  display: none
+}
+
+#quizform_error_messages
+{  
+  margin-left: 40%;
+  margin-right: 40%;
+
   color: red;
 }
 
@@ -80,8 +93,9 @@ footer
   margin-top: 15px;
   margin-right: 15px;
   
-  text-decoration: none; 
+  color: #662900;
 
+  text-decoration: none; 
 
   .dropdown
   {
@@ -112,7 +126,6 @@ footer
 
   #login-button {
     margin: 0px;
-
   }
 }
 
@@ -139,16 +152,21 @@ footer
 
 .button_container 
 {
-  margin-top: -15px;
+  margin-top: 15px;
   margin-left: 20%;
   margin-right: 20%;
   .btn 
   {
-    width:50%
+    display: inline block;
   }
 }
 
+//------Per il login------
 
+.form-actions
+{
+  background-color: transparent;
+}
 
 
 //------Per setting (su game)------
@@ -156,6 +174,9 @@ footer
 .note 
 {
   color: #ff0000;
+  text-align: center;
+  margin: auto;
+  display: block;
 }
 
 .italic 
@@ -163,8 +184,28 @@ footer
   font-style: italic;
 }
 
-.number-field {
+.number-field 
+{
   max-width: 50px;
+}
+
+#table-settings 
+{
+  margin: auto;
+  margin-top: 50px;
+  border-color: transparent !important;
+}
+
+#table-settings tr, #table-settings tr td
+{
+  border-color: transparent !important;
+}
+
+.settings-button
+{
+  max-width: 150px;
+  margin: auto;
+  display: block;
 }
 
 //------Per pagine quiz (su game)------

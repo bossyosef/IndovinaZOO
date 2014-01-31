@@ -43,7 +43,11 @@ class AnimalsController < ApplicationController
 	end
 
 	def destroy	
-		@animal.destroy
+		if @animal.destroy
+			flash[:success] = "Animale eliminato correttamente!"
+		else
+			flash[:error] = "L'animale non può essere eliminato perchè è legato ad almeno 1 quiz."
+		end
 	
 		redirect_to animals_path
 	end

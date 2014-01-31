@@ -11,8 +11,8 @@ class Quiz < ActiveRecord::Base
 									less_than_or_equal_to: 3
 								  }
   
-  #gestisce la verifica della presenza di quiz duplicati.
-  validates_with UniquenessQuizValidator
+  #gestisce la verifica della presenza di quiz duplicati.	
+  validate :uniqueness_quiz_validator
   
   #associazioni
   has_many :quiz_rows, dependent: :destroy
@@ -33,7 +33,7 @@ class Quiz < ActiveRecord::Base
   def self.error_message
 	@@error_message
   end
-  
+	  
   #metodi pubblici per il gioco
 	  
   def prepare_quiz(animal_ids)		
@@ -45,20 +45,20 @@ class Quiz < ActiveRecord::Base
 	  end
   end
   
-#ritorna un animale a caso
+  #ritorna un animale a caso
   def random_animal
 	  animals.sample
   end
   
-#ritorna gli animali appartenenti al quiz con l'id passato come parametro
+  #ritorna gli animali appartenenti al quiz con l'id passato come parametro
   def self.get_animals_from_id(idquiz)
 	  animal1 = find(idquiz).animals.first
 	  animal2 = find(idquiz).animals.last
 	  return animal1,animal2
   end
 
-#ritorna un array composto da numQuiz Quiz,un array di animali dei quiz e un array con le risposte esatte
-#se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con gli animali e le risposte
+  #ritorna un array composto da numQuiz Quiz,un array di animali dei quiz e un array con le risposte esatte
+  #se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con gli animali e le risposte
   def self.random_quiz_array(numQuiz,livello,standard)
 	if(standard == "no")
 	  livelloQuiz = livello.to_i
@@ -107,5 +107,15 @@ class Quiz < ActiveRecord::Base
 	end
 	level_count = Hash[level_arr.group_by{|i| i }.map{|k,v| [k,v.size]}]
 	return highest_level, level_count, quiz_count
-  end	
+  end
+  
+  private
+  
+  def uniqueness_quiz_validator
+	first_animal_id = self.quiz_rows.first.animal_id
+	second_animal_id = self.quiz_rows.last.animal_id
+	if QuizRow.select("quiz_id, count(*)").where(animal_id: [ first_animal_id, second_animal_id ]).group(:quiz_id).having("count(*) > ?", 1).any?
+		self.errors[:base] << "Esiste già un quiz con gli animali scelti!"
+	end
+  end
 end
