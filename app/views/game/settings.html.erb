@@ -1,5 +1,5 @@
 <div class="container-settings">
-	<h1 id="settings-title">Preferenze partita</h1>
+	<h1 id="settings-title">Preferenze partita 	<%= link_to "Torna alla Home", root_path, class: "btn btn-success home-button"%></h1>
 
 	<%= render :partial => "settings.js.erb" %>
 
@@ -39,5 +39,4 @@
 	<% end %>
   </div>
 	<a href="javascript:submitForm()" type="button" class="btn btn-success settings-button">... Adesso Gioca!</a>
-	<%= link_to "Torna alla Home", root_path, class: "btn btn-success home-button"%>
 </div>
