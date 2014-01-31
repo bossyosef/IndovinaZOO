@@ -1,9 +1,8 @@
-<script>
 $(document).ready ( function () 
 {
   /*Questa funzione non permette a un browser senza un'implementazione di IndexedDB
-   *di poter arrivare a una pagina che utilizza IndexedDB; mostra il div che mostra
-   *all'utente una scelta tra browser che hanno IndexedDB.*/
+  *di poter arrivare a una pagina che utilizza IndexedDB; mostra il div che mostra
+  *all'utente una scelta tra browser che hanno IndexedDB.*/
   
   if("indexedDB" in window) 
   {
@@ -16,9 +15,8 @@ $(document).ready ( function ()
   }
 });
 
-  function submitForm()
-  {
-    var f = document.getElementById("form_gioca");
-    f.submit();
-  }
-</script>
+function submitForm()
+{
+  var f = document.getElementById("form_gioca");
+  f.submit();
+}

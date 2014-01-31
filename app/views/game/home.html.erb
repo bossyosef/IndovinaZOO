@@ -1,4 +1,6 @@
-<%= render :partial => "home.js.erb" %>
+<% content_for :javascript do %>
+  <%= javascript_include_tag "homepage" %>
+<% end %>
 
 <div class="img-container text-center" id="mostra_gioco" style="display:none">
 	<a href="">

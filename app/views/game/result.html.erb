@@ -1,9 +1,11 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "resultpage" %>
+<% end %>
+
 <h1>
   Riepilogo Partita
   <%= link_to "Torna alla Home", root_path, class: "btn btn-success home-button"%>
 </h1>
-
-<%= render :partial => "result.js.erb" %>
 
 <div id="result_summary">
 </div>

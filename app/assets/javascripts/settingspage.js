@@ -1,10 +1,9 @@
-<script>
 function submitForm()
 {
   /*Questa funzione controlla che non ci siano inconsistenze tra i parametri
-   *inseriti dall'utente e lo stato del DB server, e se i dati inseriti sono
-   *accettati allora fa il submit della form che porta al gioco vero e 
-   *proprio.*/
+  *inseriti dall'utente e lo stato del DB server, e se i dati inseriti sono
+  *accettati allora fa il submit della form che porta al gioco vero e 
+  *proprio.*/
   
   var form = document.getElementById("settings");
   var livello_massimo = gon.livello_alto;
@@ -45,4 +44,3 @@ function submitForm()
 	form.submit();
   }
 }
-</script>

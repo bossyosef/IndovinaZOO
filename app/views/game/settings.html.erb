@@ -1,8 +1,10 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "settingspage" %>
+<% end %>
+
 <div class="container-settings">
 	<h1>Preferenze partita</h1>
 	<small class="note">nota: utilizzando le preferenze personalizzate non potrai registrare il punteggio nella classifica</small>
-
-	<%= render :partial => "settings.js.erb" %>
 
 	<%= form_tag("/quiz/1", id:"settings" , method: "post") do %>
   <div class="table-responsive">
