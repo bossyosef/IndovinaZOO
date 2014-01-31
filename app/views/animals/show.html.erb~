@@ -5,7 +5,7 @@
 </p>
 
 <p>
-	<strong>Immagine:</strong>
+	
 	<%= image_tag @animal.image_url, size: "640x480" %><br>	
 </p>
 
