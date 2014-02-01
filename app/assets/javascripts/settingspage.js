@@ -1,4 +1,3 @@
-<script>
 function submitForm()
 {
   /*Questa funzione controlla che non ci siano inconsistenze tra i parametri
@@ -45,4 +44,3 @@ function submitForm()
 	form.submit();
   }
 }
-</script>

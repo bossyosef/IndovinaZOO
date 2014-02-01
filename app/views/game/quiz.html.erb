@@ -1,4 +1,9 @@
-<%= render :partial => "quiz.js.erb" %>
+<% content_for :javascript do %>
+  <%= javascript_include_tag "animal" %>
+  <%= javascript_include_tag "main" %>
+  <%= javascript_include_tag "quiz" %>
+  <%= javascript_include_tag "quizpage" %>
+<% end %>
 
 <div class="quiz-title-container row">
   <div class="quiz-title">

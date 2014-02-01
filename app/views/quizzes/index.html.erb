@@ -1,3 +1,9 @@
+<% content_for :javascript do %>
+  <%= javascript_include_tag "animal" %>
+  <%= javascript_include_tag "main" %>
+  <%= javascript_include_tag "quiz" %>
+<% end %>
+
 <div class="container" id="list-container">
   <h1>Gestione quiz<%= link_to "Torna alla Home", root_path, class: "btn btn-success home-button"%></h1>
   <div class="row">

@@ -1,4 +1,3 @@
-<script>
 $(document).ready ( function () 
 {
   /*Questa funzione non permette a un browser senza un'implementazione di IndexedDB
@@ -16,9 +15,8 @@ $(document).ready ( function ()
   }
 });
 
-  function submitForm()
-  {
-    var f = document.getElementById("form_gioca");
-    f.submit();
-  }
-</script>
+function submitForm()
+{
+  var f = document.getElementById("form_gioca");
+  f.submit();
+}
