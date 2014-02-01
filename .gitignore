@@ -17,3 +17,6 @@
 
 #Ignora tutti i file di public/uploads
 /public/uploads/**
+
+#Ignora .directory (file di Dolphin)
+/.directory
