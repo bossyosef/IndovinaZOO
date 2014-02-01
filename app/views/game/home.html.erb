@@ -5,13 +5,11 @@
   <%= javascript_include_tag "homepage" %>
 <% end %>
 
-<div class="img-container text-center" id="mostra_gioco" style="display:none">
-	<a href="">
-		<img id="immagine_indovinazoo" src="/images/indovinazoo_home.png" class="img-responsive" onclick="submitForm()" title="Clicca per giocare"/>
-	</a>
+<div class="img-container text-center" id="mostra_gioco" >
+	<img id="immagine_indovinazoo" src="/images/indovinazoo_home.png" class="img-responsive" onclick="submitForm('g')" title="Clicca per giocare"/>
 	<div class="button_container">
     <%= link_to "Guarda gli animali!", animali_path, class: "btn btn-success", alt: "Guarda gli animali!", title: "Guarda gli animali!", method: "post" %>
-    <%= link_to "Partita personalizzata", settings_path, class: "btn btn-warning", alt: "Partita personalizzata", title: "Partita personalizzata", method: "post" %>
+    <a alt="Partita personalizzata" class="btn btn-warning" onclick="submitForm('s')" title="Partita personalizzata">Partita personalizzata</a>
     <%= link_to "Guarda la classifica!", ranks_top5_path, class: "btn btn-success", alt: "Guarda la classifica!", title: "Guarda la classifica!" %>
     
   </div>
@@ -27,4 +25,7 @@
   <%= hidden_field_tag "timeout", "5" %>
   <%= hidden_field_tag "livelloquiz", "0" %>
   <%= hidden_field_tag "standard", "sì" %>
+<% end %>
+
+<%= form_tag("/settings", id: "form_settings", name: "settings", method: "post") do %>
 <% end %>

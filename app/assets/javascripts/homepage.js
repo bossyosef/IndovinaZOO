@@ -1,22 +1,20 @@
-$(document).ready ( function () 
+function submitForm(parametro)
 {
-  /*Questa funzione non permette a un browser senza un'implementazione di IndexedDB
-   *di poter arrivare a una pagina che utilizza IndexedDB; mostra il div che mostra
-   *all'utente una scelta tra browser che hanno IndexedDB.*/
+  var f = document.getElementById("form_gioca");
+  
+  if (parametro == "s")
+	 f = document.getElementById("form_settings");
+  else if (parametro == "g")
+	f = document.getElementById("form_gioca");
   
   if("indexedDB" in window) 
   {
-	var div = document.getElementById("mostra_gioco");
-	div.style.display = "block";
+	f.submit();
   } else 
   {
-	var div = document.getElementById("cambio_browser");
+	var div = document.getElementById("mostra_gioco");
+	div.style.display = "none";
+	div = document.getElementById("cambio_browser");
 	div.style.display = "block";
   }
-});
-
-function submitForm()
-{
-  var f = document.getElementById("form_gioca");
-  f.submit();
 }
