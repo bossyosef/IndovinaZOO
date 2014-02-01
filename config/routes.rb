@@ -56,7 +56,6 @@ IndovinaZOO::Application.routes.draw do
   #   end
   
   get "game/home"
-  post "game/home"
   root "game#home"
   post "/settings" => "game#settings", as: :settings
   get "/settings" => "game#error"
