@@ -1,9 +1,3 @@
-<% content_for :javascript do %>
-  <%= javascript_include_tag "animal" %>
-  <%= javascript_include_tag "main" %>
-  <%= javascript_include_tag "quiz" %>
-<% end %>
-
 <div class="container" id="list-container">
   <h1>
     <% if admin_user_signed_in? %>

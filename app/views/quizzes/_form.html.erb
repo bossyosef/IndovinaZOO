@@ -19,6 +19,6 @@
 	  </fieldset>
 	</div>
 	
-	<%= f.button :submit, value: (params[:action] == 'new' ? "Inserisci Quiz" : "Modifica Quiz"), class: "btn btn-success" %>
+	<%= f.button :submit, value: (params[:action] == 'new' ? "Crea Quiz" : "Modifica Quiz"), class: "btn btn-success" %>
 	<%= f.button :button, "Reset", name: "reset", id: "quizform_reset_button", type: "reset", class: "btn btn-success" %>
 <% end %>

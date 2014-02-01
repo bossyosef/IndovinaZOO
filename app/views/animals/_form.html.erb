@@ -4,11 +4,11 @@
 			
 	<fieldset class="form-new-animal">
 		<legend>Dati nuovo animale:</legend>
-    <div class="animal-input"><%= f.input :name %></div>
-    <div class="animal-input"><%= f.input :image, as: :file %></div>
-		<div class="animal-input"><%= f.input :cry, as: :file %></div>		
+    <div class="animal-input"><%= f.input :name, label: "Nome" %></div>
+    <div class="animal-input"><%= f.input :image, label: "Immagine", as: :file %></div>
+		<div class="animal-input"><%= f.input :cry, label: "Verso", as: :file %></div>		
 	</fieldset>		
 		
-	<%= f.button :submit, class: "btn btn-success"%>
+	<%= f.button :submit, value: "Crea Animale", class: "btn btn-success"%>
 
 <% end %>

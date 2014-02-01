@@ -17,4 +17,6 @@
 //= require twitter/bootstrap
 //= require jquery.remotipart
 //= require turbolinks
-// require_tree .
+//= require management/init-ajax
+//= require management/quiz-management
+//= require management/animal-management

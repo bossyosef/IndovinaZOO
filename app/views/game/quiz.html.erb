@@ -1,14 +1,11 @@
-<% content_for :javascript do %>
-  <%= javascript_include_tag "animal" %>
-  <%= javascript_include_tag "main" %>
-  <%= javascript_include_tag "quiz" %>
-  <%= javascript_include_tag "quizpage" %>
+<% content_for :javascript do %>  
+  <%= javascript_include_tag "game/game_quiz" %>
 <% end %>
 
 <div class="quiz-title-container row">
   <div class="quiz-title">
     <h1 class="quiz-title-text">Quiz <%= params[:id] %></h1>
-    <%= link_to "Annulla Partita", root_path, class: "btn btn-success home-button"%>
+    <%= link_to "Annulla Partita", root_path, data: {confirm: "Stai per uscire dalla partita! Sei sicuro?" }, class: "btn btn-success home-button"%>
   </div>
   <div class="quiz-result text-center">
     <div id="risultato" ></div>

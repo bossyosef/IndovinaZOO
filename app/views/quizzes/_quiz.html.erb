@@ -4,8 +4,8 @@
     <div class="quiz-name"><%= quiz.animals.last.name %></div>
   </span>
   <span class="quiz-animals-images">
-    <span class="quiz-image"><%= image_tag quiz.animals.last.image_url %></span>
     <span class="quiz-image"><%= image_tag quiz.animals.first.image_url %></span>
+    <span class="quiz-image"><%= image_tag quiz.animals.last.image_url %></span>
   </span>
   <div class="quiz-link pull-right">
     <%= link_to "Dettagli", quiz %>
