@@ -1,9 +1,13 @@
+# Questa classe descrive l'entità Utente Amministratore e le sue validazioni e operazioni.
+
 class AdminUser < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+
+  # Include i moduli Devise di default.
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable
-         
+  
+  # Validazioni effettuate sulle proprietà del Model.
+       
   validates :username, presence: true,
 					   length: { in: 5..12 }
 

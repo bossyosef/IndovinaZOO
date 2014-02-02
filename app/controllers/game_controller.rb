@@ -1,3 +1,6 @@
+# GameController - Controller che gestisce le azioni e le viste
+# riguardanti la gestione delle partite.
+
 class GameController < ApplicationController
   def home
   end

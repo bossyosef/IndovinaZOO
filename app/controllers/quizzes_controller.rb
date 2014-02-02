@@ -1,3 +1,7 @@
+# QuizzesController - Controller che gestisce le azioni e le viste
+# riguardanti per la gestione dei quiz. L'autenticazione è richiesta
+# solo per la creazione, la modifica e l'eliminazione di quiz.
+
 class QuizzesController < ApplicationController
 	before_action :set_quiz, only: [:show, :edit, :update, :destroy]
 	before_action :init_quiz_insertions, only: [:new, :edit]
@@ -23,10 +27,10 @@ class QuizzesController < ApplicationController
 
 	def create
 	
-		#creo l'oggetto quiz.
+		#Creo l'oggetto quiz.
 		@quiz = Quiz.new(quiz_params)
 		
-		#preparo l'oggetto quiz con gli id degli animali scelti.				
+		#Preparo l'oggetto quiz con gli id degli animali scelti.				
 		@quiz.prepare_quiz([ params[:quiz][:quiz_rows_attributes]["0"][:animal_id], params[:quiz][:quiz_rows_attributes]["1"][:animal_id] ])
 					
 		if @quiz.save

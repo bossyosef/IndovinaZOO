@@ -1,3 +1,7 @@
+# AnimalsController - Controller che gestisce le azioni e le viste
+# riguardanti la gestione degli animali. L'autenticazione è richiesta
+# solo per la creazione, la modifica e l'eliminazione di animali.
+
 class AnimalsController < ApplicationController  
   before_action :set_animal, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_admin_user!, except: [:show, :index]

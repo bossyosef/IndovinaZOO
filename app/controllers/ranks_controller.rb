@@ -1,3 +1,6 @@
+# RanksController - Controller che gestisce le azioni e le viste
+# riguardanti la gestione dei punteggi delle partite. 
+
 class RanksController < ApplicationController
 #	make_resourceful do
 #		actions :index

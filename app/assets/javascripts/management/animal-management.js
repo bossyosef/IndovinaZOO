@@ -1,3 +1,5 @@
+/* Delegato JQuery per la gestione del click sul pulsante 'Nuovo Animale'. */
+
 $(document).delegate('#new_animal_link', 'ajax:success', function(e, data, status, xhr) {
 	var $this = $(this),
 		$container = $('#new_animal_links'),

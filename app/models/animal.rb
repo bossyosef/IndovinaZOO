@@ -1,11 +1,15 @@
 require 'carrierwave/orm/activerecord'
 
+# Questa classe descrive l'entità Animale e le sue validazioni/operazioni.
+
 class Animal < ActiveRecord::Base
 	
-	#variabili di classe per la gestione degli errori	
+	# Variabili di classe per la gestione degli errori.
+	
 	@@error_message = ""
 	
-	#validazioni	
+	# Validazioni sulle proprietà del Model.
+		
 	validates :name, presence: true,
 					 length: { maximum: 15 }		
 	
@@ -21,18 +25,24 @@ class Animal < ActiveRecord::Base
 	
 	mount_uploader :cry, AnimalCryUploader
 	
-	#associazioni
+	# Associazioni con le altre entità dell'ORM.
+	
 	has_many :quiz_rows
 	has_many :quizzes, through: :quiz_rows
 		
-	#metodi pubblici
-	
-  #ritorna il path del verso dell'animale passato come parametro
+	# ------- Metodi -----------------------------------------------------------------
+
+    # Metodi pubblici
+
+	# Get_cry: ritorna il path del verso dell'animale passato come parametro.
+	  
 	def self.get_cry(animal)
 		where(name: animal).first.cry
 	end
 	
-  #ritorna un messaggio di errore se non sono presenti sufficienti animali per creare un quiz
+	# Verify_presence_of_animals: ritorna un messaggio di errore
+    # (stampato poi nella view) se non sono presenti sufficienti animali per creare un quiz.
+    
 	def self.verify_presence_of_animals				
 		if !Animal.any?			
 			@@error_message = "Nessun animale trovato."
@@ -45,7 +55,8 @@ class Animal < ActiveRecord::Base
 		end
 	end
 	
-  #verifica se sono presenti almeno 2 animali
+	# Min_animals_to_make_a_quiz: verifica se sono presenti almeno 2 animali per creare un quiz.
+	
 	def self.min_animals_to_make_a_quiz?
 	  if Animal.count >= 2
 		true
@@ -58,11 +69,15 @@ class Animal < ActiveRecord::Base
 	  @@error_message
 	end
 	
-	#metodi privati
+	#Metodi privati
 		
 	private
 	
-	#metodi per validazioni
+	# Metodi utilizzati per validazioni.
+
+	# Has_quizzes: restituisce vero o falso, a seconda che l'animale
+	# sia legato o meno a dei quiz. Impedisce l'eliminazione in caso
+	# ritorni vero. Mantiene l'integrità della base dati.
 	
 	def has_quizzes
 		unless self.quizzes.nil?			
@@ -70,10 +85,16 @@ class Animal < ActiveRecord::Base
 		end
 	end
 	
+	# Image_size_validation: controlla che l'immagine inserita non sia più grande di 5 MB.
+    # In caso affermativo, restituisce un errore.
+
 	def image_size_validation
 		self.errors[:image] << "Il file deve essere più piccolo di 5 MB." if image.size > 5.megabytes
 	end
-		
+	
+	# Audio_size_validation: controlla che il file audio inserito non sia più grande di 5 MB.
+	# In caso affermativo, restituisce un errore.
+
 	def cryfile_size_validation
 		self.errors[:cry] << "Il file deve essere più piccolo di 5 MB." if cry.size > 5.megabytes
 	end

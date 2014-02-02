@@ -1,27 +1,36 @@
-class Quiz < ActiveRecord::Base
-  include ActiveModel::Validations
+# Questa classe descrive l'entità Quiz e le sue validazioni e operazioni.
+
+class Quiz < ActiveRecord::Base  
   
-  #variabili di classe per la gestione degli errori	
+  #Variabili di classe per la gestione degli errori.
   @@error_message = ""
   
-  #validazioni
+  # Validazioni sulle proprietà del Model.
   validates :level, presence: true,
 					numericality: { only_integer: true,
 									greater_than: 0,
 									less_than_or_equal_to: 3
 								  }
+    
+  validate :uniqueness_quiz_validator  
   
-  #gestisce la verifica della presenza di quiz duplicati.	
-  validate :uniqueness_quiz_validator
+  # Associazioni con le altre entità dell'ORM, quali
+  # le righe del quiz e gli animali. L'ultima riga consente
+  # l'inserimento degli attributi dell'entità QuizRow. Inoltre
+  # con l'eliminazione di un Quiz è prevista anche l'eliminazione
+  # delle QuizRow associate.
   
-  #associazioni
   has_many :quiz_rows, dependent: :destroy
   has_many :animals, through: :quiz_rows
   accepts_nested_attributes_for :quiz_rows
   
-  #metodi pubblici per la gestione dei quiz
+  # ------Metodi -------------------------------------------------------------------
+  
+  # Metodi pubblici per la gestione dei quiz.
 
-  #ritorna un messaggio di errore se non sono presenti quiz	
+  # Verify_presence_of_quizzes: ritorna un messaggio di errore
+  # (stampato poi nella view), se non sono presenti quiz nel DB.
+  
   def self.verify_presence_of_quizzes		
 	  if !Quiz.any?			
 		  @@error_message = "Nessun quiz trovato."
@@ -30,11 +39,14 @@ class Quiz < ActiveRecord::Base
 	  end		
   end
 
+  # Metodo per accedere alla variabile di classe error_message.
+  
   def self.error_message
 	@@error_message
   end
 	  
-  #metodi pubblici per il gioco
+  # Prepare_quiz (animal_ids) : questo metodo setta nelle rispettive
+  # Quiz Rows i corretti animal_id.
 	  
   def prepare_quiz(animal_ids)		
 	  # setta i valori corretti per le righe del quiz: quiz_id e animal_id.
@@ -45,20 +57,26 @@ class Quiz < ActiveRecord::Base
 	  end
   end
   
-  #ritorna un animale a caso
+  # Metodi pubblici per la partita.
+  
+  # Random_animal: ritorna un animale a caso.
+  
   def random_animal
 	  animals.sample
   end
   
-  #ritorna gli animali appartenenti al quiz con l'id passato come parametro
+  # Get_animals_from_id: ritorna gli animali appartenenti al quiz con l'id passato come parametro.
+  
   def self.get_animals_from_id(idquiz)
 	  animal1 = find(idquiz).animals.first
 	  animal2 = find(idquiz).animals.last
 	  return animal1,animal2
   end
 
-  #ritorna un array composto da numQuiz Quiz,un array di animali dei quiz e un array con le risposte esatte
-  #se numQuiz vale 0 allora si ritornano un array standard con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con gli animali e le risposte
+  # Random_quiz_array: ritorna un array composto da numQuiz Quiz,un array di animali dei quiz
+  # e un array con le risposte esatte. Se numQuiz vale 0 allora si ritornano un array standard
+  # con 4 quiz di livello 1, 4 di livello 2 e 2 di livello 3, con gli animali e le risposte.
+  
   def self.random_quiz_array(numQuiz,livello,standard)
 	if(standard == "no")
 	  livelloQuiz = livello.to_i
@@ -93,7 +111,9 @@ class Quiz < ActiveRecord::Base
 	end
   end
   
-  #la funzione restituisce il livello più alto tra i quiz presenti nel DB e un hash contenente l'associazione livello -> numero quiz di quel livello
+  # Levels_hash : la funzione restituisce il livello più alto tra i quiz presenti
+  # nel DB e un hash contenente l'associazione livello -> numero quiz di quel livello.
+  
   def self.levels_hash
 	quizzes = self.all.to_a
 	quiz_count = quizzes.length
@@ -109,7 +129,12 @@ class Quiz < ActiveRecord::Base
 	return highest_level, level_count, quiz_count
   end
   
+  # Metodi privati
+  
   private
+  
+  # Uniqueness_quiz_validator: Gestisce la validazione di unicità del Quiz. L'utente non può creare due quiz
+  # aventi gli stessi animali.
   
   def uniqueness_quiz_validator
 	first_animal_id = self.quiz_rows.first.animal_id
