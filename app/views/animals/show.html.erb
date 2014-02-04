@@ -31,6 +31,6 @@
 <% if admin_user_signed_in? %>
   <%= link_to "Modifica", edit_animal_path(@animal), class: "btn btn-success" %>
   <%= link_to "Torna a Gestione", animals_path, class: "btn btn-success" %>
+<% else %>
+  <%= link_to "Torna a Elenco", animals_path, class: "btn btn-success" %>
 <% end %>
-<%= link_to "Torna a Elenco", animals_path, class: "btn btn-success" %>
-
