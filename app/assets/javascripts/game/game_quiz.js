@@ -1,7 +1,5 @@
 var to = gon.to;
 var timeoutstatico = gon.tos;
-var id = gon.id;
-var nq = gon.nq;
 var timerID;
 var timeriniziato = 0;
 
@@ -11,14 +9,14 @@ $(document).ready ( function ()
    *db client che viene popolato con i dati di ogni quiz della partita e si assegnano alle
    *variabili globali i valori che servono alle altre funzioni.*/
   
-  if (id == 1)
+  if (gon.id == 1)
   {
 	var deleterequest = indexedDB.deleteDatabase("game");
 	console.log("db cancellato");
 	
 	deleterequest.onsuccess = function(e)
 	{
-	  var openrequest = indexedDB.open("game",id);
+	  var openrequest = indexedDB.open("game",gon.id);
 	  console.log("db aperto.");
 	  
 	  openrequest.onupgradeneeded = function(ev)
@@ -28,7 +26,7 @@ $(document).ready ( function ()
 		var db = ev.target.result;
 		var store = db.createObjectStore("quizzes", {keyPath: "number"});
 		
-		for(var i=0;i<nq;i++)
+		for(var i=0;i<gon.nq;i++)
 		{
 		  store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.animali_arr[i][0].image.url, animal2: gon.animali_arr[i][1].image.url, solution: gon.soluzioni_arr[i].cry.url, user_response: "", score: ""});
 		}
@@ -83,7 +81,7 @@ $(document).ready ( function ()
 	  var tx = db.transaction(["quizzes"],"readonly");
 	  var store = tx.objectStore("quizzes");
 	  
-	  var getrequest = store.get(id);
+	  var getrequest = store.get(gon.id);
 	  
 	  getrequest.onsuccess = function(ev)
 	  {
@@ -157,6 +155,7 @@ function createQuizObjects(r,l,a1,a2,v,a1n,a2n)
   div.appendChild(audio_el(v));
   div.appendChild(image_el(a1,a1n,r,l));
   div.appendChild(image_el(a2,a2n,r,l));
+  
   var bottone = document.getElementById("inizia");
   var att = document.createAttribute("onclick");
   att.value="inizia('" + r + "')";
@@ -178,7 +177,7 @@ function storeQuiz(ur,s)
 	var db = e.target.result;
 	var tx = db.transaction(["quizzes"],"readwrite");
 	var store = tx.objectStore("quizzes");
-	var getrequest = store.get(id);
+	var getrequest = store.get(gon.id);
 	
 	getrequest.onsuccess = function(ev)
 	{
@@ -289,7 +288,7 @@ function quizdopo()
    *ancora finito, altrimenti finequiz.*/
   
   var tag;
-  if ((id == nq) || (nq == 1)) 
+  if ((gon.id == gon.nq) || (gon.nq == 1)) 
   {
 	tag = document.getElementById("finequiztag");
 	tag.style.display = "inline";
