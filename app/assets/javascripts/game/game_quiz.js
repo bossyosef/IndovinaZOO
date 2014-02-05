@@ -148,7 +148,8 @@ function image_el(a,an,r,l)
 function createQuizObjects(r,l,a1,a2,v,a1n,a2n)
 {
   /*Questa funzione popola il div principale della pagina con il verso dell'animale
-   *da indovinare e le immagini dei due animali possibili.*/
+   *da indovinare e le immagini dei due animali possibili, e aggiunge gli onclick
+   *corretti in inizia e scelta.*/
   
   var div = document.getElementById("elementiquiz");
   div.appendChild(audio_el(v));
@@ -157,8 +158,13 @@ function createQuizObjects(r,l,a1,a2,v,a1n,a2n)
   
   var bottone = document.getElementById("inizia");
   var att = document.createAttribute("onclick");
-  att.value="inizia('" + r + "')";
+  att.value= "inizia('" + r + "')";
   bottone.setAttributeNode(att);
+  
+  var salta = document.getElementById("salta");
+  var attr = document.createAttribute("onclick");
+  attr.value= "scelta('_skip','" + l + "','" + r + "')";
+  salta.setAttributeNode(attr);
 }
 
 function storeQuiz(ur,s)
@@ -207,7 +213,7 @@ function update(r)
   
   if (to != 0) 
   {
-	document.getElementById("barra_avanzamento").value = (to*10)/gon.timeoutstatico;
+	document.getElementById("barra_avanzamento").value = (to*10)/gon.tos;
 	document.getElementById("valore_avanzamento").textContent = Math.ceil(to/100)+"s";
   } else 
   {
@@ -254,7 +260,7 @@ function scelta(animale,livello,risposta_corretta)
 		  if (animale == risposta_corretta)
 		  {
 			var modificatore = livello/2+0.5; 
-			var punteggio = Math.ceil((to/(gon.timeoutstatico*100))*10);
+			var punteggio = Math.ceil((to/(gon.tos*100))*10);
 			punteggio *= modificatore;
 			punteggio = Math.ceil(punteggio);
 			
