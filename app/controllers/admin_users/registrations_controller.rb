@@ -7,6 +7,17 @@ class AdminUsers::RegistrationsController < Devise::RegistrationsController
 	
 	def create
 		super
+		flash[:success] = "Account creato correttamente."
+	end
+	
+	def update
+		super
+		flash[:success] = "Account modificato correttamente."
+	end
+	
+	def destroy
+		super
+		flash[:success] = "Account eliminato correttamente."
 	end
 	
 	protected

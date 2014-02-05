@@ -14,8 +14,8 @@
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
     <% end %>
 
-    <%= f.input :password, :label => "Nuova password", :autocomplete => "off", :hint => "Lasciala bianca se non vuoi cambiare la password.", :required => false %>
-    <%= f.input :password_confirmation, :label => "Conferma password", :required => false %>
+    <%= f.input :password, :label => "Nuova password", :autocomplete => "off", :hint => "Lasciala bianca se non vuoi cambiare la password." %>
+    <%= f.input :password_confirmation, :label => "Conferma password" %>
     <%= f.input :current_password, :label => "Vecchia password", :hint => "Inserisci la vecchia password per confermare la modifica.", :required => true %>
   </div>
 

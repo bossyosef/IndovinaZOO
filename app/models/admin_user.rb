@@ -13,18 +13,20 @@ class AdminUser < ActiveRecord::Base
 
   validates :password, presence: true,
 					   confirmation: true,
-					   length: { in: 5..10 }
+					   length: { in: 5..10 }, on: :create
+
+  validates :password, length: { in: 5..10 }, on: :update, allow_blank: true
   
-  validates :password_confirmation, presence: true
+  validates :password_confirmation, presence: true, on: :create
    				   
   validates :email, format: { with: /\A[^@]+@[^@]+\.[^@]{2,6}\z/ },
 				    allow_blank: true
   
   validates :name, length: { maximum: 35 },
-				   format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters." },
+				   format: { with: /\A[a-zA-Z]+\z/, message: "sono permesse solo lettere." },
 				   allow_blank: true
 				   
   validates :surname, length: { maximum: 50 },
-				      format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters." },
+				      format: { with: /\A[a-zA-Z]+\z/, message: "sono permesse solo lettere." },
 				      allow_blank: true  
 end

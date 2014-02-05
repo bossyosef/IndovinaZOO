@@ -4,6 +4,16 @@
 
 class AdminUsers::SessionsController < Devise::SessionsController    
 	def home
+	end
+	
+	def create
+		super
+		flash[:success] = "Login effettuato correttamente."
+	end
+	
+	def destroy
+		super
+		flash[:success] = "Hai effettuato il logout."
 	end	
 end
 
