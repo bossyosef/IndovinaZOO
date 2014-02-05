@@ -81,9 +81,9 @@ class Quiz < ActiveRecord::Base
 	if(standard == "no")
 	  livelloQuiz = livello.to_i
 	  if (livelloQuiz == 0)
-		quizzes = self.all
+		quizzes = self.all.includes(:quiz_rows, :animals)
 	  else
-		quizzes = self.where(:level => livelloQuiz)
+		quizzes = self.where(:level => livelloQuiz).includes(:quiz_rows, :animals)
 	  end
 	  quiz_arr = []
 	  animal_arr = []
