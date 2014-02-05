@@ -1,5 +1,4 @@
 var to = gon.to;
-var timeoutstatico = gon.tos;
 var timerID;
 var timeriniziato = 0;
 
@@ -208,7 +207,7 @@ function update(r)
   
   if (to != 0) 
   {
-	document.getElementById("barra_avanzamento").value = (to*10)/timeoutstatico;
+	document.getElementById("barra_avanzamento").value = (to*10)/gon.timeoutstatico;
 	document.getElementById("valore_avanzamento").textContent = Math.ceil(to/100)+"s";
   } else 
   {
@@ -255,7 +254,7 @@ function scelta(animale,livello,risposta_corretta)
 		  if (animale == risposta_corretta)
 		  {
 			var modificatore = livello/2+0.5; 
-			var punteggio = Math.ceil((to/(timeoutstatico*100))*10);
+			var punteggio = Math.ceil((to/(gon.timeoutstatico*100))*10);
 			punteggio *= modificatore;
 			punteggio = Math.ceil(punteggio);
 			
