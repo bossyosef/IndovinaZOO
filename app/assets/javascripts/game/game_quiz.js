@@ -2,13 +2,6 @@ var to = gon.to;
 var timeoutstatico = gon.tos;
 var id = gon.id;
 var nq = gon.nq;
-var risposta_corretta;
-var livello;
-var animale1;
-var animale2;
-var verso;
-var animale1name;
-var animale2name;
 var timerID;
 var timeriniziato = 0;
 
@@ -40,14 +33,14 @@ $(document).ready ( function ()
 		  store.put({number: i+1, quiz_id: gon.quiz_arr[i].id, level: gon.quiz_arr[i].level ,animal1: gon.animali_arr[i][0].image.url, animal2: gon.animali_arr[i][1].image.url, solution: gon.soluzioni_arr[i].cry.url, user_response: "", score: ""});
 		}
 		
-		risposta_corretta = getAnimalName(gon.soluzioni_arr[0].cry.url);
-		livello = gon.quiz_arr[0].level;
-		animale1 = gon.animali_arr[0][0].image.url;
-		animale2 = gon.animali_arr[0][1].image.url;
-		verso = gon.soluzioni_arr[0].cry.url;
-		animale1name = getAnimalName(animale1);
-		animale2name = getAnimalName(animale2);
-		createQuizObjects();
+		var risposta_corretta = getAnimalName(gon.soluzioni_arr[0].cry.url);
+		var livello = gon.quiz_arr[0].level;
+		var animale1 = gon.animali_arr[0][0].image.url;
+		var animale2 = gon.animali_arr[0][1].image.url;
+		var verso = gon.soluzioni_arr[0].cry.url;
+		var animale1name = getAnimalName(animale1);
+		var animale2name = getAnimalName(animale2);
+		createQuizObjects(risposta_corretta,livello,animale1,animale2,verso,animale1name,animale2name);
 		
 		console.log("uscito onupgradeneeded");
 	  }
@@ -95,15 +88,15 @@ $(document).ready ( function ()
 	  getrequest.onsuccess = function(ev)
 	  {
 		var risultati = getrequest.result;
-		risposta_corretta = getAnimalName(risultati.solution);
-		livello = risultati.level;
-		animale1 = risultati.animal1;
-		animale2 = risultati.animal2;
-		verso = risultati.solution;
-		animale1name = getAnimalName(animale1);
-		animale2name = getAnimalName(animale2);
+		var risposta_corretta = getAnimalName(risultati.solution);
+		var livello = risultati.level;
+		var animale1 = risultati.animal1;
+		var animale2 = risultati.animal2;
+		var verso = risultati.solution;
+		var animale1name = getAnimalName(animale1);
+		var animale2name = getAnimalName(animale2);
 		db.close();
-		createQuizObjects();
+		createQuizObjects(risposta_corretta,livello,animale1,animale2,verso,animale1name,animale2name);
 		
 		console.log("uscito onsuccess");
 	  }
@@ -139,33 +132,35 @@ function audio_el(v)
   return audio;
 }
 
-function image_el(a)
+function image_el(a,an,r,l)
 {
   /*Questa funzione crea un elemento html img che contiene l'immagine di un animale
    *del quiz a partire dal path dell'immagine.*/
   
   var img = document.createElement("img");
-  var temp;
   img.src = a;
-  temp = getAnimalName(a);
-  img.alt = temp;
-  img.title = temp
+  img.alt = an;
+  img.title = an;
   img.className = "img-rounded";
   var att = document.createAttribute("onclick");
-  att.value = "scelta('"+ temp + "')";
+  att.value = "scelta('"+ an + "','" + l + "','" + r + "')";
   img.setAttributeNode(att);
   return img;
 }
 
-function createQuizObjects()
+function createQuizObjects(r,l,a1,a2,v,a1n,a2n)
 {
   /*Questa funzione popola il div principale della pagina con il verso dell'animale
    *da indovinare e le immagini dei due animali possibili.*/
   
   var div = document.getElementById("elementiquiz");
-  div.appendChild(audio_el(verso));
-  div.appendChild(image_el(animale1));
-  div.appendChild(image_el(animale2));
+  div.appendChild(audio_el(v));
+  div.appendChild(image_el(a1,a1n,r,l));
+  div.appendChild(image_el(a2,a2n,r,l));
+  var bottone = document.getElementById("inizia");
+  var att = document.createAttribute("onclick");
+  att.value="inizia('" + r + "')";
+  bottone.setAttributeNode(att);
 }
 
 function storeQuiz(ur,s)
@@ -204,7 +199,7 @@ function storeQuiz(ur,s)
   }
 }
 
-function update()
+function update(r)
 {
   /*Questa funzione viene chiamata ogni 1000 millisecondi da setInterval e
    *aggiorna l'utente su quanto tempo rimane per rispondere. Se il timer arriva
@@ -218,13 +213,13 @@ function update()
 	document.getElementById("valore_avanzamento").textContent = Math.ceil(to/100)+"s";
   } else 
   {
-	timeout();
+	timeout(r);
 	document.getElementById("barra_avanzamento").value = to;
 	document.getElementById("valore_avanzamento").textContent = "SCADUTO";
   }
 }
 
-function inizia()
+function inizia(r)
 {
   /*Questa funzione viene chiamata quanto l'utente vuole iniziare il quiz, riproduce
    *l'audio del verso e fa partire il conto alla rovescia.*/
@@ -234,12 +229,12 @@ function inizia()
 	timeriniziato = 1;
 	var audio = document.getElementById("verso");
 	audio.play();
-	timerID = setInterval("update()", 10);
+	timerID = setInterval("update('" + r + "')", 10);
   }
   document.getElementById("salta").style.display= "inline";
 }
 
-function scelta(animale)
+function scelta(animale,livello,risposta_corretta)
 {
   /*Questa funzione viene chiamata quando l'utente clicca sull'immagine di un animale.
    *Pausa l'audio e se la risposta è corretta calcola il punteggio e chiama storeQuiz,
@@ -277,14 +272,14 @@ function scelta(animale)
   }
 }
 
-function timeout()
+function timeout(r)
 {
   /*Questa funzione blocca il timer, avverte l'utente che è scaduto il tempo e
    *chiama storeQuiz con punteggio 0.*/
   
   timeriniziato = 2;
   clearInterval(timerID);
-  document.getElementById("risultato").textContent = "Il tempo è scaduto! La risposta esatta era " + risposta_corretta + "! Il tuo punteggio è 0.";
+  document.getElementById("risultato").textContent = "Il tempo è scaduto! La risposta esatta era " + r + "! Il tuo punteggio è 0.";
   storeQuiz("",0);
 }
 
