@@ -133,6 +133,10 @@ function totalScore()
   }
   insertHiddenScore(res);
   insertSocialText(res);
+  if (res<0)
+  {
+	document.getElementById("save-rank").style.display = "none";
+  }
   return document.getElementById("change_total_score").textContent = res;
 }
 

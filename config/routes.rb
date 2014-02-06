@@ -25,5 +25,6 @@ IndovinaZOO::Application.routes.draw do
   end
   
   get "/*all" => "game#home"
+  post "/*all" => "game#home"
         
 end

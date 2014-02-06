@@ -23,7 +23,7 @@ function submitForm()
 	document.getElementById("numeroquiz").focus();
   } else if (livelloquiz == 0)
   {
-	if (numeroquiz > numero_quiz_db)
+	if (numeroquiz > numero_quiz_db || numeroquiz < 0)
 	{
 	  alert("Ci dispiace, ma al momento non abbiamo quella quantità di quiz disponibile.");
 	  document.getElementById("numeroquiz").focus();
@@ -35,7 +35,7 @@ function submitForm()
   {
 	alert("Ci dispiace, ma al momento non abbiamo un numero di quiz disponibili con quel livello.");
 	document.getElementById("numeroquiz").focus();
-  } else if (livelloquiz > livello_massimo)
+  } else if (livelloquiz > livello_massimo || livelloquiz < 0)
   {
 	alert("Ci dispiace, ma al momento non abbiamo quiz di quel livello.");
 	document.getElementById("livelloquiz").focus();
