@@ -1,5 +1,8 @@
-<h1>Modifica Animale</h1>
+<div id="animal_form_container">
 
-<%= render "form" %>
+	<h2>Modifica Animale</h2>
 
-<%= link_to "Torna a Gestione", animals_path %>
+	<%= render 'form' %>
+
+	<%= link_to "Annulla", quizzes_path, id: 'cancel_button', class: 'btn btn-success' %>
+</div>

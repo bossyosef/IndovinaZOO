@@ -77,12 +77,12 @@ class Animal < ActiveRecord::Base
 
 	# Has_quizzes: restituisce vero o falso, a seconda che l'animale
 	# sia legato o meno a dei quiz. Impedisce l'eliminazione in caso
-	# ritorni vero. Mantiene l'integrità della base dati.
+	# ritorni falso. Mantiene l'integrità della base dati.
 	
 	def has_quizzes
-		unless self.quizzes.nil?			
+		unless self.quizzes.nil?						
 			return false
-		end
+		end		
 	end
 	
 	# Image_size_validation: controlla che l'immagine inserita non sia più grande di 5 MB.

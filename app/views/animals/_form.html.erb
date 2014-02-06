@@ -1,6 +1,6 @@
 <%= simple_form_for @animal, remote: (params[:action] == 'new' ? true : false), authenticity_token: true, html: { multipart: true, id: 'animal_form' } do |f| %>
 	
-	<div id="animal_error_messages"></div>
+	<div id="animalform_error_messages"></div>
 			
 	<fieldset class="form-new-animal">
 		<legend>Dati nuovo animale:</legend>
@@ -9,6 +9,6 @@
 		<div class="animal-input"><%= f.input :cry, label: "Verso", as: :file %></div>		
 	</fieldset>		
 		
-	<%= f.button :submit, value: "Crea Animale", class: "btn btn-success"%>
+	<%= f.button :submit, value: (params[:action] == 'new' ? "Crea Animale" : "Modifica Animale"), class: "btn btn-success"%>
 
 <% end %>

@@ -22,6 +22,10 @@ class AnimalsController < ApplicationController
 			respond_to do |format|		 
 			  format.js		 
 			end
+		else
+			respond_to do |format|
+			  format.js { render 'animal_validation_errors' }
+			end
 		end
 	end
 
@@ -34,26 +38,38 @@ class AnimalsController < ApplicationController
 		@animal = Animal.new
 	end
 
-	def edit	
+	def edit
+		respond_to do |format|
+		  format.html { render :layout => !request.xhr? }
+		end
 	end
 
 	def update	
 		if @animal.update(animal_params)
 			flash[:success] = "Animale modificato correttamente!"
-			redirect_to @animal
+			
+			respond_to do |format|
+				format.html { redirect_to @animal }
+				format.js
+			end			
 		else
-			render "edit"
+			respond_to do |format|
+				format.js { render 'animal_validation_errors' }
+			end
 		end
 	end
 
-	def destroy	
-		if @animal.destroy
-			flash[:success] = "Animale eliminato correttamente!"
-		else
-			flash[:error] = "L'animale non può essere eliminato perchè è legato ad almeno 1 quiz."
-		end
+	def destroy
 	
-		redirect_to animals_path
+		# Gestisce i messaggi d'errore in caso la validazione vada a buon fine o meno.
+		
+		if @animal.destroy
+			flash[:success] = "Animale eliminato correttamente!"			
+		else
+			flash[:error] = "L'animale non può essere eliminato perchè è legato ad almeno 1 quiz."			
+		end
+		
+		redirect_to animals_path		
 	end
 
 	private

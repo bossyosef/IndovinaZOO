@@ -3,16 +3,19 @@
 
 $(document).delegate('#quiz_quiz_rows_attributes_0_animal_id', 'change', function(e) {
 	e.preventDefault();
-	var $select = $(this);	
-	$.post("/quizzes/select_animal_id", {id: $select.val()}, null, "script");	
+	var $select = $(this);
+		
+	$.post("/quizzes/set_animal_ids", {id: $select.val()}, null, "script");	
 });
 
 /* Delegato JQuery per intercettare il click sul tasto reset, presente nel form
 * di creazione dei Quiz. */
 
 $(document).delegate('#quizform_reset_button', 'click', function(e) {
-	$('#quizform_error_messages').empty();		
-	$.post("/quizzes/select_animal_id", {id: ''}, null, "script");	
+	$('#quizform_error_messages').empty();
+	$('#quiz_form:input').each(function(){
+      $(this).val('');
+    });
 });
 
 /* Delegato JQuery per la gestione del pulsante 'Nuovo Quiz'

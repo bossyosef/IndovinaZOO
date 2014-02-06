@@ -16,8 +16,8 @@ IndovinaZOO::Application.routes.draw do
   
   resources :quizzes
 
-  post "/quizzes/select_animal_id"
-   
+  post "/quizzes/set_animal_ids"
+     
   devise_for :admin_users, controllers: { sessions: "admin_users/sessions", registrations: "admin_users/registrations" }
   
   devise_scope :admin_user do

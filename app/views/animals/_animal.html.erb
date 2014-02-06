@@ -1,4 +1,4 @@
-<div class="animal-element" title="Clicca per sentire il verso">
+<div class="animal-element" id="animal-<%= animal.id %>" title="Clicca per sentire il verso">
   <div class="animal-name" onclick="document.getElementById('<%= animal.name %>_sound').play()"><%= animal.name %></div>
   <%= image_tag animal.image_url, class: "img_animal_list img-circle", onclick: "document.getElementById('"+animal.name+"_sound').play()" %>
   <%= audio_tag animal.cry_url, id: animal.name+"_sound" %>
