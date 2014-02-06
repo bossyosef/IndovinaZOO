@@ -1,20 +1,5 @@
-<% if remotipart_submitted? %>
-	$errorDiv = $('#animal_error_messages');
-	$errorDiv.empty();
-	
-	<% unless @animal.errors.any? %>
-		$('#flash_messages').html("<%= escape_javascript raw(flash_display) %>");
-		$('#animals_table').append("<%= escape_javascript(render @animal) %>");		
-		$('#animal_form')[0].reset();		
-	<% else %>
-		var $form = $('#animal_form'),			
-			$errorList = $('<ul>');
-					
-		<% @animal.errors.full_messages.each do |msg| %>
-			$errorList.append('<li><%= escape_javascript msg %></li>');
-		<% end %>
-	
-		$errorList.append('</ul>');
-		$errorDiv.append($errorList);	
-	<% end %>
+<% if remotipart_submitted? %>	
+	$('#flash_messages').html("<%= escape_javascript raw(flash_display) %>");
+	$('#element-list').append("<%= escape_javascript(render @animal) %>");		
+	$(":input:not(input[type=submit])").val("");	
 <% end %>

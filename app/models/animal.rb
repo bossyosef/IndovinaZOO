@@ -19,7 +19,7 @@ class Animal < ActiveRecord::Base
 	validates :cry, presence: true	
 	validate :cryfile_size_validation, on: :create		
 	
-	before_destroy :has_quizzes
+	before_destroy :has_no_quizzes
 	
 	mount_uploader :image, AnimalImageUploader
 	
@@ -75,14 +75,16 @@ class Animal < ActiveRecord::Base
 	
 	# Metodi utilizzati per validazioni.
 
-	# Has_quizzes: restituisce vero o falso, a seconda che l'animale
+	# Has_no_quizzes: restituisce falso o vero, a seconda che l'animale
 	# sia legato o meno a dei quiz. Impedisce l'eliminazione in caso
 	# ritorni falso. Mantiene l'integrità della base dati.
 	
-	def has_quizzes
-		unless self.quizzes.nil?						
+	def has_no_quizzes
+		if self.quizzes.empty?
+			return true
+		else
 			return false
-		end		
+		end
 	end
 	
 	# Image_size_validation: controlla che l'immagine inserita non sia più grande di 5 MB.
