@@ -97,9 +97,9 @@ class Quiz < ActiveRecord::Base
 	  end
 	  return quiz_arr, animal_arr, solution_arr
 	else
-	  ar1 = self.where(:level => 1).sample(4)
-	  ar2 = self.where(:level => 2).sample(4)
-	  ar3 = self.where(:level => 3).sample(2)
+	  ar1 = self.where(:level => 1).includes(:quiz_rows, :animals).sample(4)
+	  ar2 = self.where(:level => 2).includes(:quiz_rows, :animals).sample(4)
+	  ar3 = self.where(:level => 3).includes(:quiz_rows, :animals).sample(2)
 	  quiz_arr = ar1 + ar2 + ar3
 	  animal_arr = []
 	  solution_arr = []
