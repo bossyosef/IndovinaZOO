@@ -65,7 +65,7 @@ class Quiz < ActiveRecord::Base
 	  animals.sample
   end
   
-  # Get_animals_from_id: ritorna gli animali appartenenti al quiz con l'id passato come parametro.
+  # Get_animals_from_id: ritorna g++li animali appartenenti al quiz con l'id passato come parametro.
   
   def self.get_animals_from_id(idquiz)
 	  animal1 = find(idquiz).animals.first
